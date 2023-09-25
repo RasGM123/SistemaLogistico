@@ -10,44 +10,142 @@ import java.util.List;
  *
  * @author Rodrigo
  */
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Cliente {
+    private List<TipoDeProducto> Preferencias;
+    
+    public Cliente() {
+        Preferencias = new ArrayList<TipoDeProducto>();
+    }
 
-  private int id;
-  private String nombre;
-  private String contacto;
-  private List<Pedido> historialPedidos;
-  private List<String> preferencias;
+    public List<TipoDeProducto> getPreferencias() {
+        return Preferencias;
+    }
 
-  public void registrarCliente() {
+    public void setPreferencias(List<TipoDeProducto> Preferencias) {
+        this.Preferencias = Preferencias;
+    }
 
-  }
+    public Pedido ConsultarPedido(int id) {
+        Pedido pedido = null;
 
-  public void consultarPedidos() {
+        try {
+            // Establecer la conexión con la base de datos
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/nombre_de_la_base_de_datos", "usuario", "contraseña");
 
-  }
+            // Crear la consulta SQL para obtener un pedido por su ID
+            String consulta = "SELECT * FROM Pedido WHERE ID = ?";
 
-  public void actualizarPreferencias() {
+            // Preparar la consulta
+            PreparedStatement statement = conexion.prepareStatement(consulta);
 
-  }
+            // Establecer el valor del parámetro de la consulta
+            statement.setInt(1, id);
 
-  //Getters and setters
+            // Ejecutar la consulta y obtener el resultado
+            ResultSet resultado = statement.executeQuery();
 
-  public int getId() {
-    return id;
-  }
+            // Si se encontró un pedido con el ID especificado, crear un objeto Pedido con sus datos
+            if (resultado.next()) {
+                pedido = new Pedido(
+                    resultado.getInt("ID"),
+                    resultado.getDate("Fecha"),
+                    resultado.getDouble("Total"),
+                    resultado.getInt("ClienteID")
+                );
+            }
 
-  public void setId(int id) {
-    this.id = id; 
-  }
+            // Cerrar la conexión con la base de datos
+            conexion.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-  public String getNombre() {
-    return nombre;
-  }
+        return pedido;
+    }
 
-  public void setNombre(String nombre) {
-    this.nombre = nombre;
-  }
+    public Pedido[] ConsultarPedidos() {
+        List<Pedido> pedidos = new ArrayList<Pedido>();
 
-  //etc...
+        try {
+            // Establecer la conexión con la base de datos
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/nombre_de_la_base_de_datos", "usuario", "contraseña");
 
+            // Crear la consulta SQL para obtener todos los pedidos
+            String consulta = "SELECT * FROM Pedido";
+
+            // Preparar la consulta
+            PreparedStatement statement = conexion.prepareStatement(consulta);
+
+            // Ejecutar la consulta y obtener el resultado
+            ResultSet resultado = statement.executeQuery();
+
+            // Crear un objeto Pedido con los datos de cada fila del resultado y agregarlo a la lista de pedidos
+            while (resultado.next()) {
+                Pedido pedido = new Pedido(
+                    resultado.getInt("ID"),
+                    resultado.getDate("Fecha"),
+                    resultado.getDouble("Total"),
+                    resultado.getInt("ClienteID")
+                );
+                pedidos.add(pedido);
+            }
+
+            // Cerrar la conexión con la base de datos
+            conexion.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Convertir la lista de pedidos a un array y devolverlo
+        return pedidos.toArray(new Pedido[0]);
+    }
+
+    public String[] ConsultarPreferencias() {
+        List<String> preferencias = new ArrayList<String>();
+
+        // Convertir cada TipoDeProducto en un String y agregarlo a la lista de preferencias
+        for (TipoDeProducto tipo : Preferencias) {
+            preferencias.add(tipo.toString());
+        }
+
+        // Convertir la lista de preferencias a un array y devolverlo
+        return preferencias.toArray(new String[0]);
+    }
+
+    public void DeterminarPreferencias() {
+        try {
+            // Establecer la conexión con la base de datos
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/nombre_de_la_base_de_datos", "usuario", "contraseña");
+
+            // Crear la consulta SQL para obtener los productos más comprados por el cliente
+            String consulta = "SELECT Producto.Tipo, COUNT(*) AS Cantidad FROM PedidoDetalle JOIN Producto ON PedidoDetalle.ProductoID = Producto.ID WHERE PedidoDetalle.ClienteID = ? GROUP BY Producto.Tipo ORDER BY Cantidad DESC LIMIT 3";
+
+            // Preparar la consulta
+            PreparedStatement statement = conexion.prepareStatement(consulta);
+
+            // Establecer el valor del parámetro de la consulta
+            statement.setInt(1, this.getID());
+
+            // Ejecutar la consulta y obtener el resultado
+            ResultSet resultado = statement.executeQuery();
+
+            // Limpiar la lista de preferencias actual
+            Preferencias.clear();
+
+            // Agregar cada TipoDeProducto al cliente como preferencia
+            while (resultado.next()) {
+                TipoDeProducto tipo = TipoDeProducto.valueOf(resultado.getString("Tipo"));
+                Preferencias.add(tipo);
+            }
+
+            // Cerrar la conexión con la base de datos
+            conexion.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

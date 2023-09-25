@@ -4,46 +4,70 @@
  */
 package clases;
 
-import java.util.Date;
-import java.util.List;
 
 /**
  *
  * @author Rodrigo
  */
+import java.sql.*;
+import java.util.Date;
+
 public class Pedido {
+    private int id;
+    private Date fechaEntrega;
 
-  private int id;
-  private Date fechaCreacion;
-  private String estado;
-  private Ruta ruta;
-  private Transportista transportista;
-  private List<DocumentoTransporte> documentosTransporte; 
-  private Inventario inventario;
-  private CargaDescarga cargaDescarga;
+    public Pedido(int id, Date fechaEntrega) {
+        this.id = id;
+        this.fechaEntrega = fechaEntrega;
+    }
 
-  public void crearPedido() {
+    public int getId() {
+        return id;
+    }
 
-  }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-  public void actualizarEstado() {
+    public Date getFechaEntrega() {
+        return fechaEntrega;
+    }
 
-  }
+    public void setFechaEntrega(Date fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
+    }
 
-  public void generarDocumentosTransporte() {
+    public void GenerarRemito() {
+        try {
+            // Establecer la conexión con la base de datos
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/nombre_de_la_base_de_datos", "usuario", "contraseña");
 
-  }
+            // Crear la consulta SQL para obtener los datos del pedido
+            String consulta = "SELECT * FROM Pedido WHERE ID = ?";
 
-  //Getters and setters
+            // Preparar la consulta
+            PreparedStatement statement = conexion.prepareStatement(consulta);
 
-  public int getId() {
-    return id;
-  }
+            // Establecer el valor del parámetro de la consulta
+            statement.setInt(1, this.id);
 
-  public void setId(int id) {
-    this.id = id;
-  }
+            // Ejecutar la consulta y obtener el resultado
+            ResultSet resultado = statement.executeQuery();
 
-  //etc
+            // Si se encontró un pedido con el ID especificado, crear un objeto Remito con sus datos y guardarlo en la base de datos
+            if (resultado.next()) {
+                Remito remito = new Remito(
+                    resultado.getInt("ID"),
+                    resultado.getDate("FechaEntrega"),
+                    resultado.getDouble("Total")
+                );
+                remito.guardarRemito();
+            }
 
+            // Cerrar la conexión con la base de datos
+            conexion.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

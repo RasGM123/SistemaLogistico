@@ -8,44 +8,45 @@ package clases;
  *
  * @author Rodrigo
  */
+import java.sql.*;
+
 public class Transportista {
+    private int id;
 
-  private int id;
-  private String nombre;
-  private Vehiculo vehiculo;
+    public Transportista(int id) {
+        this.id = id;
+    }
 
-  public void asignarTransportista() {
+    public int getId() {
+        return id;
+    }
 
-  }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-  public void consultarTransportista() {  
+    public void asignarVehiculo(Vehiculo vehiculo) {
+        try {
+            // Establecer la conexión con la base de datos
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/nombre_de_la_base_de_datos", "usuario", "contraseña");
 
-  }
+            // Crear la consulta SQL para actualizar el vehículo asignado al transportista
+            String consulta = "UPDATE Transportista SET VehiculoID = ? WHERE ID = ?";
 
-  //Getters and setters
+            // Preparar la consulta
+            PreparedStatement statement = conexion.prepareStatement(consulta);
 
-  public int getId() {
-    return id;
-  }
+            // Establecer los valores de los parámetros de la consulta
+            statement.setInt(1, vehiculo.getId());
+            statement.setInt(2, this.id);
 
-  public void setId(int id) {
-    this.id = id;
-  }
+            // Ejecutar la consulta
+            statement.executeUpdate();
 
-  public String getNombre() {
-    return nombre;
-  }
-
-  public void setNombre(String nombre) {
-    this.nombre = nombre;
-  }
-
-  public Vehiculo getVehiculo() {
-    return vehiculo;
-  }
-
-  public void setVehiculo(Vehiculo vehiculo) {
-    this.vehiculo = vehiculo;
-  }
-
+            // Cerrar la conexión con la base de datos
+            conexion.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

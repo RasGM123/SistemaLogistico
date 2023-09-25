@@ -12,14 +12,14 @@ import clases.*;
  */
 public class SistemaLogistica {
 
-  private List<Cliente> clientes;
+  private List<Usuario> usuarios;
   private List<Pedido> pedidos; 
   private List<Almacen> almacenes;
   private List<Proveedor> proveedores;
 
   private AnalisisDatos analisisDatos;
 
-  public void gestionarClientes() {
+  public void gestionaUsuarios() {
     
   }
 

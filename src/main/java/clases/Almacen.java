@@ -10,39 +10,83 @@ import java.util.List;
  *
  * @author Rodrigo
  */
+import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Almacen {
+    private int id;
+    private boolean esCentroDistribucion;
+    private String direccion;
+    private Map<Producto, Integer> existencias;
 
-  private int id;
-  private List<Ubicacion> ubicaciones;
+    public Almacen(int id, boolean esCentroDistribucion, String direccion) {
+        this.id = id;
+        this.esCentroDistribucion = esCentroDistribucion;
+        this.direccion = direccion;
+        this.existencias = new HashMap<>();
+    }
 
-  public void agregarUbicacion() {
+    public int getId() {
+        return id;
+    }
 
-  }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-  public void eliminarUbicacion() {
+    public boolean isEsCentroDistribucion() {
+        return esCentroDistribucion;
+    }
 
-  }
+    public void setEsCentroDistribucion(boolean esCentroDistribucion) {
+        this.esCentroDistribucion = esCentroDistribucion;
+    }
 
-  public void consultarUbicacion() {
+    public String getDireccion() {
+        return direccion;
+    }
 
-  }
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
 
-  //Getters and setters
+    public boolean tieneProducto(Producto producto) {
+        return existencias.containsKey(producto);
+    }
 
-  public int getId() {
-    return id;
-  }
+    public void aumentarCantidadProducto(Producto producto, int cantidad) {
+        if (existencias.containsKey(producto)) {
+            int cantidadActual = existencias.get(producto);
+            existencias.put(producto, cantidadActual + cantidad);
+        } else {
+            existencias.put(producto, cantidad);
+        }
+    }
 
-  public void setId(int id) {
-    this.id = id;
-  }
+    public void restarCantidadProducto(Producto producto, int cantidad) {
+        if (existencias.containsKey(producto)) {
+            int cantidadActual = existencias.get(producto);
+            if (cantidadActual >= cantidad) {
+                existencias.put(producto, cantidadActual - cantidad);
+            } else {
+                System.out.println("No hay suficientes existencias del producto " + producto.getNombre());
+            }
+        } else {
+            System.out.println("No hay existencias del producto " + producto.getNombre());
+        }
+    }
 
-  public List<Ubicacion> getUbicaciones() {
-    return ubicaciones;
-  }
+    public void gestionarPedido() {
+        // Lógica para gestionar un pedido
+    }
 
-  public void setUbicaciones(List<Ubicacion> ubicaciones) {
-    this.ubicaciones = ubicaciones;
-  }
+    public void cargarOrdenDeCompra(OrdenDeCompra ordenDeCompra) {
+        // Lógica para cargar una orden de compra
+    }
 
+    public void gestionarExistencias() {
+        
+    }
 }
+

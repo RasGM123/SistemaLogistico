@@ -13,7 +13,7 @@ public class SQLconexion {
     private String usuario;
     private String contrasena;
     
-    public void SQLconexion(){
+    public SQLconexion(){
         this.contrasena = "*";
         this.url = "*";
         this.usuario = "*";

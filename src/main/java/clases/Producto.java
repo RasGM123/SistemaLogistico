@@ -12,7 +12,6 @@ public class Producto {
 
   private int id;
   private String nombre;
-  private int cantidad;
 
   //Getters and setters
 
@@ -32,12 +31,5 @@ public class Producto {
     this.nombre = nombre;
   }
 
-  public int getCantidad() {
-    return cantidad;
-  }
-
-  public void setCantidad(int cantidad) {
-    this.cantidad = cantidad;
-  }
 
 }

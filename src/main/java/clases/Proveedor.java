@@ -10,43 +10,92 @@ import java.util.List;
  *
  * @author Rodrigo
  */
+import java.sql.*;
+
 public class Proveedor {
+    private int id;
+    private String cuil;
+    private String razonSocial;
 
-  private int id;
-  private String nombre;
-  private List<Contrato> contratos;
-  private List<Evaluacion> evaluaciones;
+    public Proveedor(int id, String cuil, String razonSocial) {
+        this.id = id;
+        this.cuil = cuil;
+        this.razonSocial = razonSocial;
+    }
 
-  public void registrarProveedor() {
+    public int getId() {
+        return id;
+    }
 
-  }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-  public void gestionarContratos() {
+    public String getCuil() {
+        return cuil;
+    }
 
-  }
+    public void setCuil(String cuil) {
+        this.cuil = cuil;
+    }
 
-  public void evaluarProveedor() {
+    public String getRazonSocial() {
+        return razonSocial;
+    }
 
-  }
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
+    }
 
-  //Getters and setters
+    public void guardarProveedor() {
+        try {
+            // Establecer la conexión con la base de datos
+            SQLconexion sq = new SQLconexion();
+            Connection conexion = DriverManager.getConnection(sq.getUrl(), sq.getUsuario(), sq.getContrasena());
+            // Crear la consulta SQL para insertar un nuevo proveedor
+            String consulta = "INSERT INTO Proveedor (ID, CUIL, RazonSocial) VALUES (?, ?, ?)";
 
-  public int getId() {
-    return id;
-  }
+            // Preparar la consulta
+            PreparedStatement statement = conexion.prepareStatement(consulta);
 
-  public void setId(int id) {
-    this.id = id;
-  }
+            // Establecer los valores de los parámetros de la consulta
+            statement.setInt(1, this.id);
+            statement.setString(2, this.cuil);
+            statement.setString(3, this.razonSocial);
 
-  public String getNombre() {
-    return nombre;
-  }
+            // Ejecutar la consulta
+            statement.executeUpdate();
 
-  public void setNombre(String nombre) {
-    this.nombre = nombre;
-  }
+            // Cerrar la conexión con la base de datos
+            conexion.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-  //etc
+    public void actualizarProveedor() {
+        try {
+            // Establecer la conexión con la base de datos
+            SQLconexion sq = new SQLconexion();
+            Connection conexion = DriverManager.getConnection(sq.getUrl(), sq.getUsuario(), sq.getContrasena());
+            // Crear la consulta SQL para actualizar un proveedor existente
+            String consulta = "UPDATE Proveedor SET CUIL = ?, RazonSocial = ? WHERE ID = ?";
 
+            // Preparar la consulta
+            PreparedStatement statement = conexion.prepareStatement(consulta);
+
+            // Establecer los valores de los parámetros de la consulta
+            statement.setString(1, this.cuil);
+            statement.setString(2, this.razonSocial);
+            statement.setInt(3, this.id);
+
+            // Ejecutar la consulta
+            statement.executeUpdate();
+
+            // Cerrar la conexión con la base de datos
+            conexion.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

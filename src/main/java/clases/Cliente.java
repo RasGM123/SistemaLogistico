@@ -15,18 +15,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cliente {
-    private List<TipoDeProducto> Preferencias;
-    
-    public Cliente() {
-        Preferencias = new ArrayList<TipoDeProducto>();
+    private List<TipoProducto> Preferencias;
+    private int id;
+    private Persona per;
+    public Cliente(Persona cliente) {
+        this.Preferencias = new ArrayList<TipoProducto>();
+        this.per = cliente;
     }
 
-    public List<TipoDeProducto> getPreferencias() {
+    public List<TipoProducto> getPreferencias() {
         return Preferencias;
     }
 
-    public void setPreferencias(List<TipoDeProducto> Preferencias) {
+    public void setPreferencias(List<TipoProducto> Preferencias) {
         this.Preferencias = Preferencias;
+    }
+    
+    public Persona getPersona(){
+        return per;
+    }
+    
+    public int getID(){
+        return id;
     }
 
     public Pedido ConsultarPedido(int id) {
@@ -50,11 +60,9 @@ public class Cliente {
 
             // Si se encontró un pedido con el ID especificado, crear un objeto Pedido con sus datos
             if (resultado.next()) {
-                pedido = new Pedido(
+                Pedido pe = new Pedido(
                     resultado.getInt("ID"),
-                    resultado.getDate("Fecha"),
-                    resultado.getDouble("Total"),
-                    resultado.getInt("ClienteID")
+                    resultado.getDate("Fecha")
                 );
             }
 
@@ -87,9 +95,7 @@ public class Cliente {
             while (resultado.next()) {
                 Pedido pedido = new Pedido(
                     resultado.getInt("ID"),
-                    resultado.getDate("Fecha"),
-                    resultado.getDouble("Total"),
-                    resultado.getInt("ClienteID")
+                    resultado.getDate("Fecha")
                 );
                 pedidos.add(pedido);
             }
@@ -108,7 +114,7 @@ public class Cliente {
         List<String> preferencias = new ArrayList<String>();
 
         // Convertir cada TipoDeProducto en un String y agregarlo a la lista de preferencias
-        for (TipoDeProducto tipo : Preferencias) {
+        for (TipoProducto tipo : Preferencias) {
             preferencias.add(tipo.toString());
         }
 
@@ -119,8 +125,8 @@ public class Cliente {
     public void DeterminarPreferencias() {
         try {
             // Establecer la conexión con la base de datos
-            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/nombre_de_la_base_de_datos", "usuario", "contraseña");
-
+            SQLconexion sq = new SQLconexion();
+            Connection conexion = DriverManager.getConnection(sq.getUrl(), sq.getUsuario(), sq.getContrasena());
             // Crear la consulta SQL para obtener los productos más comprados por el cliente
             String consulta = "SELECT Producto.Tipo, COUNT(*) AS Cantidad FROM PedidoDetalle JOIN Producto ON PedidoDetalle.ProductoID = Producto.ID WHERE PedidoDetalle.ClienteID = ? GROUP BY Producto.Tipo ORDER BY Cantidad DESC LIMIT 3";
 
@@ -138,7 +144,7 @@ public class Cliente {
 
             // Agregar cada TipoDeProducto al cliente como preferencia
             while (resultado.next()) {
-                TipoDeProducto tipo = TipoDeProducto.valueOf(resultado.getString("Tipo"));
+                TipoProducto tipo = TipoProducto.valueOf(resultado.getString("Tipo"));
                 Preferencias.add(tipo);
             }
 

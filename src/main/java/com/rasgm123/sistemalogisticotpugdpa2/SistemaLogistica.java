@@ -4,43 +4,17 @@
 
 package com.rasgm123.sistemalogisticotpugdpa2;
 
-import java.util.List;
-import clases.*;
+import ventanas.*;
+
+
 /**
  *
  * @author Rodrigo
  */
 public class SistemaLogistica {
-
-  private List<Usuario> usuarios;
-  private List<Pedido> pedidos; 
-  private List<Almacen> almacenes;
-  private List<Proveedor> proveedores;
-
-  private AnalisisDatos analisisDatos;
-
-  public void gestionaUsuarios() {
-    
-  }
-
-  public void gestionarPedidos() {
-
-  }
-
-  public void seguimientoTiempoReal() {
-
-  }
-
-  public void gestionarAlmacenes() {
-
-  }
-
-  public void gestionarProveedores() {
-
-  }
-
-  public void generarInformesRendimiento() {
-
-  }
-
+    public static void main(String[] args) {
+        // Crear una nueva instancia de la ventana principal
+        Login ventana = new Login();
+        ventana.setVisible(true);
+    }
 }

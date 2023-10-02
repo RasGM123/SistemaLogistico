@@ -34,10 +34,11 @@ public class Login extends javax.swing.JFrame {
         jPasswordField1 = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 153));
         setPreferredSize(new java.awt.Dimension(800, 480));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("Correo/Usuario:");
+        jLabel1.setText("Usuario:");
         jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jtuser.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));

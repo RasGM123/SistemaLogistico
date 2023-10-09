@@ -75,7 +75,7 @@ public class Menu extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -129,7 +129,7 @@ public class Menu extends javax.swing.JFrame {
         jCliente.setBackground(new java.awt.Color(204, 204, 204));
         jCliente.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/lapiz-de-usuario.png"))); // NOI18N
-        jCliente.setText("Clientes");
+        jCliente.setText("Editar Usuario");
         jCliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         jCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 

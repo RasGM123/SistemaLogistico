@@ -53,7 +53,7 @@ public class mUsuario extends javax.swing.JFrame {
         jButton3.setBackground(new java.awt.Color(255, 255, 51));
         jButton3.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/documento-firmado.png"))); // NOI18N
-        jButton3.setText("Tarifas");
+        jButton3.setText("Contacto");
         jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 

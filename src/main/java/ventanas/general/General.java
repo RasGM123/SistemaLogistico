@@ -34,7 +34,7 @@ public class General extends javax.swing.JFrame {
         Register = new javax.swing.JMenuItem();
         Salir = new javax.swing.JMenuItem();
         Usuario = new javax.swing.JMenu();
-        jMenu1 = new javax.swing.JMenu();
+        Seguimiento = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,9 +89,10 @@ public class General extends javax.swing.JFrame {
         Usuario.setText("Usuario");
         Menu.add(Usuario);
 
-        jMenu1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jMenu1.setText("jMenu1");
-        Menu.add(jMenu1);
+        Seguimiento.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Seguimiento.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\envio-rapido.png"));
+        Seguimiento.setText("Seguimiento");
+        Menu.add(Seguimiento);
 
         setJMenuBar(Menu);
 
@@ -144,9 +145,9 @@ public class General extends javax.swing.JFrame {
     private javax.swing.JMenuBar Menu;
     private javax.swing.JMenuItem Register;
     private javax.swing.JMenuItem Salir;
+    private javax.swing.JMenu Seguimiento;
     private javax.swing.JMenu Usuario;
     private javax.swing.JMenu inicio;
     private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JMenu jMenu1;
     // End of variables declaration//GEN-END:variables
 }

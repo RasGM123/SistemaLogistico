@@ -6,20 +6,21 @@ package ventanas.emergentes;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-
+import javax.swing.JDesktopPane;
+import clases.*;
 /**
  *
  * @author Rodrigo
  */
 public class Login extends javax.swing.JInternalFrame {
-
-    /**
-     * Creates new form Login
-     */
-    public Login() {
+    private Persona user;
+    private JDesktopPane escritorio;
+    public Login(Persona us, JDesktopPane des) {
         initComponents();
         Icon icon = new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\circulo-de-usuario.png");
         this.setFrameIcon(icon);
+        this.user = us;
+        this.escritorio = des;
     }
 
     /**
@@ -64,6 +65,11 @@ public class Login extends javax.swing.JInternalFrame {
         jRegister.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         jRegister.setText("Register");
         jRegister.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        jRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRegisterActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -105,6 +111,14 @@ public class Login extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRegisterActionPerformed
+        if(user == null){
+            Register res = new Register();
+            escritorio.add(res);
+            res.setVisible(true);
+        }
+    }//GEN-LAST:event_jRegisterActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

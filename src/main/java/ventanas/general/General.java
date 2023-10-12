@@ -23,7 +23,7 @@ public final class General extends javax.swing.JFrame {
     }
     public void AutoLogin(){
         if(per == null){
-            Login lo = new Login();
+            Login lo = new Login(per, escritorio);
             escritorio.add(lo);
             lo.setVisible(true);
         }
@@ -46,6 +46,9 @@ public final class General extends javax.swing.JFrame {
         Proveedores = new javax.swing.JMenu();
         Productos = new javax.swing.JMenu();
         Informe = new javax.swing.JMenu();
+        Envio = new javax.swing.JMenu();
+        CrearEnvio = new javax.swing.JMenuItem();
+        gestionarenvio = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -93,6 +96,11 @@ public final class General extends javax.swing.JFrame {
 
         Salir.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\salida.png"));
         Salir.setText("Salir");
+        Salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SalirActionPerformed(evt);
+            }
+        });
         inicio.add(Salir);
 
         Menu.add(inicio);
@@ -150,21 +158,49 @@ public final class General extends javax.swing.JFrame {
         Informe.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         Menu.add(Informe);
 
+        Envio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Envio.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\caja-abierta.png"));
+        Envio.setText("Envio");
+        Envio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Envio.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+
+        CrearEnvio.setText("Crear Envio");
+        CrearEnvio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CrearEnvioActionPerformed(evt);
+            }
+        });
+        Envio.add(CrearEnvio);
+
+        gestionarenvio.setText("Gestionar Envio");
+        gestionarenvio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gestionarenvioActionPerformed(evt);
+            }
+        });
+        Envio.add(gestionarenvio);
+
+        Menu.add(Envio);
+
         setJMenuBar(Menu);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
-        if(per != null){
-            Login lo = new Login();
+        if(per == null){
+            Login lo = new Login(per, escritorio);
             escritorio.add(lo);
             lo.setVisible(true);
         }
     }//GEN-LAST:event_LoginActionPerformed
 
     private void RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterActionPerformed
-        // TODO add your handling code here:
+        if(per == null){
+            Register res = new Register();
+            escritorio.add(res);
+            res.setVisible(true);
+        }
     }//GEN-LAST:event_RegisterActionPerformed
 
     private void ajususerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajususerActionPerformed
@@ -178,6 +214,22 @@ public final class General extends javax.swing.JFrame {
         escritorio.add(seg);
         seg.setVisible(true);
     }//GEN-LAST:event_amovActionPerformed
+
+    private void CrearEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearEnvioActionPerformed
+        Encli ec = new Encli();
+        escritorio.add(ec);
+        ec.setVisible(true);
+    }//GEN-LAST:event_CrearEnvioActionPerformed
+
+    private void gestionarenvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gestionarenvioActionPerformed
+        Envio en = new Envio();
+        escritorio.add(en);
+        en.setVisible(true);
+    }//GEN-LAST:event_gestionarenvioActionPerformed
+
+    private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_SalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -213,6 +265,8 @@ public final class General extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem CrearEnvio;
+    private javax.swing.JMenu Envio;
     private javax.swing.JMenu Informe;
     private javax.swing.JMenuItem Login;
     private javax.swing.JMenuBar Menu;
@@ -225,6 +279,7 @@ public final class General extends javax.swing.JFrame {
     private javax.swing.JMenuItem ajususer;
     private javax.swing.JMenuItem amov;
     private javax.swing.JDesktopPane escritorio;
+    private javax.swing.JMenuItem gestionarenvio;
     private javax.swing.JMenu inicio;
     // End of variables declaration//GEN-END:variables
 }

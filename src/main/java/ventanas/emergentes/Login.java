@@ -7,20 +7,26 @@ package ventanas.emergentes;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
-import clases.*;
+import Modelo.*;
+import java.util.List;
+import javax.swing.JOptionPane;
+import ventanas.general.*;
 /**
  *
  * @author Rodrigo
  */
 public class Login extends javax.swing.JInternalFrame {
-    private Persona user;
+    private List<Usuario> user;
     private JDesktopPane escritorio;
-    public Login(Persona us, JDesktopPane des) {
+    private General gen;
+    
+    public Login(List<Usuario> us, JDesktopPane des, General genes) {
         initComponents();
         Icon icon = new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\circulo-de-usuario.png");
         this.setFrameIcon(icon);
         this.user = us;
         this.escritorio = des;
+        this.gen = genes;
     }
 
     /**
@@ -61,6 +67,11 @@ public class Login extends javax.swing.JInternalFrame {
         jLogin.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         jLogin.setText("Login");
         jLogin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        jLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jLoginActionPerformed(evt);
+            }
+        });
 
         jRegister.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         jRegister.setText("Register");
@@ -114,11 +125,33 @@ public class Login extends javax.swing.JInternalFrame {
 
     private void jRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRegisterActionPerformed
         if(user == null){
-            Register res = new Register();
+            Register res = new Register(gen);
             escritorio.add(res);
             res.setVisible(true);
         }
     }//GEN-LAST:event_jRegisterActionPerformed
+
+    private void jLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLoginActionPerformed
+        try{
+            Usuario persona = null;
+            char[] pas = jcontrasena.getPassword();
+            String rpas = String.valueOf(pas);
+            for(Usuario use: user){
+                if(jusuario.getText().equals(use.getUsername()) && use.getPassword().equals(rpas)){
+                    persona = use;
+                }
+            }
+            if(persona != null){
+                gen.getUsuario(persona);
+                dispose();
+            }else{
+                JOptionPane.showInternalMessageDialog(null, "Usuario o contraseña no son correctos");
+            }
+            
+        }catch(Exception e){
+            JOptionPane.showInternalMessageDialog(null, "Error: Entrada de datos");
+        }
+    }//GEN-LAST:event_jLoginActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

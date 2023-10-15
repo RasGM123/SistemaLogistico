@@ -6,6 +6,9 @@ package ventanas.emergentes;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import ventanas.general.*;
+import Modelo.*;
 
 /**
  *
@@ -13,13 +16,13 @@ import javax.swing.ImageIcon;
  */
 public class Register extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form Register
-     */
-    public Register() {
+    private General gen;
+
+    public Register(General genes) {
         initComponents();
         Icon icon = new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\agregar-usuario.png");
         setFrameIcon(icon);
+        this.gen = genes;
     }
 
     /**
@@ -46,12 +49,12 @@ public class Register extends javax.swing.JInternalFrame {
         jcontrasena2 = new javax.swing.JPasswordField();
         jLabel7 = new javax.swing.JLabel();
         jDireccion = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        jPostal = new javax.swing.JTextField();
         jcondiciones = new javax.swing.JCheckBox();
         jRegistrar = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        jApellido1 = new javax.swing.JTextField();
+        jTel = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jDNI = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -129,17 +132,6 @@ public class Register extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel8.setText("Código Postal:");
-
-        jPostal.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jPostal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPostal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPostalActionPerformed(evt);
-            }
-        });
-
         jcondiciones.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jcondiciones.setText("Terminos y condiciones");
         jcondiciones.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -150,15 +142,31 @@ public class Register extends javax.swing.JInternalFrame {
         jRegistrar.setText("Registrarse");
         jRegistrar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 5));
         jRegistrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRegistrarActionPerformed(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel10.setText("Tel:");
 
-        jApellido1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jApellido1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jApellido1.addActionListener(new java.awt.event.ActionListener() {
+        jTel.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jTel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jTel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jApellido1ActionPerformed(evt);
+                jTelActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel9.setText("DNI:");
+
+        jDNI.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jDNI.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jDNI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDNIActionPerformed(evt);
             }
         });
 
@@ -179,11 +187,7 @@ public class Register extends javax.swing.JInternalFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPostal, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addComponent(jLabel6)
@@ -202,7 +206,7 @@ public class Register extends javax.swing.JInternalFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(jLabel10)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jApellido1))
+                                    .addComponent(jTel))
                                 .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addComponent(jLabel2)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -210,8 +214,12 @@ public class Register extends javax.swing.JInternalFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jLabel3)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 64, Short.MAX_VALUE)))
+                                    .addComponent(jApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 22, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -231,16 +239,18 @@ public class Register extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel10)
-                        .addComponent(jApellido1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
                         .addComponent(jCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addComponent(jPostal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -281,19 +291,45 @@ public class Register extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jDireccionActionPerformed
 
-    private void jPostalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPostalActionPerformed
+    private void jTelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTelActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPostalActionPerformed
+    }//GEN-LAST:event_jTelActionPerformed
 
-    private void jApellido1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jApellido1ActionPerformed
+    private void jRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRegistrarActionPerformed
+        try {
+            if (jcondiciones.isSelected()) {
+                char[] c1 = jcontrasena1.getPassword();
+                char[] c2 = jcontrasena2.getPassword();
+                String con1 = new String(c1);
+                String con2 = new String(c2);
+                if (con1.equals(con2)) {
+                    Usuario per = new Usuario(Integer.getInteger(JOptionPane.showInputDialog("Ingrese un numero")),
+                             jnick.getText(), con1, jCorreo.getText(), jNombre.getText(), jApellido.getText(), jDNI.getText(), jTel.getText(), jDireccion.getText());
+                    gen.getUsuario(per);
+                    JOptionPane.showMessageDialog(null, "Registro Completado!");
+                    dispose();
+                }else{
+                    JOptionPane.showMessageDialog(null, "La contraseña no son iguales");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Acepta las condiciones para continuar");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: Entrada de datos no correspondientes");
+        }
+    }//GEN-LAST:event_jRegistrarActionPerformed
+
+    private void jDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDNIActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jApellido1ActionPerformed
+    }//GEN-LAST:event_jDNIActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField jApellido;
-    private javax.swing.JTextField jApellido1;
     private javax.swing.JTextField jCorreo;
+    private javax.swing.JTextField jDNI;
     private javax.swing.JTextField jDireccion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -303,11 +339,11 @@ public class Register extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField jNombre;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jPostal;
     private javax.swing.JButton jRegistrar;
+    private javax.swing.JTextField jTel;
     private javax.swing.JCheckBox jcondiciones;
     private javax.swing.JPasswordField jcontrasena1;
     private javax.swing.JPasswordField jcontrasena2;

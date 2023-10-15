@@ -115,7 +115,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="amov">
               <Properties>
-                <Property name="text" type="java.lang.String" value="A&#xf1;adir Movimiento"/>
+                <Property name="text" type="java.lang.String" value="Movimientos"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="amovActionPerformed"/>
@@ -141,6 +141,18 @@
               <Font name="Times New Roman" size="14" style="1"/>
             </Property>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="AgrProveedor">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="A&#xf1;adir Proveedor"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="ModProveedor">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Modificar Proveedor"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="Productos">
           <Properties>
@@ -160,6 +172,21 @@
               <Font name="Times New Roman" size="14" style="1"/>
             </Property>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="AgrProducto">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Agregar Producto"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="ModProducto">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Modificar Producto"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ModProductoActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="Informe">
           <Properties>
@@ -179,6 +206,18 @@
               <Font name="Times New Roman" size="14" style="1"/>
             </Property>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="newinfo">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Nuevo Informe"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Buscar Informe"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="Envio">
           <Properties>

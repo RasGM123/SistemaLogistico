@@ -10,7 +10,7 @@ import java.util.Objects;
  *
  * @author Gustavo
  */
-public abstract class Usuario {
+public class Usuario {
     private int id;
     private String username;
     private String password;

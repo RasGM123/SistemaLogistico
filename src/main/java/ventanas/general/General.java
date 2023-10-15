@@ -7,10 +7,12 @@ package ventanas.general;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import ventanas.emergentes.*;
-import clases.*;
+import Modelo.*;
+import java.util.List;
 
 public final class General extends javax.swing.JFrame {
-    private Persona per;
+    private Usuario per;
+    private List<Usuario> usuarios;
 
     public General() {
         initComponents();
@@ -21,9 +23,18 @@ public final class General extends javax.swing.JFrame {
         this.setTitle("Fenix Global Delibery");
         this.AutoLogin();
     }
+    
+    public void getUsuario(Usuario us){
+        this.per = us;
+    }
+    
+    public void anadirUsuario(Usuario us){
+        usuarios.add(us);
+    }
+    
     public void AutoLogin(){
         if(per == null){
-            Login lo = new Login(per, escritorio);
+            Login lo = new Login(usuarios, escritorio,this);
             escritorio.add(lo);
             lo.setVisible(true);
         }
@@ -44,8 +55,14 @@ public final class General extends javax.swing.JFrame {
         Seguimiento = new javax.swing.JMenu();
         amov = new javax.swing.JMenuItem();
         Proveedores = new javax.swing.JMenu();
+        AgrProveedor = new javax.swing.JMenuItem();
+        ModProveedor = new javax.swing.JMenuItem();
         Productos = new javax.swing.JMenu();
+        AgrProducto = new javax.swing.JMenuItem();
+        ModProducto = new javax.swing.JMenuItem();
         Informe = new javax.swing.JMenu();
+        newinfo = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         Envio = new javax.swing.JMenu();
         CrearEnvio = new javax.swing.JMenuItem();
         gestionarenvio = new javax.swing.JMenuItem();
@@ -127,7 +144,7 @@ public final class General extends javax.swing.JFrame {
         Seguimiento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Seguimiento.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
-        amov.setText("Añadir Movimiento");
+        amov.setText("Movimientos");
         amov.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 amovActionPerformed(evt);
@@ -142,6 +159,13 @@ public final class General extends javax.swing.JFrame {
         Proveedores.setText("Proveedores");
         Proveedores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Proveedores.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+
+        AgrProveedor.setText("Añadir Proveedor");
+        Proveedores.add(AgrProveedor);
+
+        ModProveedor.setText("Modificar Proveedor");
+        Proveedores.add(ModProveedor);
+
         Menu.add(Proveedores);
 
         Productos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -149,6 +173,18 @@ public final class General extends javax.swing.JFrame {
         Productos.setText("Productos");
         Productos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Productos.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+
+        AgrProducto.setText("Agregar Producto");
+        Productos.add(AgrProducto);
+
+        ModProducto.setText("Modificar Producto");
+        ModProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ModProductoActionPerformed(evt);
+            }
+        });
+        Productos.add(ModProducto);
+
         Menu.add(Productos);
 
         Informe.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -156,6 +192,13 @@ public final class General extends javax.swing.JFrame {
         Informe.setText("Informe");
         Informe.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Informe.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+
+        newinfo.setText("Nuevo Informe");
+        Informe.add(newinfo);
+
+        jMenuItem1.setText("Buscar Informe");
+        Informe.add(jMenuItem1);
+
         Menu.add(Informe);
 
         Envio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -189,7 +232,7 @@ public final class General extends javax.swing.JFrame {
 
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
         if(per == null){
-            Login lo = new Login(per, escritorio);
+            Login lo = new Login(usuarios, escritorio,this);
             escritorio.add(lo);
             lo.setVisible(true);
         }
@@ -197,7 +240,7 @@ public final class General extends javax.swing.JFrame {
 
     private void RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterActionPerformed
         if(per == null){
-            Register res = new Register();
+            Register res = new Register(this);
             escritorio.add(res);
             res.setVisible(true);
         }
@@ -230,6 +273,10 @@ public final class General extends javax.swing.JFrame {
     private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_SalirActionPerformed
+
+    private void ModProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModProductoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ModProductoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -265,11 +312,15 @@ public final class General extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem AgrProducto;
+    private javax.swing.JMenuItem AgrProveedor;
     private javax.swing.JMenuItem CrearEnvio;
     private javax.swing.JMenu Envio;
     private javax.swing.JMenu Informe;
     private javax.swing.JMenuItem Login;
     private javax.swing.JMenuBar Menu;
+    private javax.swing.JMenuItem ModProducto;
+    private javax.swing.JMenuItem ModProveedor;
     private javax.swing.JMenu Productos;
     private javax.swing.JMenu Proveedores;
     private javax.swing.JMenuItem Register;
@@ -281,5 +332,7 @@ public final class General extends javax.swing.JFrame {
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenuItem gestionarenvio;
     private javax.swing.JMenu inicio;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem newinfo;
     // End of variables declaration//GEN-END:variables
 }

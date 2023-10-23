@@ -27,6 +27,13 @@ public final class General extends javax.swing.JFrame {
     public void getUsuario(Usuario us){
         this.per = us;
     }
+    public Usuario getUser(){
+        return per;
+    }
+    
+    public List<Usuario> getUsers(){
+        return usuarios;
+    }
     
     public void anadirUsuario(Usuario us){
         usuarios.add(us);
@@ -52,6 +59,7 @@ public final class General extends javax.swing.JFrame {
         Salir = new javax.swing.JMenuItem();
         Usuario = new javax.swing.JMenu();
         ajususer = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         Seguimiento = new javax.swing.JMenu();
         amov = new javax.swing.JMenuItem();
         Proveedores = new javax.swing.JMenu();
@@ -135,6 +143,14 @@ public final class General extends javax.swing.JFrame {
             }
         });
         Usuario.add(ajususer);
+
+        jMenuItem2.setText("Ajustes");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        Usuario.add(jMenuItem2);
 
         Menu.add(Usuario);
 
@@ -247,7 +263,7 @@ public final class General extends javax.swing.JFrame {
     }//GEN-LAST:event_RegisterActionPerformed
 
     private void ajususerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajususerActionPerformed
-        AjusteUsuario us = new AjusteUsuario();
+        AjusteUsuario us = new AjusteUsuario(this);
         escritorio.add(us);
         us.setVisible(true);
     }//GEN-LAST:event_ajususerActionPerformed
@@ -277,6 +293,12 @@ public final class General extends javax.swing.JFrame {
     private void ModProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModProductoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ModProductoActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        Conuser user = new Conuser(this);
+        escritorio.add(user);
+        user.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -333,6 +355,7 @@ public final class General extends javax.swing.JFrame {
     private javax.swing.JMenuItem gestionarenvio;
     private javax.swing.JMenu inicio;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem newinfo;
     // End of variables declaration//GEN-END:variables
 }

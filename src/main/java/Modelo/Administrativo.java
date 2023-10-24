@@ -98,7 +98,7 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
     
     @Override
     public void cambiarEstado(Pedido pedido, String estado){
-        pedido.setEstado(estado);
+        pedido.cambiarEstado(estado);
     }
     
     @Override
@@ -114,6 +114,11 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
     @Override
     public void generarRemito(Pedido pedido){
         pedido.generarRemito();
+    }
+
+    @Override
+    public Remito obtenerRemito(Pedido pedido) {
+        return pedido.getRemito();
     }
     
     /*

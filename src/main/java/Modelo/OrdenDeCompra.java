@@ -4,6 +4,7 @@
  */
 package Modelo;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -13,16 +14,28 @@ import java.util.List;
  */
 public class OrdenDeCompra {
     private int id;
-    private LocalDateTime fecha;
+    private LocalDateTime fechaEmision;
+    private LocalDateTime fechaEntrega;
     
     private Proveedor proveedor;
     private List<RenglonOrdenDeCompra> renglones;
 
     public OrdenDeCompra(int id, Proveedor proveedor, List<RenglonOrdenDeCompra> renglones) {
         this.id = id;
-        this.fecha = LocalDateTime.now();
+        this.fechaEmision = LocalDateTime.now();
+        this.fechaEmision = null;
         this.proveedor = proveedor;
         this.renglones = renglones;
+    }
+    
+    //Funcionalidades
+    
+    public void establecerEntrega(LocalDateTime fechaEntrega) throws Exception{
+        if(fechaEntrega.isBefore(fechaEmision)){
+            throw new Exception("La fecha de entrega no puede ocurrir antes de la fecha de emisión.");
+        }
+        
+        this.fechaEntrega = fechaEntrega;
     }
 
     @Override
@@ -57,12 +70,12 @@ public class OrdenDeCompra {
         this.id = id;
     }
 
-    public LocalDateTime getFecha() {
-        return fecha;
+    public LocalDateTime getFechaEmision() {
+        return fechaEmision;
     }
 
-    public void setFecha(LocalDateTime fecha) {
-        this.fecha = fecha;
+    public void setFechaEmision(LocalDateTime fechaEmision) {
+        this.fechaEmision = fechaEmision;
     }
 
     public Proveedor getProveedor() {
@@ -79,5 +92,13 @@ public class OrdenDeCompra {
 
     public void setRenglones(List<RenglonOrdenDeCompra> renglones) {
         this.renglones = renglones;
+    }
+
+    public LocalDateTime getFechaEntrega() {
+        return fechaEntrega;
+    }
+
+    public void setFechaEntrega(LocalDateTime fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
     }
 }

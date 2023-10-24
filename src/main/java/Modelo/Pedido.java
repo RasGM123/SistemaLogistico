@@ -5,6 +5,7 @@
 package Modelo;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +21,7 @@ public class Pedido {
     private Transportista transportista;
     private Remito remito;
     private List<RenglonPedido> renglones;
+    private List<Movimiento> movimientos;
     
     //cuando se crea el Pedido el estado inicial es "Preparandose"
     //el Transportista y el Remito se asignan despues de la creacion mediante un usuario Administrativo/Gerente
@@ -31,6 +33,7 @@ public class Pedido {
         this.transportista = null;
         this.remito = null;
         this.renglones = renglones;
+        this.movimientos = new ArrayList();
     }
     
     //Funcionalidades
@@ -56,6 +59,22 @@ public class Pedido {
 
     public void generarRemito() {
         remito = new Remito(this.id, LocalDateTime.now());
+    }
+    
+    public void cambiarEstado(String estado){
+        movimientos.add(new Movimiento(this.getId(), LocalDateTime.now(), estado));
+        
+        this.setEstado(estado);
+    }
+    
+    public int obtenerCantidadProducto(Producto producto){
+        
+        for(RenglonPedido r:renglones){
+            if(r.getProducto().equals(producto))
+                return r.getCantidad();
+        }
+        
+        return 0;
     }
 
     @Override
@@ -106,10 +125,6 @@ public class Pedido {
         this.estado = estado;
     }
 
-    public void actualizarEstado(String estado) {
-        this.estado = estado;
-    }
-
     public Ruta getRuta() {
         return ruta;
     }
@@ -140,5 +155,13 @@ public class Pedido {
 
     public void setRenglones(List<RenglonPedido> renglones) {
         this.renglones = renglones;
+    }
+
+    public List<Movimiento> getMovimientos() {
+        return movimientos;
+    }
+
+    public void setMovimientos(List<Movimiento> movimientos) {
+        this.movimientos = movimientos;
     }
 }

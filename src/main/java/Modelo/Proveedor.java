@@ -4,6 +4,7 @@
  */
 package Modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,17 +15,26 @@ import java.util.Objects;
 public class Proveedor {
 
   private int id;
-  private String nombre;
   private String cuit;
+  private String nombre;
+  private String email;
+  private String telefono;
+  private String direccion;
   
   private List<Contrato> contratos;
   private List<Evaluacion> evaluaciones;
 
-    public Proveedor(int id, String nombre, String cuil) {
+    public Proveedor(int id, String cuit, String nombre, String telefono, String direccion) {
         this.id = id;
+        this.cuit = cuit;
         this.nombre = nombre;
-        this.cuit = cuil;
+        this.telefono = telefono;
+        this.direccion = direccion;
+        this.contratos = new ArrayList();
+        this.evaluaciones = new ArrayList();
     }
+    
+    //Funcionalidades
     
     public void agregarContrato(Contrato contrato){
         contratos.add(contrato);
@@ -66,27 +76,63 @@ public class Proveedor {
         return id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getCuit() {
         return cuit;
     }
 
-    public List<Contrato> getContratos() {
-        return contratos;
+    public void setCuit(String cuit) {
+        this.cuit = cuit;
     }
 
-    public List<Evaluacion> getEvaluaciones() {
-        return evaluaciones;
+    public String getNombre() {
+        return nombre;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public void setCuit(String cuit) {
-        this.cuit = cuit;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public List<Contrato> getContratos() {
+        return contratos;
+    }
+
+    public void setContratos(List<Contrato> contratos) {
+        this.contratos = contratos;
+    }
+
+    public List<Evaluacion> getEvaluaciones() {
+        return evaluaciones;
+    }
+
+    public void setEvaluaciones(List<Evaluacion> evaluaciones) {
+        this.evaluaciones = evaluaciones;
     }
 }

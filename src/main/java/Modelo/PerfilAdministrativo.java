@@ -26,6 +26,7 @@ public interface PerfilAdministrativo {
     public void asignarRuta(Pedido pedido, Ruta ruta);
     public void asignarTransportista(Pedido pedido, Transportista transportista);
     public void generarRemito(Pedido pedido);
+    public Remito obtenerRemito(Pedido pedido);
     
     //CRUD Transportista
     public Transportista buscarTransportista(String dni);

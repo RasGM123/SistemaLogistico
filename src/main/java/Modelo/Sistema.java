@@ -15,7 +15,11 @@ import java.util.Map;
  *
  * @author Gustavo
  */
-public class Sistema {
+public final class Sistema {
+    
+    //Sistema es SINGLETON
+    private static Sistema instancia;
+    
     //Clave = dni
     private Map<String,Usuario> usuarios;
     //Clave = dni
@@ -34,7 +38,15 @@ public class Sistema {
     
     private Sesion sesion;
     
-    public Sistema() throws Exception{
+    public static Sistema iniciar() throws Exception{
+        if(instancia == null){
+            instancia = new Sistema();
+        }
+        
+        return instancia;
+    }
+    
+    private Sistema() throws Exception{
         this.usuarios = new HashMap();
         this.clientes = new HashMap();
         this.pedidos = new HashMap();
@@ -142,16 +154,11 @@ public class Sistema {
     
     public boolean existeCorreo(String correo) throws Exception{
         if(usuarios.isEmpty()){
-            throw new Exception("El sistema no tiene ningún usuario cargado.");
+            return false;
         }
         
-        Iterator iter = usuarios.entrySet().iterator();
-        Usuario usuario;
-        
-        while(iter.hasNext()){
-            usuario = (Usuario)iter.next();
-            
-            if(usuario.getEmail().equals(correo)){
+        for(Usuario u:usuarios.values()){
+            if(u.getEmail().equals(correo)){
                 return true;
             }
         }
@@ -161,7 +168,7 @@ public class Sistema {
     
     public boolean existeUsuario(Usuario usuario) throws Exception{
         if(usuarios.isEmpty()){
-            throw new Exception("El sistema no tiene ningún usuario cargado.");
+            return false;
         }
         
         return usuarios.containsKey(usuario.getUsername());
@@ -169,7 +176,7 @@ public class Sistema {
     
     public boolean existeUsuario(String username) throws Exception{
         if(usuarios.isEmpty()){
-            throw new Exception("El sistema no tiene ningún usuario cargado.");
+            return false;
         }
         
         return usuarios.containsKey(username);

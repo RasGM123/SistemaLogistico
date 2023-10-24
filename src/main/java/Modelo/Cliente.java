@@ -4,6 +4,7 @@
  */
 package Modelo;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -28,6 +29,34 @@ public class Cliente extends Usuario implements PerfilCliente{
     public List<Pedido> listarPedidos() {
         return pedidos;
     }
+    
+    @Override
+    public List<Pedido> listarPedidos(LocalDate inicio, LocalDate fin) throws Exception {
+        List<Pedido> lista = new ArrayList();
+        LocalDate fecha;
+        
+        for(Pedido p:pedidos){
+            fecha = p.getFechaCreacion().toLocalDate();
+            
+            if(estaEntre(fecha, inicio, fin)){
+                lista.add(p);
+            }
+        }
+        
+        return lista;
+    }
+    
+    private boolean estaEntre(LocalDate fecha, LocalDate inicio, LocalDate fin) throws Exception{
+        if(inicio.isAfter(fin)){
+            throw new Exception("La fecha de inicio debe ser menor o igual a la fecha fin.");
+        }
+        
+        if(fin.isBefore(inicio)){
+            throw new Exception("La fecha de fin debe ser mayor o igual a la fecha inicio.");
+        }
+        
+        return !fecha.isBefore(inicio) && !fecha.isAfter(fin);
+    }
 
     @Override
     public Pedido buscarPedido(int idPedido) {
@@ -42,6 +71,20 @@ public class Cliente extends Usuario implements PerfilCliente{
         }
         
         return null;
+    }
+
+    @Override
+    public String consultarEstado(Pedido pedido) {
+        return pedido.getEstado();
+    }
+
+    @Override
+    public List<Movimiento> listarMovimientos(Pedido pedido) {
+        List<Movimiento> movimientos = pedido.getMovimientos();
+        
+        movimientos.sort((Movimiento a, Movimiento b) -> -1*a.getFecha().compareTo(b.getFecha()));
+        
+        return movimientos;
     }
     
     //devuelve la lista de tipos de producto mas pedidos por el cliente con una cantidad maxima de cantidadPreferencias

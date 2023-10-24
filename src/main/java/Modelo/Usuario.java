@@ -4,17 +4,19 @@
  */
 package Modelo;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
  *
  * @author Gustavo
  */
-public class Usuario {
+public abstract class Usuario {
     private int id;
     private String username;
     private String password;
     private String email;
+    private LocalDateTime fechaCreacion;
     
     private String nombres;
     private String apellidos;
@@ -27,6 +29,8 @@ public class Usuario {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.fechaCreacion = LocalDateTime.now();
+        
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.dni = dni;
@@ -146,5 +150,13 @@ public class Usuario {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 }

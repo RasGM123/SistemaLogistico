@@ -4,6 +4,7 @@
  */
 package Modelo;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -13,6 +14,8 @@ import java.util.List;
 public interface PerfilCliente {
     
     public List<Pedido> listarPedidos();
-    
+    public List<Pedido> listarPedidos(LocalDate inicio, LocalDate fin) throws Exception;
     public Pedido buscarPedido(int idPedido);
+    public String consultarEstado(Pedido pedido);
+    public List<Movimiento> listarMovimientos(Pedido pedido);
 }

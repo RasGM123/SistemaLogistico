@@ -4,8 +4,10 @@
  */
 package Modelo;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -55,4 +57,28 @@ public interface PerfilGerente {
     public void crearTipoDeProducto(TipoProducto tipo) throws Exception;
     public void editarTipoProducto(TipoProducto tipo, String nombre);
     public void borrarTipoDeProducto(TipoProducto tipo) throws Exception;
+    
+    //CRUD OrdenDeCompra
+    public void crearOrdenDeCompra(OrdenDeCompra orden) throws Exception;
+    public OrdenDeCompra buscarOrdenDeCompra(int idOrdenDeCompra);
+    public List<OrdenDeCompra> listarOrdenesDeCompra();
+    public void editarOrdenDeCompra(OrdenDeCompra orden, Proveedor proveedor, List<RenglonOrdenDeCompra> renglones);
+    public void borrarOrdenDeCompra(OrdenDeCompra orden) throws Exception;
+    //Otras operaciones con OrdenDeCompra
+    public void establecerEntregaOrdenDeCompra(OrdenDeCompra orden, LocalDateTime fechaEntrega) throws Exception;
+    
+    //Generacion de informes
+    //Numero de veces que se pidieron los Productos comprendido entre 2 fechas
+    //KEY = Producto, VALUE = cantidad
+    public Map<Producto, Integer> listarProductosPorPedidos(LocalDate inicio, LocalDate fin) throws Exception;
+    //Listado de Tranportitastas y su cantidad de entregas en comprendidas entre 2 fechas
+    //KEY = Transportista, VALUE = cantidad de entregas
+    public Map<Transportista, Integer> listarTransportistasPorEntregas(LocalDate inicio, LocalDate fin) throws Exception;
+    //Listado de Proveedores con su tiempo promedio de entrega
+    //KEY = Proveedor, VALUE = tiempo promedio de entrega
+    public Map<Proveedor, Float> listarProveedoresPorEntregas(LocalDate inicio, LocalDate fin);
+    //Cantidad de usuarios registrados comprendido entre 2 fechas
+    public int numeroUsuariosRegistrados(LocalDate inicio, LocalDate fin) throws Exception;
+    //Cantidad promedio de Pedidos por Cliente
+    public double promedioPedidos(LocalDate inicio, LocalDate fin) throws Exception;
 }

@@ -6,7 +6,7 @@ package com;
 import ventanas.general.*;
 
 public class SistemaPrincipal {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         General gen = new General();
         gen.setVisible(true);
     }

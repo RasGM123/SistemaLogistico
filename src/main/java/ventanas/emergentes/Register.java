@@ -16,13 +16,13 @@ import Modelo.*;
  */
 public class Register extends javax.swing.JInternalFrame {
 
-    private General gen;
+    private Sistema sistem;
 
-    public Register(General genes) {
+    public Register(Sistema sis) {
         initComponents();
         Icon icon = new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\agregar-usuario.png");
         setFrameIcon(icon);
-        this.gen = genes;
+        this.sistem = sis;
     }
 
     /**
@@ -37,24 +37,24 @@ public class Register extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jnick = new javax.swing.JTextField();
-        jNombre = new javax.swing.JTextField();
+        nick = new javax.swing.JTextField();
+        Nombre = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jApellido = new javax.swing.JTextField();
+        Apellido = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jCorreo = new javax.swing.JTextField();
+        Correo = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jcontrasena1 = new javax.swing.JPasswordField();
         jLabel6 = new javax.swing.JLabel();
         jcontrasena2 = new javax.swing.JPasswordField();
         jLabel7 = new javax.swing.JLabel();
-        jDireccion = new javax.swing.JTextField();
+        Direccion = new javax.swing.JTextField();
         jcondiciones = new javax.swing.JCheckBox();
         jRegistrar = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        jTel = new javax.swing.JTextField();
+        Tel = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jDNI = new javax.swing.JTextField();
+        DNI = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -69,41 +69,41 @@ public class Register extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel2.setText("Nombre:");
 
-        jnick.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jnick.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jnick.addActionListener(new java.awt.event.ActionListener() {
+        nick.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        nick.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        nick.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jnickActionPerformed(evt);
+                nickActionPerformed(evt);
             }
         });
 
-        jNombre.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jNombre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jNombre.addActionListener(new java.awt.event.ActionListener() {
+        Nombre.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        Nombre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        Nombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jNombreActionPerformed(evt);
+                NombreActionPerformed(evt);
             }
         });
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel3.setText("Apellido:");
 
-        jApellido.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jApellido.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jApellido.addActionListener(new java.awt.event.ActionListener() {
+        Apellido.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        Apellido.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        Apellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jApellidoActionPerformed(evt);
+                ApellidoActionPerformed(evt);
             }
         });
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel4.setText("Correo:");
 
-        jCorreo.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jCorreo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jCorreo.addActionListener(new java.awt.event.ActionListener() {
+        Correo.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        Correo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        Correo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCorreoActionPerformed(evt);
+                CorreoActionPerformed(evt);
             }
         });
 
@@ -124,11 +124,11 @@ public class Register extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel7.setText("Dirección:");
 
-        jDireccion.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jDireccion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jDireccion.addActionListener(new java.awt.event.ActionListener() {
+        Direccion.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        Direccion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        Direccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jDireccionActionPerformed(evt);
+                DireccionActionPerformed(evt);
             }
         });
 
@@ -151,22 +151,22 @@ public class Register extends javax.swing.JInternalFrame {
         jLabel10.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel10.setText("Tel:");
 
-        jTel.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jTel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jTel.addActionListener(new java.awt.event.ActionListener() {
+        Tel.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        Tel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        Tel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTelActionPerformed(evt);
+                TelActionPerformed(evt);
             }
         });
 
         jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel9.setText("DNI:");
 
-        jDNI.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jDNI.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jDNI.addActionListener(new java.awt.event.ActionListener() {
+        DNI.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        DNI.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        DNI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jDNIActionPerformed(evt);
+                DNIActionPerformed(evt);
             }
         });
 
@@ -183,11 +183,11 @@ public class Register extends javax.swing.JInternalFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jnick, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(nick, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(Direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addComponent(jLabel6)
@@ -202,23 +202,23 @@ public class Register extends javax.swing.JInternalFrame {
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                     .addComponent(jLabel4)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Correo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(jLabel10)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTel))
+                                    .addComponent(Tel))
                                 .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addComponent(jLabel2)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jLabel3)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(Apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(DNI, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 22, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -228,29 +228,29 @@ public class Register extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jnick, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nick, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Apellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel10)
-                        .addComponent(jTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(Tel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
-                        .addComponent(jCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(Correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Direccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(DNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -271,29 +271,29 @@ public class Register extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jnickActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jnickActionPerformed
+    private void nickActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nickActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jnickActionPerformed
+    }//GEN-LAST:event_nickActionPerformed
 
-    private void jNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jNombreActionPerformed
+    private void NombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jNombreActionPerformed
+    }//GEN-LAST:event_NombreActionPerformed
 
-    private void jApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jApellidoActionPerformed
+    private void ApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ApellidoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jApellidoActionPerformed
+    }//GEN-LAST:event_ApellidoActionPerformed
 
-    private void jCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCorreoActionPerformed
+    private void CorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CorreoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCorreoActionPerformed
+    }//GEN-LAST:event_CorreoActionPerformed
 
-    private void jDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDireccionActionPerformed
+    private void DireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DireccionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jDireccionActionPerformed
+    }//GEN-LAST:event_DireccionActionPerformed
 
-    private void jTelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTelActionPerformed
+    private void TelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TelActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTelActionPerformed
+    }//GEN-LAST:event_TelActionPerformed
 
     private void jRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRegistrarActionPerformed
         try {
@@ -303,13 +303,12 @@ public class Register extends javax.swing.JInternalFrame {
                 String con1 = new String(c1);
                 String con2 = new String(c2);
                 if (con1.equals(con2)) {
-                    Usuario per = new Usuario(Integer.getInteger(JOptionPane.showInputDialog("Ingrese un numero")),
-                             jnick.getText(), con1, jCorreo.getText(), jNombre.getText(), jApellido.getText(), jDNI.getText(), jTel.getText(), jDireccion.getText());
-                    gen.getUsuario(per);
-                    JOptionPane.showMessageDialog(null, "Registro Completado!");
+                    Usuario usu = new Cliente(sistem.getUsuarios().size()+1,nick.getText(),con1,Correo.getText() ,Nombre.getText() , Apellido.getText(), DNI.getText(), Tel.getText(), Direccion.getText());
+                    sistem.crearUsuario(usu);
+                    JOptionPane.showMessageDialog(this, "Registro Completado!");
                     dispose();
                 }else{
-                    JOptionPane.showMessageDialog(null, "La contraseña no son iguales");
+                    JOptionPane.showMessageDialog(this, "La contraseña no son iguales");
                 }
 
             } else {
@@ -317,20 +316,22 @@ public class Register extends javax.swing.JInternalFrame {
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: Entrada de datos no correspondientes");
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_jRegistrarActionPerformed
 
-    private void jDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDNIActionPerformed
+    private void DNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DNIActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jDNIActionPerformed
+    }//GEN-LAST:event_DNIActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField jApellido;
-    private javax.swing.JTextField jCorreo;
-    private javax.swing.JTextField jDNI;
-    private javax.swing.JTextField jDireccion;
+    private javax.swing.JTextField Apellido;
+    private javax.swing.JTextField Correo;
+    private javax.swing.JTextField DNI;
+    private javax.swing.JTextField Direccion;
+    private javax.swing.JTextField Nombre;
+    private javax.swing.JTextField Tel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -340,13 +341,11 @@ public class Register extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jNombre;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton jRegistrar;
-    private javax.swing.JTextField jTel;
     private javax.swing.JCheckBox jcondiciones;
     private javax.swing.JPasswordField jcontrasena1;
     private javax.swing.JPasswordField jcontrasena2;
-    private javax.swing.JTextField jnick;
+    private javax.swing.JTextField nick;
     // End of variables declaration//GEN-END:variables
 }

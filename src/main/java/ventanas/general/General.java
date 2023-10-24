@@ -9,12 +9,15 @@ import javax.swing.ImageIcon;
 import ventanas.emergentes.*;
 import Modelo.*;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public final class General extends javax.swing.JFrame {
     private Usuario per;
     private List<Usuario> usuarios;
+    private Sistema sis;
 
-    public General() {
+    public General() throws Exception {
         initComponents();
         this.setExtendedState(this.MAXIMIZED_BOTH);
         ImageIcon icon = new ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\lado-del-camion.png");
@@ -22,6 +25,7 @@ public final class General extends javax.swing.JFrame {
         this.setIconImage(image);
         this.setTitle("Fenix Global Delibery");
         this.AutoLogin();
+        this.sis = Sistema.iniciar();
     }
     
     public void getUsuario(Usuario us){
@@ -41,7 +45,7 @@ public final class General extends javax.swing.JFrame {
     
     public void AutoLogin(){
         if(per == null){
-            Login lo = new Login(usuarios, escritorio,this);
+            Login lo = new Login(usuarios, escritorio,sis);
             escritorio.add(lo);
             lo.setVisible(true);
         }
@@ -248,7 +252,7 @@ public final class General extends javax.swing.JFrame {
 
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
         if(per == null){
-            Login lo = new Login(usuarios, escritorio,this);
+            Login lo = new Login(usuarios, escritorio,sis);
             escritorio.add(lo);
             lo.setVisible(true);
         }
@@ -256,7 +260,7 @@ public final class General extends javax.swing.JFrame {
 
     private void RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterActionPerformed
         if(per == null){
-            Register res = new Register(this);
+            Register res = new Register(sis);
             escritorio.add(res);
             res.setVisible(true);
         }
@@ -329,7 +333,11 @@ public final class General extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new General().setVisible(true);
+            try {
+                new General().setVisible(true);
+            } catch (Exception ex) {
+                Logger.getLogger(General.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
 

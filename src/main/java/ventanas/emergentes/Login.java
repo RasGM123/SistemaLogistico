@@ -18,9 +18,9 @@ import ventanas.general.*;
 public class Login extends javax.swing.JInternalFrame {
     private List<Usuario> user;
     private JDesktopPane escritorio;
-    private General gen;
+    private Sistema gen;
     
-    public Login(List<Usuario> us, JDesktopPane des, General genes) {
+    public Login(List<Usuario> us, JDesktopPane des, Sistema genes) {
         initComponents();
         Icon icon = new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\circulo-de-usuario.png");
         this.setFrameIcon(icon);
@@ -133,23 +133,18 @@ public class Login extends javax.swing.JInternalFrame {
 
     private void jLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLoginActionPerformed
         try{
-            Usuario persona = null;
             char[] pas = jcontrasena.getPassword();
             String rpas = String.valueOf(pas);
-            for(Usuario use: user){
-                if(jusuario.getText().equals(use.getUsername()) && use.getPassword().equals(rpas)){
-                    persona = use;
-                }
-            }
-            if(persona != null){
-                gen.getUsuario(persona);
+            gen.iniciarSesion(jusuario.getText(), rpas);
+            if(gen.getSesion() != null){
+                JOptionPane.showInternalMessageDialog(this, "Iniciaste sesión!");
                 dispose();
             }else{
-                JOptionPane.showInternalMessageDialog(null, "Usuario o contraseña no son correctos");
+                JOptionPane.showInternalMessageDialog(this, "Usuario o contraseña no son correctos");
             }
             
         }catch(Exception e){
-            JOptionPane.showInternalMessageDialog(null, "Error: Entrada de datos");
+            JOptionPane.showInternalMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_jLoginActionPerformed
 

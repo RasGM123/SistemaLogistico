@@ -234,6 +234,25 @@ public final class Sistema {
         return this.sesion.getUsuario();
     }
     
+    //Devuelve un entero segun el tipo de Usuario
+    // 1 = Cliente, 2 = Gerente, 3 = Administrativo, 4 = Transportista
+    public int obtenerCodigoUsuario(Usuario usuario){
+        if(usuario instanceof Cliente){
+            return 1;
+        }else{
+            if(usuario instanceof Gerente){
+                return 2;
+            }else{
+                if(usuario instanceof Administrativo){
+                    return 3;
+                }
+            }
+            
+        }
+        
+        return 4;
+    }
+    
     //Implementacion pendiente...
     public String hashPassword(String password){
         return password;

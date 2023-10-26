@@ -11,9 +11,9 @@ package Modelo;
 public class Transportista extends Empleado{
     private Vehiculo vehiculo;
 
-    public Transportista(Vehiculo vehiculo, String cuil, int id, String username, String password, String email, String nombres, String apellidos, String dni, String telefono, String direccion) {
+    public Transportista(String cuil, int id, String username, String password, String email, String nombres, String apellidos, String dni, String telefono, String direccion) {
         super(cuil, id, username, password, email, nombres, apellidos, dni, telefono, direccion);
-        this.vehiculo = vehiculo;
+        this.vehiculo = null;
     }
     
     //setters & getters

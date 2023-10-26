@@ -15,6 +15,17 @@ public class Prueba {
     public static void main(String[] args){
         try {
             Sistema sistema = Sistema.iniciar();
+            
+            int codigo;
+            
+            Usuario miUsuario = new Transportista("1122200", 4, "rodrigo", "rodrigo", "correo@correo.com", "rodrigo", "rodrigo", "222", "222", "222");
+                   
+            sistema.crearUsuario(miUsuario);
+            
+            codigo = sistema.obtenerCodigoUsuario(miUsuario);
+            
+            System.out.print("Codigo = "+codigo);
+            
         } catch (Exception ex) {
             Logger.getLogger(Prueba.class.getName()).log(Level.SEVERE, null, ex);
         }

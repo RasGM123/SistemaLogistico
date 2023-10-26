@@ -4,6 +4,7 @@
  */
 package ventanas.emergentes;
 
+import Modelo.*;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
@@ -12,16 +13,29 @@ import javax.swing.ImageIcon;
  * @author Rodrigo
  */
 public class Seguimiento extends javax.swing.JInternalFrame {
-
+    private Sistema sis;
     /**
      * Creates new form Seguimiento
+     * @param gen
      */
-    public Seguimiento() {
+    public Seguimiento(Sistema gen) {
         initComponents();
         Icon icon = new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\envio-rapido.png");
         setFrameIcon(icon);
+        this.sis = gen;
+        iniciar();
     }
 
+    private void iniciar(){
+        Sesion ses = sis.getSesion();
+        Usuario us = ses.getUsuario();
+        if(sis.obtenerCodigoUsuario(us) !=1 ){
+            jAnadir.setVisible(true);
+        }else{
+            jAnadir.setVisible(false);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

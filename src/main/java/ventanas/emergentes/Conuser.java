@@ -16,7 +16,7 @@ import ventanas.general.General;
  */
 public class Conuser extends javax.swing.JInternalFrame {
 
-    private General gen;
+    private Sistema gen;
     private Usuario user;
 
     /**
@@ -24,13 +24,12 @@ public class Conuser extends javax.swing.JInternalFrame {
      *
      * @param genes
      */
-    public Conuser(General genes) {
+    public Conuser(Sistema genes) throws Exception {
         initComponents();
         Icon icon = new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\circulo-usuario.png");
         setFrameIcon(icon);
         this.gen = genes;
-        this.user = gen.getUser();
-        setDatos(gen.getUser());
+        setDatos(gen.obtenerSesion());
     }
 
     private void setDatos(Usuario us) {
@@ -249,6 +248,11 @@ public class Conuser extends javax.swing.JInternalFrame {
         con1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         con1.setText("Contraseña");
         con1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        con1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                con1MouseClicked(evt);
+            }
+        });
 
         jLabel49.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel49.setText("Confirmar:");
@@ -256,6 +260,11 @@ public class Conuser extends javax.swing.JInternalFrame {
         con2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         con2.setText("Contraseña");
         con2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        con2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                con2MouseClicked(evt);
+            }
+        });
 
         ActContrasena.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         ActContrasena.setText("Actualizar");
@@ -367,6 +376,14 @@ public class Conuser extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Error: Entrada de datos no correspondientes");
         }
     }//GEN-LAST:event_ActContrasenaActionPerformed
+
+    private void con1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_con1MouseClicked
+        con1.setText("");
+    }//GEN-LAST:event_con1MouseClicked
+
+    private void con2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_con2MouseClicked
+        con2.setText("");
+    }//GEN-LAST:event_con2MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

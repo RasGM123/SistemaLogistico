@@ -8,23 +8,19 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import Modelo.*;
-import java.util.List;
 import javax.swing.JOptionPane;
-import ventanas.general.*;
 /**
  *
  * @author Rodrigo
  */
 public class Login extends javax.swing.JInternalFrame {
-    private List<Usuario> user;
     private JDesktopPane escritorio;
     private Sistema gen;
     
-    public Login(List<Usuario> us, JDesktopPane des, Sistema genes) {
+    public Login( JDesktopPane des, Sistema genes) {
         initComponents();
         Icon icon = new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\circulo-de-usuario.png");
         this.setFrameIcon(icon);
-        this.user = us;
         this.escritorio = des;
         this.gen = genes;
     }
@@ -48,6 +44,7 @@ public class Login extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setTitle("Login");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 5));
@@ -63,6 +60,11 @@ public class Login extends javax.swing.JInternalFrame {
 
         jcontrasena.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jcontrasena.setText("Contraseña");
+        jcontrasena.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcontrasenaMouseClicked(evt);
+            }
+        });
 
         jLogin.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         jLogin.setText("Login");
@@ -124,7 +126,7 @@ public class Login extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRegisterActionPerformed
-        if(user == null){
+        if(gen.getSesion() == null){
             Register res = new Register(gen);
             escritorio.add(res);
             res.setVisible(true);
@@ -136,8 +138,10 @@ public class Login extends javax.swing.JInternalFrame {
             char[] pas = jcontrasena.getPassword();
             String rpas = String.valueOf(pas);
             gen.iniciarSesion(jusuario.getText(), rpas);
+            Sesion ses = gen.getSesion();
+            int tipo = gen.obtenerCodigoUsuario(ses.getUsuario());
             if(gen.getSesion() != null){
-                JOptionPane.showInternalMessageDialog(this, "Iniciaste sesión!");
+                JOptionPane.showInternalMessageDialog(this, "Iniciaste sesión!"+ tipo);
                 dispose();
             }else{
                 JOptionPane.showInternalMessageDialog(this, "Usuario o contraseña no son correctos");
@@ -147,6 +151,10 @@ public class Login extends javax.swing.JInternalFrame {
             JOptionPane.showInternalMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_jLoginActionPerformed
+
+    private void jcontrasenaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcontrasenaMouseClicked
+        jcontrasena.setText("");
+    }//GEN-LAST:event_jcontrasenaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

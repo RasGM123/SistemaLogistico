@@ -113,6 +113,11 @@ public class Register extends javax.swing.JInternalFrame {
         jcontrasena1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jcontrasena1.setText("Contraseña");
         jcontrasena1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jcontrasena1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcontrasena1MouseClicked(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel6.setText("Confirmar:");
@@ -120,6 +125,11 @@ public class Register extends javax.swing.JInternalFrame {
         jcontrasena2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jcontrasena2.setText("Contraseña");
         jcontrasena2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jcontrasena2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcontrasena2MouseClicked(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel7.setText("Dirección:");
@@ -305,7 +315,6 @@ public class Register extends javax.swing.JInternalFrame {
                 if (con1.equals(con2)) {
                     Usuario usu = new Cliente(sistem.getUsuarios().size()+1,nick.getText(),con1,Correo.getText() ,Nombre.getText() , Apellido.getText(), DNI.getText(), Tel.getText(), Direccion.getText());
                     sistem.crearUsuario(usu);
-                    JOptionPane.showMessageDialog(this, "Registro Completado!");
                     dispose();
                 }else{
                     JOptionPane.showMessageDialog(this, "La contraseña no son iguales");
@@ -323,6 +332,14 @@ public class Register extends javax.swing.JInternalFrame {
     private void DNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DNIActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_DNIActionPerformed
+
+    private void jcontrasena1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcontrasena1MouseClicked
+        jcontrasena1.setText("");
+    }//GEN-LAST:event_jcontrasena1MouseClicked
+
+    private void jcontrasena2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcontrasena2MouseClicked
+        jcontrasena2.setText("");
+    }//GEN-LAST:event_jcontrasena2MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

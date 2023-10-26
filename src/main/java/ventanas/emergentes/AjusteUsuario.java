@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class AjusteUsuario extends javax.swing.JInternalFrame {
 
-    private General gen;
+    private Sistema gen;
     private Usuario user = null;
 
     /**
@@ -24,7 +24,7 @@ public class AjusteUsuario extends javax.swing.JInternalFrame {
      *
      * @param gene
      */
-    public AjusteUsuario(General gene) {
+    public AjusteUsuario(Sistema gene) {
         initComponents();
         Icon icon = new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\usuario.png");
         setFrameIcon(icon);
@@ -314,11 +314,7 @@ public class AjusteUsuario extends javax.swing.JInternalFrame {
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
         try {
             String nom = Apodo.getText();
-            for (Usuario us : gen.getUsers()) {
-                if (us.getUsername().equals(nom)) {
-                    this.user = us;
-                }
-            }
+            Usuario user = gen.buscarUsuario(nom);
             if(user != null){
                 setDatos(user);
             }else{

@@ -1,53 +1,47 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package ventanas.general;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import ventanas.emergentes.*;
 import Modelo.*;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 public final class General extends javax.swing.JFrame {
-    private Usuario per;
-    private List<Usuario> usuarios;
+
     private Sistema sis;
+    private Sesion ses;
 
     public General() throws Exception {
         initComponents();
         this.setExtendedState(this.MAXIMIZED_BOTH);
-        ImageIcon icon = new ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\lado-del-camion.png");
+        ImageIcon icon = new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\lado-del-camion.png");
         Image image = icon.getImage();
         this.setIconImage(image);
         this.setTitle("Fenix Global Delibery");
-        this.AutoLogin();
         this.sis = Sistema.iniciar();
+        this.AutoLogin();
     }
-    
-    public void getUsuario(Usuario us){
-        this.per = us;
+
+    public void addcentrarpanel(Component com) {
+        escritorio.add(com);
+        Dimension escSize = escritorio.getSize();
+        Dimension comSize = com.getSize();
+        com.setLocation((escSize.width - comSize.width) / 2, (escSize.height - comSize.height) / 2);
+        com.setVisible(true);
     }
-    public Usuario getUser(){
-        return per;
-    }
-    
-    public List<Usuario> getUsers(){
-        return usuarios;
-    }
-    
-    public void anadirUsuario(Usuario us){
-        usuarios.add(us);
-    }
-    
-    public void AutoLogin(){
-        if(per == null){
-            Login lo = new Login(usuarios, escritorio,sis);
-            escritorio.add(lo);
-            lo.setVisible(true);
+
+    public void AutoLogin() {
+        if (sis.getSesion() == null) {
+            Login lo = new Login(escritorio, sis);
+            addcentrarpanel(lo);
         }
     }
 
@@ -55,7 +49,13 @@ public final class General extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        escritorio = new javax.swing.JDesktopPane();
+        ImageIcon icon = new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\fondos\\ciudad futurista.jpeg");
+        Image image = icon.getImage();
+        escritorio = new javax.swing.JDesktopPane(){
+            public void paintComponent(Graphics g){
+                g.drawImage(image,0,0,getWidth(),getHeight(),this);
+            }
+        };
         Menu = new javax.swing.JMenuBar();
         inicio = new javax.swing.JMenu();
         Login = new javax.swing.JMenuItem();
@@ -81,7 +81,6 @@ public final class General extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        escritorio.setBackground(new java.awt.Color(153, 153, 153));
         escritorio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 5));
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
@@ -181,6 +180,11 @@ public final class General extends javax.swing.JFrame {
         Proveedores.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
         AgrProveedor.setText("Añadir Proveedor");
+        AgrProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AgrProveedorActionPerformed(evt);
+            }
+        });
         Proveedores.add(AgrProveedor);
 
         ModProveedor.setText("Modificar Proveedor");
@@ -248,46 +252,91 @@ public final class General extends javax.swing.JFrame {
         setJMenuBar(Menu);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
-        if(per == null){
-            Login lo = new Login(usuarios, escritorio,sis);
+        if (sis.getSesion() == null) {
+            Login lo = new Login(escritorio, sis);
             escritorio.add(lo);
             lo.setVisible(true);
         }
     }//GEN-LAST:event_LoginActionPerformed
 
     private void RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterActionPerformed
-        if(per == null){
+        if (sis.getSesion() == null) {
             Register res = new Register(sis);
-            escritorio.add(res);
-            res.setVisible(true);
+            addcentrarpanel(res);
         }
     }//GEN-LAST:event_RegisterActionPerformed
 
     private void ajususerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajususerActionPerformed
-        AjusteUsuario us = new AjusteUsuario(this);
-        escritorio.add(us);
-        us.setVisible(true);
+        Usuario us = null;
+        try {
+            us = sis.obtenerSesion();
+        } catch (Exception ex) {
+            Logger.getLogger(General.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        int per = sis.obtenerCodigoUsuario(us);
+        if (per != 4 && per != 1) {
+            AjusteUsuario aus = new AjusteUsuario(sis);
+            escritorio.add(aus);
+            aus.setVisible(true);
+        } else {
+            ajususer.setVisible(false);
+        }
     }//GEN-LAST:event_ajususerActionPerformed
 
     private void amovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amovActionPerformed
-        Seguimiento seg = new Seguimiento();
-        escritorio.add(seg);
-        seg.setVisible(true);
+        Usuario us = null;
+        try {
+            us = sis.obtenerSesion();
+        } catch (Exception ex) {
+            Logger.getLogger(General.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        int per = sis.obtenerCodigoUsuario(us);
+        if (per != 4) {
+            Seguimiento seg = new Seguimiento(sis);
+            escritorio.add(seg);
+            seg.setVisible(true);
+        } else {
+            amov.setVisible(false);
+        }
     }//GEN-LAST:event_amovActionPerformed
 
     private void CrearEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearEnvioActionPerformed
-        Encli ec = new Encli();
-        escritorio.add(ec);
-        ec.setVisible(true);
+        Usuario us = null;
+        try {
+            us = sis.obtenerSesion();
+        } catch (Exception ex) {
+            Logger.getLogger(General.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        int per = sis.obtenerCodigoUsuario(us);
+        System.out.println(per);
+        if (per != 4) {
+            Encli ec = new Encli();
+            escritorio.add(ec);
+            ec.setVisible(true);
+        } else {
+            CrearEnvio.setVisible(false);
+        }
     }//GEN-LAST:event_CrearEnvioActionPerformed
 
     private void gestionarenvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gestionarenvioActionPerformed
-        Envio en = new Envio();
-        escritorio.add(en);
-        en.setVisible(true);
+        Usuario us = null;
+        try {
+            us = sis.obtenerSesion();
+        } catch (Exception ex) {
+            Logger.getLogger(General.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        int per = sis.obtenerCodigoUsuario(us);
+        if (per != 4) {
+            Envio en = new Envio();
+            escritorio.add(en);
+            en.setVisible(true);
+        } else {
+            gestionarenvio.setVisible(false);
+        }
     }//GEN-LAST:event_gestionarenvioActionPerformed
 
     private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
@@ -299,10 +348,19 @@ public final class General extends javax.swing.JFrame {
     }//GEN-LAST:event_ModProductoActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        Conuser user = new Conuser(this);
-        escritorio.add(user);
-        user.setVisible(true);
+        Conuser user = null;
+        try {
+            user = new Conuser(sis);
+            escritorio.add(user);
+            user.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(General.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void AgrProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgrProveedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AgrProveedorActionPerformed
 
     /**
      * @param args the command line arguments

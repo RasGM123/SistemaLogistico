@@ -10,17 +10,15 @@ package clases;
  */
 import java.sql.*;
 
-public class TipoProducto {
-
-    static TipoProducto valueOf(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+public class Existencia {
     private int id;
-    private String nombre;
+    private int cantidad;
+    private int productoId;
 
-    public TipoProducto(int id, String nombre) {
+    public Existencia(int id, int cantidad, int productoId) {
         this.id = id;
-        this.nombre = nombre;
+        this.cantidad = cantidad;
+        this.productoId = productoId;
     }
 
     public int getId() {
@@ -31,32 +29,42 @@ public class TipoProducto {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public int getCantidad() {
+        return cantidad;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 
-    public void guardarTipoProducto() {
+    public int getProductoId() {
+        return productoId;
+    }
+
+    public void setProductoId(int productoId) {
+        this.productoId = productoId;
+    }
+
+    public void aumentarCantidad(int cantidad) {
         try {
-            SQLconexion sq = new SQLconexion();
             // Establecer la conexión con la base de datos
+            SQLconexion sq = new SQLconexion();
             Connection conexion = DriverManager.getConnection(sq.getUrl(), sq.getUsuario(), sq.getContrasena());
-
-            // Crear la consulta SQL para insertar un nuevo tipo de producto
-            String consulta = "INSERT INTO TipoProducto (ID, Nombre) VALUES (?, ?)";
+            // Crear la consulta SQL para aumentar la cantidad de existencias
+            String consulta = "UPDATE Existencia SET Cantidad = Cantidad + ? WHERE ID = ?";
 
             // Preparar la consulta
             PreparedStatement statement = conexion.prepareStatement(consulta);
 
             // Establecer los valores de los parámetros de la consulta
-            statement.setInt(1, this.id);
-            statement.setString(2, this.nombre);
+            statement.setInt(1, cantidad);
+            statement.setInt(2, this.id);
 
             // Ejecutar la consulta
             statement.executeUpdate();
+
+            // Actualizar la cantidad de existencias en la instancia actual de la clase Existencia
+            this.cantidad += cantidad;
 
             // Cerrar la conexión con la base de datos
             conexion.close();
@@ -65,23 +73,26 @@ public class TipoProducto {
         }
     }
 
-    public void actualizarTipoProducto() {
+    public void reducirCantidad(int cantidad) {
         try {
             // Establecer la conexión con la base de datos
             SQLconexion sq = new SQLconexion();
             Connection conexion = DriverManager.getConnection(sq.getUrl(), sq.getUsuario(), sq.getContrasena());
-            // Crear la consulta SQL para actualizar un tipo de producto existente
-            String consulta = "UPDATE TipoProducto SET Nombre = ? WHERE ID = ?";
+            // Crear la consulta SQL para reducir la cantidad de existencias
+            String consulta = "UPDATE Existencia SET Cantidad = Cantidad - ? WHERE ID = ?";
 
             // Preparar la consulta
             PreparedStatement statement = conexion.prepareStatement(consulta);
 
             // Establecer los valores de los parámetros de la consulta
-            statement.setString(1, this.nombre);
+            statement.setInt(1, cantidad);
             statement.setInt(2, this.id);
 
             // Ejecutar la consulta
             statement.executeUpdate();
+
+            // Actualizar la cantidad de existencias en la instancia actual de la clase Existencia
+            this.cantidad -= cantidad;
 
             // Cerrar la conexión con la base de datos
             conexion.close();

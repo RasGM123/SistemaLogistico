@@ -2,65 +2,27 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Modelo;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
+package clases;
 
 /**
  *
- * @author Gustavo
+ * @author Rodrigo
  */
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 public class OrdenDeCompra {
     private int id;
-    private LocalDateTime fechaEmision;
-    private LocalDateTime fechaEntrega;
-    
-    private Proveedor proveedor;
-    private List<RenglonOrdenDeCompra> renglones;
+    private Date fechaEmision;
+    private List<ReglonOrdenDeCompra> renglones;
 
-    public OrdenDeCompra(int id, Proveedor proveedor, List<RenglonOrdenDeCompra> renglones) {
+    public OrdenDeCompra(int id, Date fechaEmision) {
         this.id = id;
-        this.fechaEmision = LocalDateTime.now();
-        this.fechaEmision = null;
-        this.proveedor = proveedor;
-        this.renglones = renglones;
+        this.fechaEmision = fechaEmision;
+        this.renglones = new ArrayList<>();
     }
-    
-    //Funcionalidades
-    
-    public void establecerEntrega(LocalDateTime fechaEntrega) throws Exception{
-        if(fechaEntrega.isBefore(fechaEmision)){
-            throw new Exception("La fecha de entrega no puede ocurrir antes de la fecha de emisión.");
-        }
-        
-        this.fechaEntrega = fechaEntrega;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + this.id;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final OrdenDeCompra other = (OrdenDeCompra) obj;
-        return this.id == other.id;
-    }
-    
-    //setters & getters
 
     public int getId() {
         return id;
@@ -70,35 +32,53 @@ public class OrdenDeCompra {
         this.id = id;
     }
 
-    public LocalDateTime getFechaEmision() {
+    public Date getFechaEmision() {
         return fechaEmision;
     }
 
-    public void setFechaEmision(LocalDateTime fechaEmision) {
+    public void setFechaEmision(Date fechaEmision) {
         this.fechaEmision = fechaEmision;
     }
 
-    public Proveedor getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
-    }
-
-    public List<RenglonOrdenDeCompra> getRenglones() {
+    public List<ReglonOrdenDeCompra> getRenglones() {
         return renglones;
     }
 
-    public void setRenglones(List<RenglonOrdenDeCompra> renglones) {
+    public void setRenglones(List<ReglonOrdenDeCompra> renglones) {
         this.renglones = renglones;
     }
 
-    public LocalDateTime getFechaEntrega() {
-        return fechaEntrega;
+    public void agregarReglon(ReglonOrdenDeCompra reglon) {
+        renglones.add(reglon);
     }
 
-    public void setFechaEntrega(LocalDateTime fechaEntrega) {
-        this.fechaEntrega = fechaEntrega;
+    public void guardarOrdenDeCompra() {
+        try {
+            // Establecer la conexión con la base de datos
+            SQLconexion sq = new SQLconexion();
+            Connection conexion = DriverManager.getConnection(sq.getUrl(), sq.getUsuario(), sq.getContrasena());
+            // Crear la consulta SQL para insertar una nueva orden de compra
+            String consulta = "INSERT INTO OrdenDeCompra (ID, FechaEmision) VALUES (?, ?)";
+
+            // Preparar la consulta
+            PreparedStatement statement = conexion.prepareStatement(consulta);
+
+            // Establecer los valores de los parámetros de la consulta
+            statement.setInt(1, this.id);
+            statement.setDate(2, new java.sql.Date(this.fechaEmision.getTime()));
+
+            // Ejecutar la consulta
+            statement.executeUpdate();
+
+            // Guardar los renglones de la orden de compra en la base de datos
+            for (ReglonOrdenDeCompra reglon : renglones) {
+                reglon.guardarReglonOrdenDeCompra(this.id, reglon.getId());
+            }
+
+            // Cerrar la conexión con la base de datos
+            conexion.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

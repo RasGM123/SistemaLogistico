@@ -2,27 +2,51 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Modelo;
+package clases;
 
 /**
  *
  * @author Rodrigo
  */
-public class Transportista extends Empleado{
-    private Vehiculo vehiculo;
+import java.sql.*;
 
-    public Transportista(String cuil, int id, String username, String password, String email, String nombres, String apellidos, String dni, String telefono, String direccion) {
-        super(cuil, id, username, password, email, nombres, apellidos, dni, telefono, direccion);
-        this.vehiculo = null;
+public class Transportista {
+    private int id;
+
+    public Transportista(int id) {
+        this.id = id;
     }
-    
-    //setters & getters
 
-    public Vehiculo getVehiculo() {
-        return vehiculo;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void asignarVehiculo(Vehiculo vehiculo) {
-        this.vehiculo = vehiculo;
+        try {
+            // Establecer la conexión con la base de datos
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/nombre_de_la_base_de_datos", "usuario", "contraseña");
+
+            // Crear la consulta SQL para actualizar el vehículo asignado al transportista
+            String consulta = "UPDATE Transportista SET VehiculoID = ? WHERE ID = ?";
+
+            // Preparar la consulta
+            PreparedStatement statement = conexion.prepareStatement(consulta);
+
+            // Establecer los valores de los parámetros de la consulta
+            statement.setInt(1, vehiculo.getId());
+            statement.setInt(2, this.id);
+
+            // Ejecutar la consulta
+            statement.executeUpdate();
+
+            // Cerrar la conexión con la base de datos
+            conexion.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

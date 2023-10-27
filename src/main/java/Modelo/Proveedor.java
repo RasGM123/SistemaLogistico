@@ -2,75 +2,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Modelo;
+package clases;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  *
  * @author Rodrigo
  */
+import java.sql.*;
+
 public class Proveedor {
+    private int id;
+    private String cuil;
+    private String razonSocial;
 
-  private int id;
-  private String cuit;
-  private String nombre;
-  private String email;
-  private String telefono;
-  private String direccion;
-  
-  private List<Contrato> contratos;
-  private List<Evaluacion> evaluaciones;
-
-    public Proveedor(int id, String cuit, String nombre, String telefono, String direccion) {
+    public Proveedor(int id, String cuil, String razonSocial) {
         this.id = id;
-        this.cuit = cuit;
-        this.nombre = nombre;
-        this.telefono = telefono;
-        this.direccion = direccion;
-        this.contratos = new ArrayList();
-        this.evaluaciones = new ArrayList();
+        this.cuil = cuil;
+        this.razonSocial = razonSocial;
     }
-    
-    //Funcionalidades
-    
-    public void agregarContrato(Contrato contrato){
-        contratos.add(contrato);
-    }
-    
-    public void agregarEvaluacion(Evaluacion evaluacion){
-        evaluaciones.add(evaluacion);
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + Objects.hashCode(this.nombre);
-        hash = 97 * hash + Objects.hashCode(this.cuit);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Proveedor other = (Proveedor) obj;
-        if (!Objects.equals(this.nombre, other.nombre)) {
-            return false;
-        }
-        return Objects.equals(this.cuit, other.cuit);
-    }
-    
-    //setters & getters
 
     public int getId() {
         return id;
@@ -80,59 +31,71 @@ public class Proveedor {
         this.id = id;
     }
 
-    public String getCuit() {
-        return cuit;
+    public String getCuil() {
+        return cuil;
     }
 
-    public void setCuit(String cuit) {
-        this.cuit = cuit;
+    public void setCuil(String cuil) {
+        this.cuil = cuil;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getRazonSocial() {
+        return razonSocial;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
     }
 
-    public String getEmail() {
-        return email;
+    public void guardarProveedor() {
+        try {
+            // Establecer la conexión con la base de datos
+            SQLconexion sq = new SQLconexion();
+            Connection conexion = DriverManager.getConnection(sq.getUrl(), sq.getUsuario(), sq.getContrasena());
+            // Crear la consulta SQL para insertar un nuevo proveedor
+            String consulta = "INSERT INTO Proveedor (ID, CUIL, RazonSocial) VALUES (?, ?, ?)";
+
+            // Preparar la consulta
+            PreparedStatement statement = conexion.prepareStatement(consulta);
+
+            // Establecer los valores de los parámetros de la consulta
+            statement.setInt(1, this.id);
+            statement.setString(2, this.cuil);
+            statement.setString(3, this.razonSocial);
+
+            // Ejecutar la consulta
+            statement.executeUpdate();
+
+            // Cerrar la conexión con la base de datos
+            conexion.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public void actualizarProveedor() {
+        try {
+            // Establecer la conexión con la base de datos
+            SQLconexion sq = new SQLconexion();
+            Connection conexion = DriverManager.getConnection(sq.getUrl(), sq.getUsuario(), sq.getContrasena());
+            // Crear la consulta SQL para actualizar un proveedor existente
+            String consulta = "UPDATE Proveedor SET CUIL = ?, RazonSocial = ? WHERE ID = ?";
 
-    public String getTelefono() {
-        return telefono;
-    }
+            // Preparar la consulta
+            PreparedStatement statement = conexion.prepareStatement(consulta);
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
+            // Establecer los valores de los parámetros de la consulta
+            statement.setString(1, this.cuil);
+            statement.setString(2, this.razonSocial);
+            statement.setInt(3, this.id);
 
-    public String getDireccion() {
-        return direccion;
-    }
+            // Ejecutar la consulta
+            statement.executeUpdate();
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public List<Contrato> getContratos() {
-        return contratos;
-    }
-
-    public void setContratos(List<Contrato> contratos) {
-        this.contratos = contratos;
-    }
-
-    public List<Evaluacion> getEvaluaciones() {
-        return evaluaciones;
-    }
-
-    public void setEvaluaciones(List<Evaluacion> evaluaciones) {
-        this.evaluaciones = evaluaciones;
+            // Cerrar la conexión con la base de datos
+            conexion.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -9,15 +9,14 @@ package clases;
  * @author Rodrigo
  */
 import java.sql.*;
-import java.util.Date;
 
-public class Remito {
+public class EstadoPedido {
     private int id;
-    private Date FechaEntrega;
+    private String nombre;
 
-    public Remito(int id, Date FechaEntrega, double aDouble) {
+    public EstadoPedido(int id, String nombre) {
         this.id = id;
-        this.FechaEntrega = FechaEntrega;
+        this.nombre = nombre;
     }
 
     public int getId() {
@@ -28,28 +27,28 @@ public class Remito {
         this.id = id;
     }
 
-    public Date getFechaEntrega() {
-        return FechaEntrega;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setFechaEntrega(Date FechaEntrega) {
-        this.FechaEntrega = FechaEntrega;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public void guardarRemito() {
+    public void actualizarEstadoPedido(int pedidoID, int estadoID) {
         try {
             // Establecer la conexión con la base de datos
             Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/nombre_de_la_base_de_datos", "usuario", "contraseña");
 
-            // Crear la consulta SQL para insertar un nuevo remito
-            String consulta = "INSERT INTO Remito (ID, FechaEntrega) VALUES (?, ?)";
+            // Crear la consulta SQL para actualizar el estado del pedido
+            String consulta = "UPDATE Pedido SET EstadoID = ? WHERE ID = ?";
 
             // Preparar la consulta
             PreparedStatement statement = conexion.prepareStatement(consulta);
 
             // Establecer los valores de los parámetros de la consulta
-            statement.setInt(1, this.id);
-            statement.setDate(2, new java.sql.Date(this.FechaEntrega.getTime()));
+            statement.setInt(1, estadoID);
+            statement.setInt(2, pedidoID);
 
             // Ejecutar la consulta
             statement.executeUpdate();

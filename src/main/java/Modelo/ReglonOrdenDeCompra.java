@@ -9,15 +9,16 @@ package clases;
  * @author Rodrigo
  */
 import java.sql.*;
-import java.util.Date;
 
-public class Remito {
+public class ReglonOrdenDeCompra {
     private int id;
-    private Date FechaEntrega;
+    private int cantidad;
+    private double precioUnitario;
 
-    public Remito(int id, Date FechaEntrega, double aDouble) {
+    public ReglonOrdenDeCompra(int id, int cantidad, double precioUnitario) {
         this.id = id;
-        this.FechaEntrega = FechaEntrega;
+        this.cantidad = cantidad;
+        this.precioUnitario = precioUnitario;
     }
 
     public int getId() {
@@ -28,28 +29,39 @@ public class Remito {
         this.id = id;
     }
 
-    public Date getFechaEntrega() {
-        return FechaEntrega;
+    public int getCantidad() {
+        return cantidad;
     }
 
-    public void setFechaEntrega(Date FechaEntrega) {
-        this.FechaEntrega = FechaEntrega;
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 
-    public void guardarRemito() {
+    public double getPrecioUnitario() {
+        return precioUnitario;
+    }
+
+    public void setPrecioUnitario(double precioUnitario) {
+        this.precioUnitario = precioUnitario;
+    }
+
+    public void guardarReglonOrdenDeCompra(int ordenDeCompraId, int productoId) {
         try {
             // Establecer la conexión con la base de datos
             Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/nombre_de_la_base_de_datos", "usuario", "contraseña");
 
-            // Crear la consulta SQL para insertar un nuevo remito
-            String consulta = "INSERT INTO Remito (ID, FechaEntrega) VALUES (?, ?)";
+            // Crear la consulta SQL para insertar un nuevo renglón de orden de compra
+            String consulta = "INSERT INTO ReglonOrdenDeCompra (ID, Cantidad, PrecioUnitario, OrdenDeCompraID, ProductoID) VALUES (?, ?, ?, ?, ?)";
 
             // Preparar la consulta
             PreparedStatement statement = conexion.prepareStatement(consulta);
 
             // Establecer los valores de los parámetros de la consulta
             statement.setInt(1, this.id);
-            statement.setDate(2, new java.sql.Date(this.FechaEntrega.getTime()));
+            statement.setInt(2, this.cantidad);
+            statement.setDouble(3, this.precioUnitario);
+            statement.setInt(4, ordenDeCompraId);
+            statement.setInt(5, productoId);
 
             // Ejecutar la consulta
             statement.executeUpdate();

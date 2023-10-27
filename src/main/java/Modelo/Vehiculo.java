@@ -2,59 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Modelo;
-
-import java.util.Objects;
+package clases;
 
 /**
  *
  * @author Rodrigo
  */
+import java.sql.*;
 
 public class Vehiculo {
-
     private int id;
     private String marca;
-    private String modelo;
     private String dominio;
-    private int capacidadCarga;
+    private String modelo;
+    private int capacidadDeCarga;
 
-    public Vehiculo(int id, String marca, String modelo, String dominio, int capacidadCarga) {
+    public Vehiculo(int id, String marca, String dominio, String modelo, int capacidadDeCarga) {
         this.id = id;
         this.marca = marca;
-        this.modelo = modelo;
         this.dominio = dominio;
-        this.capacidadCarga = capacidadCarga;
+        this.modelo = modelo;
+        this.capacidadDeCarga = capacidadDeCarga;
     }
-    
-    @Override
-    public String toString(){
-        return this.marca+" "+this.modelo+" patente "+this.dominio;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 67 * hash + Objects.hashCode(this.dominio);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Vehiculo other = (Vehiculo) obj;
-        return Objects.equals(this.dominio, other.dominio);
-    }
-    
-    //Getters and setters
 
     public int getId() {
         return id;
@@ -72,14 +41,6 @@ public class Vehiculo {
         this.marca = marca;
     }
 
-    public String getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
-
     public String getDominio() {
         return dominio;
     }
@@ -88,11 +49,99 @@ public class Vehiculo {
         this.dominio = dominio;
     }
 
-    public int getCapacidadCarga() {
-        return capacidadCarga;
+    public String getModelo() {
+        return modelo;
     }
 
-    public void setCapacidadCarga(int capacidadCarga) {
-        this.capacidadCarga = capacidadCarga;
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public int getCapacidadDeCarga() {
+        return capacidadDeCarga;
+    }
+
+    public void setCapacidadDeCarga(int capacidadDeCarga) {
+        this.capacidadDeCarga = capacidadDeCarga;
+    }
+
+    public void guardarVehiculo() {
+        try {
+            // Establecer la conexión con la base de datos
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/nombre_de_la_base_de_datos", "usuario", "contraseña");
+
+            // Crear la consulta SQL para insertar un nuevo vehículo
+            String consulta = "INSERT INTO Vehiculo (ID, Marca, Dominio, Modelo, CapacidadDeCarga) VALUES (?, ?, ?, ?, ?)";
+
+            // Preparar la consulta
+            PreparedStatement statement = conexion.prepareStatement(consulta);
+
+            // Establecer los valores de los parámetros de la consulta
+            statement.setInt(1, this.id);
+            statement.setString(2, this.marca);
+            statement.setString(3, this.dominio);
+            statement.setString(4, this.modelo);
+            statement.setInt(5, this.capacidadDeCarga);
+
+            // Ejecutar la consulta
+            statement.executeUpdate();
+
+            // Cerrar la conexión con la base de datos
+            conexion.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void actualizarVehiculo() {
+        try {
+            // Establecer la conexión con la base de datos
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/nombre_de_la_base_de_datos", "usuario", "contraseña");
+
+            // Crear la consulta SQL para actualizar un vehículo existente
+            String consulta = "UPDATE Vehiculo SET Marca = ?, Dominio = ?, Modelo = ?, CapacidadDeCarga = ? WHERE ID = ?";
+
+            // Preparar la consulta
+            PreparedStatement statement = conexion.prepareStatement(consulta);
+
+            // Establecer los valores de los parámetros de la consulta
+            statement.setString(1, this.marca);
+            statement.setString(2, this.dominio);
+            statement.setString(3, this.modelo);
+            statement.setInt(4, this.capacidadDeCarga);
+            statement.setInt(5, this.id);
+
+            // Ejecutar la consulta
+            statement.executeUpdate();
+
+            // Cerrar la conexión con la base de datos
+            conexion.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void eliminarVehiculo() {
+        try {
+            // Establecer la conexión con la base de datos
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/nombre_de_la_base_de_datos", "usuario", "contraseña");
+
+            // Crear la consulta SQL para eliminar un vehículo existente
+            String consulta = "DELETE FROM Vehiculo WHERE ID = ?";
+
+            // Preparar la consulta
+            PreparedStatement statement = conexion.prepareStatement(consulta);
+
+            // Establecer el valor del parámetro de la consulta
+            statement.setInt(1, this.id);
+
+            // Ejecutar la consulta
+            statement.executeUpdate();
+
+            // Cerrar la conexión con la base de datos
+            conexion.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

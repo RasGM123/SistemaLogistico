@@ -2,104 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Modelo;
+package clases;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
  * @author Rodrigo
  */
+import java.sql.*;
+import java.util.Date;
+
 public class Pedido {
     private int id;
-    private LocalDateTime fechaCreacion;
-    private String estado;
+    private Date fechaEntrega;
 
-    private Ruta ruta;
-    private Transportista transportista;
-    private Remito remito;
-    private List<RenglonPedido> renglones;
-    private List<Movimiento> movimientos;
-    
-    //cuando se crea el Pedido el estado inicial es "Preparandose"
-    //el Transportista y el Remito se asignan despues de la creacion mediante un usuario Administrativo/Gerente
-    public Pedido(int id, LocalDateTime fechaCreacion, Ruta ruta, List<RenglonPedido> renglones) {
+    public Pedido(int id, Date fechaEntrega) {
         this.id = id;
-        this.fechaCreacion = fechaCreacion;
-        this.estado = "Preparándose";
-        this.ruta = ruta;
-        this.transportista = null;
-        this.remito = null;
-        this.renglones = renglones;
-        this.movimientos = new ArrayList();
+        this.fechaEntrega = fechaEntrega;
     }
-    
-    //Funcionalidades
-    
-    public void asignarTransportista(Transportista transportista){
-        
-        //Si el Pedido tiene un Transportista cuando se intenta asignarle uno, se cambia el Transportista anterior por el nuevo
-        if(this.transportista!=null){
-            Vehiculo vehiculo = this.getTransportista().getVehiculo();
-            
-            //Se libera el Vehiculo del Transportista anterior
-            this.transportista.asignarVehiculo(null);
-            
-            //Se asigna el Transportista nuevo al Pedido
-            this.setTransportista(transportista);
-            
-            //Se asigna el Vehiculo al nuevo Transportista
-            transportista.asignarVehiculo(vehiculo);
-        }
-        
-        this.transportista = transportista;
-    }
-
-    public void generarRemito() {
-        remito = new Remito(this.id, LocalDateTime.now());
-    }
-    
-    public void cambiarEstado(String estado){
-        movimientos.add(new Movimiento(this.getId(), LocalDateTime.now(), estado));
-        
-        this.setEstado(estado);
-    }
-    
-    public int obtenerCantidadProducto(Producto producto){
-        
-        for(RenglonPedido r:renglones){
-            if(r.getProducto().equals(producto))
-                return r.getCantidad();
-        }
-        
-        return 0;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 19 * hash + this.id;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Pedido other = (Pedido) obj;
-        return this.id == other.id;
-    }
-
-  //Getters and setters
 
     public int getId() {
         return id;
@@ -109,59 +29,45 @@ public class Pedido {
         this.id = id;
     }
 
-    public LocalDateTime getFechaCreacion() {
-        return fechaCreacion;
+    public Date getFechaEntrega() {
+        return fechaEntrega;
     }
 
-    public void setFechaCreacion(LocalDateTime fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
+    public void setFechaEntrega(Date fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
     }
 
-    public String getEstado() {
-        return estado;
-    }
+    public void GenerarRemito() {
+        try {
+            // Establecer la conexión con la base de datos
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/nombre_de_la_base_de_datos", "usuario", "contraseña");
 
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
+            // Crear la consulta SQL para obtener los datos del pedido
+            String consulta = "SELECT * FROM Pedido WHERE ID = ?";
 
-    public Ruta getRuta() {
-        return ruta;
-    }
+            // Preparar la consulta
+            PreparedStatement statement = conexion.prepareStatement(consulta);
 
-    public void setRuta(Ruta ruta) {
-        this.ruta = ruta;
-    }
+            // Establecer el valor del parámetro de la consulta
+            statement.setInt(1, this.id);
 
-    public Transportista getTransportista() {
-        return transportista;
-    }
+            // Ejecutar la consulta y obtener el resultado
+            ResultSet resultado = statement.executeQuery();
 
-    public void setTransportista(Transportista transportista) {
-        this.transportista = transportista;
-    }
+            // Si se encontró un pedido con el ID especificado, crear un objeto Remito con sus datos y guardarlo en la base de datos
+            if (resultado.next()) {
+                Remito remito = new Remito(
+                    resultado.getInt("ID"),
+                    resultado.getDate("FechaEntrega"),
+                    resultado.getDouble("Total")
+                );
+                remito.guardarRemito();
+            }
 
-    public Remito getRemito() {
-        return remito;
-    }
-
-    public void setRemito(Remito remito) {
-        this.remito = remito;
-    }
-
-    public List<RenglonPedido> getRenglones() {
-        return renglones;
-    }
-
-    public void setRenglones(List<RenglonPedido> renglones) {
-        this.renglones = renglones;
-    }
-
-    public List<Movimiento> getMovimientos() {
-        return movimientos;
-    }
-
-    public void setMovimientos(List<Movimiento> movimientos) {
-        this.movimientos = movimientos;
+            // Cerrar la conexión con la base de datos
+            conexion.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -10,17 +10,15 @@ package clases;
  */
 import java.sql.*;
 
-public class TipoProducto {
-
-    static TipoProducto valueOf(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+public class RemitoEntrega {
     private int id;
-    private String nombre;
+    private int puntuacion;
+    private String comentario;
 
-    public TipoProducto(int id, String nombre) {
+    public RemitoEntrega(int id, int puntuacion, String comentario) {
         this.id = id;
-        this.nombre = nombre;
+        this.puntuacion = puntuacion;
+        this.comentario = comentario;
     }
 
     public int getId() {
@@ -31,29 +29,37 @@ public class TipoProducto {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public int getPuntuacion() {
+        return puntuacion;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setPuntuacion(int puntuacion) {
+        this.puntuacion = puntuacion;
     }
 
-    public void guardarTipoProducto() {
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
+
+    public void guardarRemitoEntrega() {
         try {
-            SQLconexion sq = new SQLconexion();
             // Establecer la conexión con la base de datos
+            SQLconexion sq = new SQLconexion();
             Connection conexion = DriverManager.getConnection(sq.getUrl(), sq.getUsuario(), sq.getContrasena());
-
-            // Crear la consulta SQL para insertar un nuevo tipo de producto
-            String consulta = "INSERT INTO TipoProducto (ID, Nombre) VALUES (?, ?)";
+            // Crear la consulta SQL para insertar un nuevo remito de entrega
+            String consulta = "INSERT INTO RemitoEntrega (ID, Puntuacion, Comentario) VALUES (?, ?, ?)";
 
             // Preparar la consulta
             PreparedStatement statement = conexion.prepareStatement(consulta);
 
             // Establecer los valores de los parámetros de la consulta
             statement.setInt(1, this.id);
-            statement.setString(2, this.nombre);
+            statement.setInt(2, this.puntuacion);
+            statement.setString(3, this.comentario);
 
             // Ejecutar la consulta
             statement.executeUpdate();
@@ -65,20 +71,21 @@ public class TipoProducto {
         }
     }
 
-    public void actualizarTipoProducto() {
+    public void actualizarRemitoEntrega() {
         try {
             // Establecer la conexión con la base de datos
             SQLconexion sq = new SQLconexion();
             Connection conexion = DriverManager.getConnection(sq.getUrl(), sq.getUsuario(), sq.getContrasena());
-            // Crear la consulta SQL para actualizar un tipo de producto existente
-            String consulta = "UPDATE TipoProducto SET Nombre = ? WHERE ID = ?";
+            // Crear la consulta SQL para actualizar un remito de entrega existente
+            String consulta = "UPDATE RemitoEntrega SET Puntuacion = ?, Comentario = ? WHERE ID = ?";
 
             // Preparar la consulta
             PreparedStatement statement = conexion.prepareStatement(consulta);
 
             // Establecer los valores de los parámetros de la consulta
-            statement.setString(1, this.nombre);
-            statement.setInt(2, this.id);
+            statement.setInt(1, this.puntuacion);
+            statement.setString(2, this.comentario);
+            statement.setInt(3, this.id);
 
             // Ejecutar la consulta
             statement.executeUpdate();
@@ -90,4 +97,3 @@ public class TipoProducto {
         }
     }
 }
-

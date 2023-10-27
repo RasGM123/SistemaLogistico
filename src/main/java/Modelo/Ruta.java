@@ -2,70 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Modelo;
+package clases;
 
-import java.time.LocalDateTime;
-import java.util.Objects;
 
 /**
  *
  * @author Rodrigo
  */
+import java.sql.*;
+import java.util.Date;
+
 public class Ruta {
     private int id;
-    private String origen;
-    private String destino;
-    private LocalDateTime fechaSalida;
-    private LocalDateTime fechaLlegada;
+    private Date fechaSalida;
+    private Date fechaLlegada;
+    private int tiempoDeEspera;
 
-    public Ruta(int id, String origen, String destino, LocalDateTime fechaSalida, LocalDateTime fechaLlegada) {
+    public Ruta(int id, Date fechaSalida, Date fechaLlegada, int tiempoDeEspera) {
         this.id = id;
-        this.origen = origen;
-        this.destino = destino;
         this.fechaSalida = fechaSalida;
         this.fechaLlegada = fechaLlegada;
+        this.tiempoDeEspera = tiempoDeEspera;
     }
-    
-    @Override
-    public String toString(){
-        return origen+" -> "+destino;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 79 * hash + Objects.hashCode(this.origen);
-        hash = 79 * hash + Objects.hashCode(this.destino);
-        hash = 79 * hash + Objects.hashCode(this.fechaSalida);
-        hash = 79 * hash + Objects.hashCode(this.fechaLlegada);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Ruta other = (Ruta) obj;
-        if (!Objects.equals(this.origen, other.origen)) {
-            return false;
-        }
-        if (!Objects.equals(this.destino, other.destino)) {
-            return false;
-        }
-        if (!Objects.equals(this.fechaSalida, other.fechaSalida)) {
-            return false;
-        }
-        return Objects.equals(this.fechaLlegada, other.fechaLlegada);
-    }
-    
-    //setters & getters
 
     public int getId() {
         return id;
@@ -75,35 +33,52 @@ public class Ruta {
         this.id = id;
     }
 
-    public String getOrigen() {
-        return origen;
-    }
-
-    public void setOrigen(String origen) {
-        this.origen = origen;
-    }
-
-    public String getDestino() {
-        return destino;
-    }
-
-    public void setDestino(String destino) {
-        this.destino = destino;
-    }
-
-    public LocalDateTime getFechaSalida() {
+    public Date getFechaSalida() {
         return fechaSalida;
     }
 
-    public void setFechaSalida(LocalDateTime fechaSalida) {
+    public void setFechaSalida(Date fechaSalida) {
         this.fechaSalida = fechaSalida;
     }
 
-    public LocalDateTime getFechaLlegada() {
+    public Date getFechaLlegada() {
         return fechaLlegada;
     }
 
-    public void setFechaLlegada(LocalDateTime fechaLlegada) {
+    public void setFechaLlegada(Date fechaLlegada) {
         this.fechaLlegada = fechaLlegada;
+    }
+
+    public int getTiempoDeEspera() {
+        return tiempoDeEspera;
+    }
+
+    public void setTiempoDeEspera(int tiempoDeEspera) {
+        this.tiempoDeEspera = tiempoDeEspera;
+    }
+
+    public void asignarTransportista(Transportista transportista) {
+        try {
+            // Establecer la conexión con la base de datos
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/nombre_de_la_base_de_datos", "usuario", "contraseña");
+
+            // Crear la consulta SQL para actualizar el transportista asignado a la ruta
+            String consulta = "UPDATE Ruta SET TransportistaID = ? WHERE ID = ?";
+
+            // Preparar la consulta
+            PreparedStatement statement = conexion.prepareStatement(consulta);
+
+            // Establecer los valores de los parámetros de la consulta
+            statement.setInt(1, transportista.getId());
+            statement.setInt(2, this.id);
+
+            // Ejecutar la consulta
+            statement.executeUpdate();
+
+            // Cerrar la conexión con la base de datos
+            conexion.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

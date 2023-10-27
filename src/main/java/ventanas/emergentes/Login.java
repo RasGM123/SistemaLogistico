@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import Modelo.*;
 import javax.swing.JOptionPane;
+import ventanas.general.General;
 /**
  *
  * @author Rodrigo
@@ -16,13 +17,15 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JInternalFrame {
     private JDesktopPane escritorio;
     private Sistema gen;
+    private General g;
     
-    public Login( JDesktopPane des, Sistema genes) {
+    public Login( JDesktopPane des, Sistema genes, General god) {
         initComponents();
         Icon icon = new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\circulo-de-usuario.png");
         this.setFrameIcon(icon);
         this.escritorio = des;
         this.gen = genes;
+        this.g = god;
     }
 
     /**
@@ -141,7 +144,7 @@ public class Login extends javax.swing.JInternalFrame {
             Sesion ses = gen.getSesion();
             int tipo = gen.obtenerCodigoUsuario(ses.getUsuario());
             if(gen.getSesion() != null){
-                JOptionPane.showInternalMessageDialog(this, "Iniciaste sesión!"+ tipo);
+                g.mostrarmenu();
                 dispose();
             }else{
                 JOptionPane.showInternalMessageDialog(this, "Usuario o contraseña no son correctos");

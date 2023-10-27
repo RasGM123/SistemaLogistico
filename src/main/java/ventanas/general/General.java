@@ -28,6 +28,7 @@ public final class General extends javax.swing.JFrame {
         this.setTitle("Fenix Global Delibery");
         this.sis = Sistema.iniciar();
         this.AutoLogin();
+        mostrarmenu();
     }
 
     public void addcentrarpanel(Component com) {
@@ -38,17 +39,76 @@ public final class General extends javax.swing.JFrame {
         com.setVisible(true);
     }
 
+    public void mostrarmenu() {
+        if (sis.getSesion() == null) {
+            Usuario.setVisible(false);
+            Seguimiento.setVisible(false);
+            Proveedores.setVisible(false);
+            Productos.setVisible(false);
+            Informe.setVisible(false);
+            Envio.setVisible(false);
+            Usuario1.setVisible(false);
+            Seguimiento1.setVisible(false);
+            Proveedores1.setVisible(false);
+            Productos1.setVisible(false);
+            Informe1.setVisible(false);
+            Envio1.setVisible(false);
+        } else {
+            if (sis.obtenerCodigoUsuario(sis.obtenerSesion()) == 1) {
+                Usuario.setVisible(true);
+                Seguimiento.setVisible(true);
+                Envio.setVisible(true);
+                Usuario1.setVisible(true);
+                Seguimiento1.setVisible(true);
+                Envio1.setVisible(true);
+            } else {
+                Usuario.setVisible(true);
+                Seguimiento.setVisible(true);
+                Proveedores.setVisible(true);
+                Productos.setVisible(true);
+                Informe.setVisible(true);
+                Envio.setVisible(true);
+                Usuario1.setVisible(true);
+                Seguimiento1.setVisible(true);
+                Proveedores1.setVisible(true);
+                Productos1.setVisible(true);
+                Informe1.setVisible(true);
+                Envio1.setVisible(true);
+            }
+        }
+    }
+
     public void AutoLogin() {
         if (sis.getSesion() == null) {
-            Login lo = new Login(escritorio, sis);
+            Login lo = new Login(escritorio, sis,this);
             addcentrarpanel(lo);
         }
+        mostrarmenu();
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        popMenu = new javax.swing.JPopupMenu();
+        Usuario1 = new javax.swing.JMenu();
+        ajususer1 = new javax.swing.JMenuItem();
+        ajuste1 = new javax.swing.JMenuItem();
+        contacto1 = new javax.swing.JMenuItem();
+        Proveedores1 = new javax.swing.JMenu();
+        AgrProveedor1 = new javax.swing.JMenuItem();
+        ModProveedor1 = new javax.swing.JMenuItem();
+        Seguimiento1 = new javax.swing.JMenu();
+        amov1 = new javax.swing.JMenuItem();
+        Productos1 = new javax.swing.JMenu();
+        AgrProducto1 = new javax.swing.JMenuItem();
+        ModProducto1 = new javax.swing.JMenuItem();
+        Informe1 = new javax.swing.JMenu();
+        newinfo1 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        Envio1 = new javax.swing.JMenu();
+        CrearEnvio1 = new javax.swing.JMenuItem();
+        gestionarenvio1 = new javax.swing.JMenuItem();
         ImageIcon icon = new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\fondos\\ciudad futurista.jpeg");
         Image image = icon.getImage();
         escritorio = new javax.swing.JDesktopPane(){
@@ -63,7 +123,8 @@ public final class General extends javax.swing.JFrame {
         Salir = new javax.swing.JMenuItem();
         Usuario = new javax.swing.JMenu();
         ajususer = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        ajustes = new javax.swing.JMenuItem();
+        contacto = new javax.swing.JMenuItem();
         Seguimiento = new javax.swing.JMenu();
         amov = new javax.swing.JMenuItem();
         Proveedores = new javax.swing.JMenu();
@@ -79,9 +140,134 @@ public final class General extends javax.swing.JFrame {
         CrearEnvio = new javax.swing.JMenuItem();
         gestionarenvio = new javax.swing.JMenuItem();
 
+        Usuario1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Usuario1.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\circulo-de-usuario.png"));
+        Usuario1.setText("Usuario");
+        Usuario1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Usuario1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+
+        ajususer1.setText("Ajuste de Usuario");
+        ajususer1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ajususer1ActionPerformed(evt);
+            }
+        });
+        Usuario1.add(ajususer1);
+
+        ajuste1.setText("Ajustes");
+        ajuste1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ajuste1ActionPerformed(evt);
+            }
+        });
+        Usuario1.add(ajuste1);
+
+        contacto1.setText("Contacto");
+        contacto1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contacto1ActionPerformed(evt);
+            }
+        });
+        Usuario1.add(contacto1);
+
+        popMenu.add(Usuario1);
+
+        Proveedores1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Proveedores1.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\carrito-de-compras.png"));
+        Proveedores1.setText("Proveedores");
+        Proveedores1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Proveedores1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+
+        AgrProveedor1.setText("Añadir Proveedor");
+        AgrProveedor1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AgrProveedor1ActionPerformed(evt);
+            }
+        });
+        Proveedores1.add(AgrProveedor1);
+
+        ModProveedor1.setText("Modificar Proveedor");
+        Proveedores1.add(ModProveedor1);
+
+        popMenu.add(Proveedores1);
+
+        Seguimiento1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Seguimiento1.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\envio-rapido.png"));
+        Seguimiento1.setText("Seguimiento");
+        Seguimiento1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Seguimiento1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+
+        amov1.setText("Movimientos");
+        amov1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                amov1ActionPerformed(evt);
+            }
+        });
+        Seguimiento1.add(amov1);
+
+        popMenu.add(Seguimiento1);
+
+        Productos1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Productos1.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\cajas.png"));
+        Productos1.setText("Productos");
+        Productos1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Productos1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+
+        AgrProducto1.setText("Agregar Producto");
+        Productos1.add(AgrProducto1);
+
+        ModProducto1.setText("Modificar Producto");
+        ModProducto1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ModProducto1ActionPerformed(evt);
+            }
+        });
+        Productos1.add(ModProducto1);
+
+        popMenu.add(Productos1);
+
+        Informe1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Informe1.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\grafico-histograma.png"));
+        Informe1.setText("Informe");
+        Informe1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Informe1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+
+        newinfo1.setText("Nuevo Informe");
+        Informe1.add(newinfo1);
+
+        jMenuItem4.setText("Buscar Informe");
+        Informe1.add(jMenuItem4);
+
+        popMenu.add(Informe1);
+
+        Envio1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Envio1.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\caja-abierta.png"));
+        Envio1.setText("Envio");
+        Envio1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Envio1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+
+        CrearEnvio1.setText("Crear Envio");
+        CrearEnvio1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CrearEnvio1ActionPerformed(evt);
+            }
+        });
+        Envio1.add(CrearEnvio1);
+
+        gestionarenvio1.setText("Gestionar Envio");
+        gestionarenvio1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gestionarenvio1ActionPerformed(evt);
+            }
+        });
+        Envio1.add(gestionarenvio1);
+
+        popMenu.add(Envio1);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         escritorio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 5));
+        escritorio.setComponentPopupMenu(popMenu);
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
@@ -147,13 +333,21 @@ public final class General extends javax.swing.JFrame {
         });
         Usuario.add(ajususer);
 
-        jMenuItem2.setText("Ajustes");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        ajustes.setText("Ajustes");
+        ajustes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                ajustesActionPerformed(evt);
             }
         });
-        Usuario.add(jMenuItem2);
+        Usuario.add(ajustes);
+
+        contacto.setText("Contacto");
+        contacto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contactoActionPerformed(evt);
+            }
+        });
+        Usuario.add(contacto);
 
         Menu.add(Usuario);
 
@@ -257,7 +451,7 @@ public final class General extends javax.swing.JFrame {
 
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
         if (sis.getSesion() == null) {
-            Login lo = new Login(escritorio, sis);
+            Login lo = new Login(escritorio, sis,this);
             escritorio.add(lo);
             lo.setVisible(true);
         }
@@ -347,7 +541,7 @@ public final class General extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ModProductoActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void ajustesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajustesActionPerformed
         Conuser user = null;
         try {
             user = new Conuser(sis);
@@ -356,11 +550,49 @@ public final class General extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(General.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_ajustesActionPerformed
 
     private void AgrProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgrProveedorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_AgrProveedorActionPerformed
+
+    private void ajususer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajususer1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ajususer1ActionPerformed
+
+    private void ajuste1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajuste1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ajuste1ActionPerformed
+
+    private void AgrProveedor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgrProveedor1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AgrProveedor1ActionPerformed
+
+    private void amov1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amov1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_amov1ActionPerformed
+
+    private void ModProducto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModProducto1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ModProducto1ActionPerformed
+
+    private void CrearEnvio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearEnvio1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CrearEnvio1ActionPerformed
+
+    private void gestionarenvio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gestionarenvio1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_gestionarenvio1ActionPerformed
+
+    private void contactoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactoActionPerformed
+        mensaje men = new mensaje(sis);
+        escritorio.add(men);
+        men.setVisible(true);
+    }//GEN-LAST:event_contactoActionPerformed
+
+    private void contacto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contacto1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_contacto1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -401,27 +633,47 @@ public final class General extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AgrProducto;
+    private javax.swing.JMenuItem AgrProducto1;
     private javax.swing.JMenuItem AgrProveedor;
+    private javax.swing.JMenuItem AgrProveedor1;
     private javax.swing.JMenuItem CrearEnvio;
+    private javax.swing.JMenuItem CrearEnvio1;
     private javax.swing.JMenu Envio;
+    private javax.swing.JMenu Envio1;
     private javax.swing.JMenu Informe;
+    private javax.swing.JMenu Informe1;
     private javax.swing.JMenuItem Login;
     private javax.swing.JMenuBar Menu;
     private javax.swing.JMenuItem ModProducto;
+    private javax.swing.JMenuItem ModProducto1;
     private javax.swing.JMenuItem ModProveedor;
+    private javax.swing.JMenuItem ModProveedor1;
     private javax.swing.JMenu Productos;
+    private javax.swing.JMenu Productos1;
     private javax.swing.JMenu Proveedores;
+    private javax.swing.JMenu Proveedores1;
     private javax.swing.JMenuItem Register;
     private javax.swing.JMenuItem Salir;
     private javax.swing.JMenu Seguimiento;
+    private javax.swing.JMenu Seguimiento1;
     private javax.swing.JMenu Usuario;
+    private javax.swing.JMenu Usuario1;
+    private javax.swing.JMenuItem ajuste1;
+    private javax.swing.JMenuItem ajustes;
     private javax.swing.JMenuItem ajususer;
+    private javax.swing.JMenuItem ajususer1;
     private javax.swing.JMenuItem amov;
+    private javax.swing.JMenuItem amov1;
+    private javax.swing.JMenuItem contacto;
+    private javax.swing.JMenuItem contacto1;
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenuItem gestionarenvio;
+    private javax.swing.JMenuItem gestionarenvio1;
     private javax.swing.JMenu inicio;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem newinfo;
+    private javax.swing.JMenuItem newinfo1;
+    private javax.swing.JPopupMenu popMenu;
     // End of variables declaration//GEN-END:variables
 }

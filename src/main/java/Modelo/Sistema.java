@@ -226,11 +226,7 @@ public final class Sistema {
         sesion.setUsuario(null);
     }
     
-    public Usuario obtenerSesion() throws Exception{
-        if(sesion == null){
-            throw new Exception("Inicie sesión para realizar esta acción.");
-        }
-        
+    public Usuario obtenerSesion(){
         return this.sesion.getUsuario();
     }
     

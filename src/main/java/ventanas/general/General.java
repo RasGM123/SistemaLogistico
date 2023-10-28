@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.Action;
 import javax.swing.JOptionPane;
 
 public final class General extends javax.swing.JFrame {
@@ -61,6 +62,7 @@ public final class General extends javax.swing.JFrame {
                 Usuario1.setVisible(true);
                 Seguimiento1.setVisible(true);
                 Envio1.setVisible(true);
+                ajususer.setVisible(false);
             } else {
                 Usuario.setVisible(true);
                 Seguimiento.setVisible(true);
@@ -80,7 +82,7 @@ public final class General extends javax.swing.JFrame {
 
     public void AutoLogin() {
         if (sis.getSesion() == null) {
-            Login lo = new Login(escritorio, sis,this);
+            Login lo = new Login(escritorio, sis, this);
             addcentrarpanel(lo);
         }
         mostrarmenu();
@@ -100,12 +102,13 @@ public final class General extends javax.swing.JFrame {
         ModProveedor1 = new javax.swing.JMenuItem();
         Seguimiento1 = new javax.swing.JMenu();
         amov1 = new javax.swing.JMenuItem();
+        infoenvio1 = new javax.swing.JMenuItem();
         Productos1 = new javax.swing.JMenu();
         AgrProducto1 = new javax.swing.JMenuItem();
         ModProducto1 = new javax.swing.JMenuItem();
         Informe1 = new javax.swing.JMenu();
         newinfo1 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        BusInfo = new javax.swing.JMenuItem();
         Envio1 = new javax.swing.JMenu();
         CrearEnvio1 = new javax.swing.JMenuItem();
         gestionarenvio1 = new javax.swing.JMenuItem();
@@ -127,6 +130,7 @@ public final class General extends javax.swing.JFrame {
         contacto = new javax.swing.JMenuItem();
         Seguimiento = new javax.swing.JMenu();
         amov = new javax.swing.JMenuItem();
+        infoenvio = new javax.swing.JMenuItem();
         Proveedores = new javax.swing.JMenu();
         AgrProveedor = new javax.swing.JMenuItem();
         ModProveedor = new javax.swing.JMenuItem();
@@ -146,6 +150,7 @@ public final class General extends javax.swing.JFrame {
         Usuario1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Usuario1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
+        ajususer1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         ajususer1.setText("Ajuste de Usuario");
         ajususer1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,6 +159,7 @@ public final class General extends javax.swing.JFrame {
         });
         Usuario1.add(ajususer1);
 
+        ajuste1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         ajuste1.setText("Ajustes");
         ajuste1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -162,6 +168,7 @@ public final class General extends javax.swing.JFrame {
         });
         Usuario1.add(ajuste1);
 
+        contacto1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         contacto1.setText("Contacto");
         contacto1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -178,6 +185,7 @@ public final class General extends javax.swing.JFrame {
         Proveedores1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Proveedores1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
+        AgrProveedor1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         AgrProveedor1.setText("Añadir Proveedor");
         AgrProveedor1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -186,6 +194,7 @@ public final class General extends javax.swing.JFrame {
         });
         Proveedores1.add(AgrProveedor1);
 
+        ModProveedor1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         ModProveedor1.setText("Modificar Proveedor");
         Proveedores1.add(ModProveedor1);
 
@@ -197,6 +206,7 @@ public final class General extends javax.swing.JFrame {
         Seguimiento1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Seguimiento1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
+        amov1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         amov1.setText("Movimientos");
         amov1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -204,6 +214,10 @@ public final class General extends javax.swing.JFrame {
             }
         });
         Seguimiento1.add(amov1);
+
+        infoenvio1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        infoenvio1.setText("Info Envio");
+        Seguimiento1.add(infoenvio1);
 
         popMenu.add(Seguimiento1);
 
@@ -213,9 +227,11 @@ public final class General extends javax.swing.JFrame {
         Productos1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Productos1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
+        AgrProducto1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         AgrProducto1.setText("Agregar Producto");
         Productos1.add(AgrProducto1);
 
+        ModProducto1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         ModProducto1.setText("Modificar Producto");
         ModProducto1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -232,11 +248,13 @@ public final class General extends javax.swing.JFrame {
         Informe1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Informe1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
+        newinfo1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         newinfo1.setText("Nuevo Informe");
         Informe1.add(newinfo1);
 
-        jMenuItem4.setText("Buscar Informe");
-        Informe1.add(jMenuItem4);
+        BusInfo.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        BusInfo.setText("Buscar Informe");
+        Informe1.add(BusInfo);
 
         popMenu.add(Informe1);
 
@@ -246,6 +264,7 @@ public final class General extends javax.swing.JFrame {
         Envio1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Envio1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
+        CrearEnvio1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         CrearEnvio1.setText("Crear Envio");
         CrearEnvio1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -254,6 +273,7 @@ public final class General extends javax.swing.JFrame {
         });
         Envio1.add(CrearEnvio1);
 
+        gestionarenvio1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         gestionarenvio1.setText("Gestionar Envio");
         gestionarenvio1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -265,6 +285,7 @@ public final class General extends javax.swing.JFrame {
         popMenu.add(Envio1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Pantalla de Inicio");
 
         escritorio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 5));
         escritorio.setComponentPopupMenu(popMenu);
@@ -290,6 +311,7 @@ public final class General extends javax.swing.JFrame {
         inicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         inicio.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
+        Login.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         Login.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\usuario.png"));
         Login.setText("Login");
         Login.addActionListener(new java.awt.event.ActionListener() {
@@ -299,6 +321,7 @@ public final class General extends javax.swing.JFrame {
         });
         inicio.add(Login);
 
+        Register.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         Register.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\agregar-usuario.png"));
         Register.setText("Register");
         Register.addActionListener(new java.awt.event.ActionListener() {
@@ -308,6 +331,7 @@ public final class General extends javax.swing.JFrame {
         });
         inicio.add(Register);
 
+        Salir.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         Salir.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\salida.png"));
         Salir.setText("Salir");
         Salir.addActionListener(new java.awt.event.ActionListener() {
@@ -325,6 +349,7 @@ public final class General extends javax.swing.JFrame {
         Usuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Usuario.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
+        ajususer.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         ajususer.setText("Ajuste de Usuario");
         ajususer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -333,6 +358,7 @@ public final class General extends javax.swing.JFrame {
         });
         Usuario.add(ajususer);
 
+        ajustes.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         ajustes.setText("Ajustes");
         ajustes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -341,6 +367,7 @@ public final class General extends javax.swing.JFrame {
         });
         Usuario.add(ajustes);
 
+        contacto.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         contacto.setText("Contacto");
         contacto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -357,6 +384,7 @@ public final class General extends javax.swing.JFrame {
         Seguimiento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Seguimiento.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
+        amov.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         amov.setText("Movimientos");
         amov.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -364,6 +392,10 @@ public final class General extends javax.swing.JFrame {
             }
         });
         Seguimiento.add(amov);
+
+        infoenvio.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        infoenvio.setText("Info Envio");
+        Seguimiento.add(infoenvio);
 
         Menu.add(Seguimiento);
 
@@ -373,6 +405,7 @@ public final class General extends javax.swing.JFrame {
         Proveedores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Proveedores.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
+        AgrProveedor.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         AgrProveedor.setText("Añadir Proveedor");
         AgrProveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -381,6 +414,7 @@ public final class General extends javax.swing.JFrame {
         });
         Proveedores.add(AgrProveedor);
 
+        ModProveedor.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         ModProveedor.setText("Modificar Proveedor");
         Proveedores.add(ModProveedor);
 
@@ -392,9 +426,11 @@ public final class General extends javax.swing.JFrame {
         Productos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Productos.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
+        AgrProducto.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         AgrProducto.setText("Agregar Producto");
         Productos.add(AgrProducto);
 
+        ModProducto.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         ModProducto.setText("Modificar Producto");
         ModProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -411,9 +447,11 @@ public final class General extends javax.swing.JFrame {
         Informe.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Informe.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
+        newinfo.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         newinfo.setText("Nuevo Informe");
         Informe.add(newinfo);
 
+        jMenuItem1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jMenuItem1.setText("Buscar Informe");
         Informe.add(jMenuItem1);
 
@@ -425,6 +463,7 @@ public final class General extends javax.swing.JFrame {
         Envio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Envio.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
+        CrearEnvio.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         CrearEnvio.setText("Crear Envio");
         CrearEnvio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -433,6 +472,7 @@ public final class General extends javax.swing.JFrame {
         });
         Envio.add(CrearEnvio);
 
+        gestionarenvio.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         gestionarenvio.setText("Gestionar Envio");
         gestionarenvio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -451,7 +491,7 @@ public final class General extends javax.swing.JFrame {
 
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
         if (sis.getSesion() == null) {
-            Login lo = new Login(escritorio, sis,this);
+            Login lo = new Login(escritorio, sis, this);
             escritorio.add(lo);
             lo.setVisible(true);
         }
@@ -465,72 +505,27 @@ public final class General extends javax.swing.JFrame {
     }//GEN-LAST:event_RegisterActionPerformed
 
     private void ajususerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajususerActionPerformed
-        Usuario us = null;
-        try {
-            us = sis.obtenerSesion();
-        } catch (Exception ex) {
-            Logger.getLogger(General.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        int per = sis.obtenerCodigoUsuario(us);
-        if (per != 4 && per != 1) {
-            AjusteUsuario aus = new AjusteUsuario(sis);
-            escritorio.add(aus);
-            aus.setVisible(true);
-        } else {
-            ajususer.setVisible(false);
-        }
+        AjusteUsuario aus = new AjusteUsuario(sis);
+        escritorio.add(aus);
+        aus.setVisible(true);
     }//GEN-LAST:event_ajususerActionPerformed
 
     private void amovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amovActionPerformed
-        Usuario us = null;
-        try {
-            us = sis.obtenerSesion();
-        } catch (Exception ex) {
-            Logger.getLogger(General.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        int per = sis.obtenerCodigoUsuario(us);
-        if (per != 4) {
-            Seguimiento seg = new Seguimiento(sis);
-            escritorio.add(seg);
-            seg.setVisible(true);
-        } else {
-            amov.setVisible(false);
-        }
+        Seguimiento seg = new Seguimiento(sis);
+        escritorio.add(seg);
+        seg.setVisible(true);
     }//GEN-LAST:event_amovActionPerformed
 
     private void CrearEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearEnvioActionPerformed
-        Usuario us = null;
-        try {
-            us = sis.obtenerSesion();
-        } catch (Exception ex) {
-            Logger.getLogger(General.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        int per = sis.obtenerCodigoUsuario(us);
-        System.out.println(per);
-        if (per != 4) {
-            Encli ec = new Encli();
-            escritorio.add(ec);
-            ec.setVisible(true);
-        } else {
-            CrearEnvio.setVisible(false);
-        }
+        Encli ec = new Encli();
+        escritorio.add(ec);
+        ec.setVisible(true);
     }//GEN-LAST:event_CrearEnvioActionPerformed
 
     private void gestionarenvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gestionarenvioActionPerformed
-        Usuario us = null;
-        try {
-            us = sis.obtenerSesion();
-        } catch (Exception ex) {
-            Logger.getLogger(General.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        int per = sis.obtenerCodigoUsuario(us);
-        if (per != 4) {
-            Envio en = new Envio();
-            escritorio.add(en);
-            en.setVisible(true);
-        } else {
-            gestionarenvio.setVisible(false);
-        }
+        Envio en = new Envio();
+        escritorio.add(en);
+        en.setVisible(true);
     }//GEN-LAST:event_gestionarenvioActionPerformed
 
     private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
@@ -557,31 +552,31 @@ public final class General extends javax.swing.JFrame {
     }//GEN-LAST:event_AgrProveedorActionPerformed
 
     private void ajususer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajususer1ActionPerformed
-        // TODO add your handling code here:
+        ajususerActionPerformed(evt);
     }//GEN-LAST:event_ajususer1ActionPerformed
 
     private void ajuste1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajuste1ActionPerformed
-        // TODO add your handling code here:
+        ajustesActionPerformed(evt);
     }//GEN-LAST:event_ajuste1ActionPerformed
 
     private void AgrProveedor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgrProveedor1ActionPerformed
-        // TODO add your handling code here:
+        AgrProveedorActionPerformed(evt);
     }//GEN-LAST:event_AgrProveedor1ActionPerformed
 
     private void amov1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amov1ActionPerformed
-        // TODO add your handling code here:
+        amovActionPerformed(evt);
     }//GEN-LAST:event_amov1ActionPerformed
 
     private void ModProducto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModProducto1ActionPerformed
-        // TODO add your handling code here:
+        ModProductoActionPerformed(evt);
     }//GEN-LAST:event_ModProducto1ActionPerformed
 
     private void CrearEnvio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearEnvio1ActionPerformed
-        // TODO add your handling code here:
+        CrearEnvioActionPerformed(evt);
     }//GEN-LAST:event_CrearEnvio1ActionPerformed
 
     private void gestionarenvio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gestionarenvio1ActionPerformed
-        // TODO add your handling code here:
+        gestionarenvioActionPerformed(evt);
     }//GEN-LAST:event_gestionarenvio1ActionPerformed
 
     private void contactoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactoActionPerformed
@@ -591,7 +586,7 @@ public final class General extends javax.swing.JFrame {
     }//GEN-LAST:event_contactoActionPerformed
 
     private void contacto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contacto1ActionPerformed
-        // TODO add your handling code here:
+        contactoActionPerformed(evt);
     }//GEN-LAST:event_contacto1ActionPerformed
 
     /**
@@ -636,6 +631,7 @@ public final class General extends javax.swing.JFrame {
     private javax.swing.JMenuItem AgrProducto1;
     private javax.swing.JMenuItem AgrProveedor;
     private javax.swing.JMenuItem AgrProveedor1;
+    private javax.swing.JMenuItem BusInfo;
     private javax.swing.JMenuItem CrearEnvio;
     private javax.swing.JMenuItem CrearEnvio1;
     private javax.swing.JMenu Envio;
@@ -669,9 +665,10 @@ public final class General extends javax.swing.JFrame {
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenuItem gestionarenvio;
     private javax.swing.JMenuItem gestionarenvio1;
+    private javax.swing.JMenuItem infoenvio;
+    private javax.swing.JMenuItem infoenvio1;
     private javax.swing.JMenu inicio;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem newinfo;
     private javax.swing.JMenuItem newinfo1;
     private javax.swing.JPopupMenu popMenu;

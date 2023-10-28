@@ -26,7 +26,7 @@ public class AjusteUsuario extends javax.swing.JInternalFrame {
      */
     public AjusteUsuario(Sistema gene) {
         initComponents();
-        Icon icon = new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\usuario.png");
+        Icon icon = new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\circulo-de-usuario.png");
         setFrameIcon(icon);
         this.gen = gene;
     }

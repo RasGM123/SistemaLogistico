@@ -29,6 +29,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="ajususer1">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Ajuste de Usuario"/>
               </Properties>
               <Events>
@@ -37,6 +40,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="ajuste1">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Ajustes"/>
               </Properties>
               <Events>
@@ -45,6 +51,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="contacto1">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Contacto"/>
               </Properties>
               <Events>
@@ -74,6 +83,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="AgrProveedor1">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="A&#xf1;adir Proveedor"/>
               </Properties>
               <Events>
@@ -82,6 +94,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="ModProveedor1">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Modificar Proveedor"/>
               </Properties>
             </MenuItem>
@@ -108,11 +123,22 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="amov1">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Movimientos"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="amov1ActionPerformed"/>
               </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="infoenvio1">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Info Envio"/>
+              </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -137,11 +163,17 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="AgrProducto1">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Agregar Producto"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="ModProducto1">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Modificar Producto"/>
               </Properties>
               <Events>
@@ -171,11 +203,17 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="newinfo1">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Nuevo Informe"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
+            <MenuItem class="javax.swing.JMenuItem" name="BusInfo">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Buscar Informe"/>
               </Properties>
             </MenuItem>
@@ -202,6 +240,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="CrearEnvio1">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Crear Envio"/>
               </Properties>
               <Events>
@@ -210,6 +251,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="gestionarenvio1">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Gestionar Envio"/>
               </Properties>
               <Events>
@@ -250,6 +294,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="Login">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="new javax.swing.ImageIcon(System.getProperty(&quot;user.dir&quot;)+&quot;\\src\\main\\java\\imagenes\\minicon\\usuario.png&quot;)" type="code"/>
                 </Property>
@@ -261,6 +308,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="Register">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="new javax.swing.ImageIcon(System.getProperty(&quot;user.dir&quot;)+&quot;\\src\\main\\java\\imagenes\\minicon\\agregar-usuario.png&quot;)" type="code"/>
                 </Property>
@@ -272,6 +322,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="Salir">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="new javax.swing.ImageIcon(System.getProperty(&quot;user.dir&quot;)+&quot;\\src\\main\\java\\imagenes\\minicon\\salida.png&quot;)" type="code"/>
                 </Property>
@@ -304,6 +357,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="ajususer">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Ajuste de Usuario"/>
               </Properties>
               <Events>
@@ -312,6 +368,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="ajustes">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Ajustes"/>
               </Properties>
               <Events>
@@ -320,6 +379,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="contacto">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Contacto"/>
               </Properties>
               <Events>
@@ -349,11 +411,22 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="amov">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Movimientos"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="amovActionPerformed"/>
               </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="infoenvio">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Info Envio"/>
+              </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -378,6 +451,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="AgrProveedor">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="A&#xf1;adir Proveedor"/>
               </Properties>
               <Events>
@@ -386,6 +462,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="ModProveedor">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Modificar Proveedor"/>
               </Properties>
             </MenuItem>
@@ -412,11 +491,17 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="AgrProducto">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Agregar Producto"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="ModProducto">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Modificar Producto"/>
               </Properties>
               <Events>
@@ -446,11 +531,17 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="newinfo">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Nuevo Informe"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Buscar Informe"/>
               </Properties>
             </MenuItem>
@@ -477,6 +568,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="CrearEnvio">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Crear Envio"/>
               </Properties>
               <Events>
@@ -485,6 +579,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="gestionarenvio">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Times New Roman" size="12" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Gestionar Envio"/>
               </Properties>
               <Events>
@@ -498,6 +595,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="title" type="java.lang.String" value="Pantalla de Inicio"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="Menu"/>

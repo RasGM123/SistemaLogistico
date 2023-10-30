@@ -5,17 +5,23 @@
 package ventanas.emergentes;
 
 import Modelo.*;
+import java.time.LocalDateTime;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Rodrigo
  */
 public class Seguimiento extends javax.swing.JInternalFrame {
+
     private Sistema sis;
+    private LocalDateTime fecha;
+    private String estado;
     /**
      * Creates new form Seguimiento
+     *
      * @param gen
      */
     public Seguimiento(Sistema gen) {
@@ -23,19 +29,8 @@ public class Seguimiento extends javax.swing.JInternalFrame {
         Icon icon = new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\envio-rapido.png");
         setFrameIcon(icon);
         this.sis = gen;
-        iniciar();
     }
 
-    private void iniciar(){
-        Sesion ses = sis.getSesion();
-        Usuario us = ses.getUsuario();
-        if(sis.obtenerCodigoUsuario(us) !=1 ){
-            jAnadir.setVisible(true);
-        }else{
-            jAnadir.setVisible(false);
-        }
-    }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -47,11 +42,13 @@ public class Seguimiento extends javax.swing.JInternalFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        id = new javax.swing.JTextField();
         jAceptar = new javax.swing.JButton();
-        jAnadir = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        ListaMov = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jAceptar1 = new javax.swing.JButton();
+        Fecha = new javax.swing.JLabel();
+        Estado = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -61,40 +58,35 @@ public class Seguimiento extends javax.swing.JInternalFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 5));
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel2.setText("Número de Seguimiento:");
+        jLabel2.setText("Número:");
 
-        jTextField1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        id.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        id.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
         jAceptar.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jAceptar.setText("Aceptar");
         jAceptar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         jAceptar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jAnadir.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jAnadir.setText("Nuevo Movimiento");
-        jAnadir.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        jAnadir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        ListaMov.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        ListaMov.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        ListaMov.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Fecha", "Almacen", "Estado"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        jAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jAceptarActionPerformed(evt);
             }
         });
-        jScrollPane2.setViewportView(ListaMov);
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel1.setText("Fecha de creación:");
+
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel3.setText("Estado:");
+
+        jAceptar1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jAceptar1.setText("Salir");
+        jAceptar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        jAceptar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        Fecha.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+
+        Estado.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -103,15 +95,22 @@ public class Seguimiento extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addComponent(jAnadir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Fecha))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Estado))
+                    .addComponent(jAceptar1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,13 +119,19 @@ public class Seguimiento extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(Fecha))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jAnadir, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(Estado))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jAceptar1)
+                .addGap(10, 10, 10))
         );
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -134,14 +139,34 @@ public class Seguimiento extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAceptarActionPerformed
+        try {
+
+            Usuario us = sis.obtenerSesion();
+            if (us instanceof Cliente cli) {
+                Pedido pi = cli.buscarPedido(Integer.getInteger(id.getText()));
+                this.fecha = pi.getFechaCreacion();
+                this.estado = pi.getEstado();
+            }
+            
+            Fecha.setText(fecha.toString());
+            Estado.setText(estado);
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: de entrada de datos");
+        }
+    }//GEN-LAST:event_jAceptarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable ListaMov;
+    private javax.swing.JLabel Estado;
+    private javax.swing.JLabel Fecha;
+    private javax.swing.JTextField id;
     private javax.swing.JButton jAceptar;
-    private javax.swing.JButton jAnadir;
+    private javax.swing.JButton jAceptar1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

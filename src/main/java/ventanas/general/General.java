@@ -517,7 +517,7 @@ public final class General extends javax.swing.JFrame {
     }//GEN-LAST:event_amovActionPerformed
 
     private void CrearEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearEnvioActionPerformed
-        Encli ec = new Encli();
+        Encli ec = new Encli(sis.obtenerSesion(),sis);
         escritorio.add(ec);
         ec.setVisible(true);
     }//GEN-LAST:event_CrearEnvioActionPerformed

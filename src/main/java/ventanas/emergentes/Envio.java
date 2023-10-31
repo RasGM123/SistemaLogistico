@@ -35,6 +35,7 @@ public class Envio extends javax.swing.JInternalFrame {
         this.sis = s;
         this.escritorio = des;
         this.modelo = new DefaultListModel();
+        ponerListaPedidos();
     }
     
     private void ponerListaPedidos(){

@@ -220,6 +220,11 @@ public class Encli extends javax.swing.JInternalFrame {
         Estado.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         Estado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Preimposicion", "Proceso", "Poseeción del cartero", "Entregado" }));
         Estado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        Estado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EstadoActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel3.setText("Estado:");
@@ -366,6 +371,10 @@ public class Encli extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Error: no se pudo enviar el pedido!");
         }
     }//GEN-LAST:event_EnviarActionPerformed
+
+    private void EstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EstadoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -4,7 +4,6 @@
  */
 package Modelo;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class OrdenDeCompra {
     public OrdenDeCompra(int id, Proveedor proveedor, List<RenglonOrdenDeCompra> renglones) {
         this.id = id;
         this.fechaEmision = LocalDateTime.now();
-        this.fechaEmision = null;
+        this.fechaEntrega = null;
         this.proveedor = proveedor;
         this.renglones = renglones;
     }

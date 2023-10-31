@@ -18,7 +18,7 @@ public class Transportista extends Empleado{
     
     //setters & getters
 
-    public Vehiculo getVehiculo() {
+    public Vehiculo consultarVehiculo() {
         return vehiculo;
     }
 

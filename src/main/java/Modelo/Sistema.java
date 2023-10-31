@@ -35,6 +35,7 @@ public final class Sistema {
     private List<Almacen> almacenes;
     private List<OrdenDeCompra> ordenesDeCompra;
     private List<Proveedor> proveedores;
+    private List<Ticket> tickets;
     
     private Sesion sesion;
     
@@ -58,15 +59,13 @@ public final class Sistema {
         this.almacenes = new ArrayList();
         this.ordenesDeCompra = new ArrayList();
         this.proveedores = new ArrayList();
+        this.tickets = new ArrayList();
         
         //El Sistema no tiene iniciada la Sesion al crearse
         this.sesion = null;
         
         cargarDatos();
     }
-    
-    //Funcionalidades
-    
     
     //Carga algunos datos en el Sistema para poder probarlo
     public void cargarDatos() throws Exception{
@@ -80,6 +79,8 @@ public final class Sistema {
         crearUsuario(new Cliente(3, "cliente", "cliente", "jorgito@outlook.com", "Jorge", "Smith", "20111999", "3764 001122", "Argentina"));
         
     }
+    
+    //Funcionalidades
     
     /*
         ABM Usuario
@@ -99,15 +100,21 @@ public final class Sistema {
     }
     
     public Usuario buscarUsuario(String username) throws Exception{
-        if(usuarios.isEmpty()){
-            throw new Exception("El sistema no tiene ningún usuario cargado.");
-        }
-        
         if(!existeUsuario(username)){
             return null;
         }
         
         return usuarios.get(username);
+    }
+    
+    public Usuario buscarUsuarioPorDni(String dni){
+        for(Usuario u:this.usuarios.values()){
+            if(u.getDni().equals(dni)){
+                return u;
+            }
+        }
+        
+        return null;
     }
     
     public List<Usuario> listarUsuarios() throws Exception{
@@ -129,7 +136,7 @@ public final class Sistema {
         return lista;
     }
     
-    //Se permite editar solo email y password del Usuario
+    /*
     public void editarUsuario(Usuario usuario, String email, String password) throws Exception{
         if(!existeUsuario(usuario)){
             throw new Exception("El usuario que quiere editar  no existe.");
@@ -138,6 +145,7 @@ public final class Sistema {
         usuario.setEmail(email);
         usuario.setPassword(password);
     }
+    */
     
     public void borrarUsuario(Usuario usuario) throws Exception{
         if(!existeUsuario(usuario)){
@@ -247,6 +255,7 @@ public final class Sistema {
             
         }
         
+        //Codigo Transportista
         return 4;
     }
     
@@ -303,6 +312,10 @@ public final class Sistema {
 
     public Sesion getSesion() {
         return sesion;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
     }
 }
 

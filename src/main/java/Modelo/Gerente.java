@@ -177,9 +177,11 @@ public class Gerente extends Administrativo implements PerfilGerente{
     }
     
     @Override
-    public void editarProveedor(Proveedor proveedor, String nombre, String cuit){
-        proveedor.setNombre(nombre);
+    public void editarProveedor(Proveedor proveedor, String cuit, String nombre, String telefono, String direccion){
         proveedor.setCuit(cuit);
+        proveedor.setNombre(nombre);
+        proveedor.setTelefono(telefono);
+        proveedor.setDireccion(direccion);
     }
     
     @Override
@@ -191,9 +193,9 @@ public class Gerente extends Administrativo implements PerfilGerente{
         }
         
         //Se borran los Contratos del Proveedor
-        proveedor.getContratos().clear();
+        proveedor.listarContratos().clear();
         //Se borran las Evaluaciones del Proveedor
-        proveedor.getEvaluaciones().clear();
+        proveedor.listarEvaluaciones().clear();
         
         proveedores.remove(proveedor);
     }
@@ -213,7 +215,7 @@ public class Gerente extends Administrativo implements PerfilGerente{
     
     @Override
     public List<Evaluacion> listarEvaluaciones(Proveedor proveedor){
-        return proveedor.getEvaluaciones();
+        return proveedor.listarEvaluaciones();
     }
     
     @Override
@@ -223,7 +225,7 @@ public class Gerente extends Administrativo implements PerfilGerente{
     
     @Override
     public List<Contrato> listarContratos(Proveedor proveedor){
-        return proveedor.getContratos();
+        return proveedor.listarContratos();
     }
     
     /*
@@ -284,9 +286,9 @@ public class Gerente extends Administrativo implements PerfilGerente{
     }
     
     @Override
-    public void editarProducto(Producto producto, String nombre, TipoProducto tp){
+    public void editarProducto(Producto producto, String nombre, TipoProducto tipo){
         producto.setNombre(nombre);
-        producto.setTipoProducto(tp);
+        producto.setTipoProducto(tipo);
     }
     
     @Override
@@ -487,8 +489,6 @@ public class Gerente extends Administrativo implements PerfilGerente{
         return transportistas;
     }
     
-    //Listado de Proveedores con su tiempo promedio de entrega
-    //KEY = Proveedor, VALUE = tiempo promedio de entrega
     @Override
     public Map<Proveedor, Float> listarProveedoresPorEntregas(LocalDate inicio, LocalDate fin) {
         List<OrdenDeCompra> ordenes = sistema.getOrdenesDeCompra();

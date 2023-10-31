@@ -5,28 +5,31 @@
 package Modelo;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  *
  * @author Gustavo
  */
 class Remito {
-    private int id;
+    private LocalDateTime fechaCreacionPedido;
     private LocalDateTime fechaEntrega;
+    private List<RenglonPedido> renglones;
 
-    public Remito(int id, LocalDateTime fechaEntrega) {
-        this.id = id;
+    public Remito(LocalDateTime fechaCreacionPedido, LocalDateTime fechaEntrega, List<RenglonPedido> renglones) {
+        this.fechaCreacionPedido = fechaCreacionPedido;
         this.fechaEntrega = fechaEntrega;
+        this.renglones = renglones;
     }
     
     //setters & getters
 
-    public int getId() {
-        return id;
+    public LocalDateTime getFechaCreacionPedido() {
+        return fechaCreacionPedido;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setFechaCreacionPedido(LocalDateTime fechaCreacionPedido) {
+        this.fechaCreacionPedido = fechaCreacionPedido;
     }
 
     public LocalDateTime getFechaEntrega() {
@@ -35,5 +38,13 @@ class Remito {
 
     public void setFechaEntrega(LocalDateTime fechaEntrega) {
         this.fechaEntrega = fechaEntrega;
+    }
+
+    public List<RenglonPedido> getRenglones() {
+        return renglones;
+    }
+
+    public void setRenglones(List<RenglonPedido> renglones) {
+        this.renglones = renglones;
     }
 }

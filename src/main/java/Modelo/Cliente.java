@@ -18,9 +18,14 @@ import java.util.Map;
 public class Cliente extends Usuario implements PerfilCliente{
     private List<String> preferencias;
     private List<Pedido> pedidos;
+    private List<Ticket> tickets;
 
     public Cliente(int id, String username, String password, String email, String nombres, String apellidos, String dni, String telefono, String direccion) {
         super(id, username, password, email, nombres, apellidos, dni, telefono, direccion);
+        
+        this.preferencias = null;
+        this.pedidos = null;
+        this.tickets = null;
     }
     
     //Funcionalidades
@@ -85,6 +90,31 @@ public class Cliente extends Usuario implements PerfilCliente{
         movimientos.sort((Movimiento a, Movimiento b) -> -1*a.getFecha().compareTo(b.getFecha()));
         
         return movimientos;
+    }
+    
+    //Funcionalidad mensajeria
+
+    @Override
+    public void crearTicket(String motivo, String reclamo) {
+        Ticket ticket = new Ticket(this.getId(), motivo, reclamo);
+        
+        this.tickets.add(ticket);
+    }
+
+    @Override
+    public List<Ticket> listarTickets() {
+        return this.getTickets();
+    }
+
+    @Override
+    public Ticket buscarTicket(int idTicket) {
+        for(Ticket t:this.tickets){
+            if(t.getId() == idTicket){
+                return t;
+            }
+        }
+        
+        return null;
     }
     
     //devuelve la lista de tipos de producto mas pedidos por el cliente con una cantidad maxima de cantidadPreferencias
@@ -164,5 +194,13 @@ public class Cliente extends Usuario implements PerfilCliente{
 
     public void setPedidos(List<Pedido> pedidos) {
         this.pedidos = pedidos;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
     }
 }

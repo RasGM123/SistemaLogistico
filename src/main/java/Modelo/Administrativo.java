@@ -112,14 +112,63 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
     }
     
     @Override
-    public void generarRemito(Pedido pedido){
-        pedido.generarRemito();
+    public Remito generarRemito(Pedido pedido){
+        return pedido.generarRemito();
+    }
+    
+    //Funciones relacionadas con mensajeria
+    @Override
+    public void responderTicket(Ticket ticket, String respuesta) {
+        ticket.setRespuesta(respuesta);
     }
 
     @Override
-    public Remito obtenerRemito(Pedido pedido) {
-        return pedido.getRemito();
+    public Ticket buscarTicket(int idIicket) {
+        List<Ticket> tickets = sistema.getTickets();
+        
+        for(Ticket t:tickets){
+            if(t.getId() == idIicket){
+                return t;
+            }
+        }
+        
+        return null;
     }
+
+    @Override
+    public List<Ticket> listarTodosLosTickets() {
+        return sistema.getTickets();
+    }
+
+    @Override
+    public List<Ticket> listarTicketsPendientes() {
+        List<Ticket> tickets = sistema.getTickets();
+        List<Ticket> lista = new ArrayList();
+        
+        for(Ticket t:tickets){
+            if(t.getRespuesta() == null){
+                lista.add(t);
+            }
+        }
+        
+        return lista;
+    }
+
+    @Override
+    public List<Ticket> listarTicketsSolucionados() {
+        List<Ticket> tickets = sistema.getTickets();
+        List<Ticket> lista = new ArrayList();
+        
+        for(Ticket t:tickets){
+            if(t.getRespuesta() != null){
+                lista.add(t);
+            }
+        }
+        
+        return lista;
+    }
+    
+    
     
     /*
         CRUD Transportista
@@ -132,18 +181,19 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
         return transportistas.get(dni);
     }
     
-    //Busca 1 Transportista por nombre y apellido
+    //Devuelve una lista de los Transportistas por nombre y apellido
     @Override
-    public Transportista buscarTransportista(String nombres, String apellidos){
+    public List<Transportista> buscarTransportista(String nombres, String apellidos){
         Map<String, Transportista> transportistas = sistema.getTransportistas();
+        List<Transportista> lista = new ArrayList();
         
         for(Transportista t:transportistas.values()){
-            if(t.getNombres().equalsIgnoreCase(nombres) && t.getApellidos().equals(apellidos)){
-                return t;
+            if(t.getNombres().equalsIgnoreCase(nombres) || t.getApellidos().equalsIgnoreCase(apellidos)){
+                lista.add(t);
             }
         }
         
-        return null;
+        return lista;
     }
     
     @Override
@@ -305,7 +355,7 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
     }
 
     @Override
-    public RenglonInventario buscarProducto(Almacen almacen, Producto producto) {
+    public RenglonInventario buscarProductoEnAlmacen(Almacen almacen, Producto producto) {
         return almacen.buscarRenglon(producto);
     }
 

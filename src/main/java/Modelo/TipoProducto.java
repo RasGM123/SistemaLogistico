@@ -10,7 +10,7 @@ import java.util.Objects;
  *
  * @author Gustavo
  */
-class TipoProducto {
+public class TipoProducto {
     private int id;
     private String nombre;
 

@@ -517,13 +517,13 @@ public final class General extends javax.swing.JFrame {
     }//GEN-LAST:event_amovActionPerformed
 
     private void CrearEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearEnvioActionPerformed
-        Encli ec = new Encli(sis.obtenerSesion(),sis);
+        Encli ec = new Encli(sis);
         escritorio.add(ec);
         ec.setVisible(true);
     }//GEN-LAST:event_CrearEnvioActionPerformed
 
     private void gestionarenvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gestionarenvioActionPerformed
-        Envio en = new Envio();
+        Envio en = new Envio(sis,escritorio);
         escritorio.add(en);
         en.setVisible(true);
     }//GEN-LAST:event_gestionarenvioActionPerformed

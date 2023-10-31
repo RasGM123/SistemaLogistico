@@ -16,15 +16,12 @@ public class Evaluacion {
   private LocalDateTime fecha;
   private int puntuacion;
   private String comentario;
-  
-  private Proveedor proveedor;
 
-    public Evaluacion(int id, int puntuacion, String comentario, Proveedor proveedor) {
+    public Evaluacion(int id, int puntuacion, String comentario) {
         this.id = id;
         this.fecha = LocalDateTime.now();
         this.puntuacion = puntuacion;
         this.comentario = comentario;
-        this.proveedor = proveedor;
     }
 
   //Getters and setters
@@ -59,13 +56,5 @@ public class Evaluacion {
 
     public void setComentario(String comentario) {
         this.comentario = comentario;
-    }
-
-    public Proveedor getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
     }
 }

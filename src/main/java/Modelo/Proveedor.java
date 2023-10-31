@@ -120,7 +120,7 @@ public class Proveedor {
         this.direccion = direccion;
     }
 
-    public List<Contrato> getContratos() {
+    public List<Contrato> listarContratos() {
         return contratos;
     }
 
@@ -128,7 +128,7 @@ public class Proveedor {
         this.contratos = contratos;
     }
 
-    public List<Evaluacion> getEvaluaciones() {
+    public List<Evaluacion> listarEvaluaciones() {
         return evaluaciones;
     }
 

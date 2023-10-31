@@ -19,7 +19,6 @@ public class Pedido {
 
     private Ruta ruta;
     private Transportista transportista;
-    private Remito remito;
     private List<RenglonPedido> renglones;
     private List<Movimiento> movimientos;
     
@@ -31,7 +30,6 @@ public class Pedido {
         this.estado = "Preparándose";
         this.ruta = ruta;
         this.transportista = null;
-        this.remito = null;
         this.renglones = renglones;
         this.movimientos = new ArrayList();
     }
@@ -42,7 +40,7 @@ public class Pedido {
         
         //Si el Pedido tiene un Transportista cuando se intenta asignarle uno, se cambia el Transportista anterior por el nuevo
         if(this.transportista!=null){
-            Vehiculo vehiculo = this.getTransportista().getVehiculo();
+            Vehiculo vehiculo = this.getTransportista().consultarVehiculo();
             
             //Se libera el Vehiculo del Transportista anterior
             this.transportista.asignarVehiculo(null);
@@ -57,8 +55,8 @@ public class Pedido {
         this.transportista = transportista;
     }
 
-    public void generarRemito() {
-        remito = new Remito(this.id, LocalDateTime.now());
+    public Remito generarRemito() {
+        return new Remito(this.getFechaCreacion(), LocalDateTime.now(), this.getRenglones());
     }
     
     public void cambiarEstado(String estado){
@@ -139,14 +137,6 @@ public class Pedido {
 
     public void setTransportista(Transportista transportista) {
         this.transportista = transportista;
-    }
-
-    public Remito getRemito() {
-        return remito;
-    }
-
-    public void setRemito(Remito remito) {
-        this.remito = remito;
     }
 
     public List<RenglonPedido> getRenglones() {

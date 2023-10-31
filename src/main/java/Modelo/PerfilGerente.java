@@ -34,7 +34,7 @@ public interface PerfilGerente {
     public void crearProveedor(Proveedor proveedor) throws Exception;
     public Proveedor buscarProveedor(String nombre);
     public List<Proveedor> listarProveedores();
-    public void editarProveedor(Proveedor proveedor, String nombre, String cuit);
+    public void editarProveedor(Proveedor proveedor, String cuit, String nombre, String telefono, String direccion);
     public void borrarProveedor(Proveedor proveedor) throws Exception;
     
     //Operaciones con Proveedor
@@ -50,7 +50,7 @@ public interface PerfilGerente {
     
     //CRUD Producto
     public void crearProducto(Producto producto) throws Exception;
-    public void editarProducto(Producto producto, String nombre, TipoProducto tp);
+    public void editarProducto(Producto producto, String nombre, TipoProducto tipo);
     public void borrarProducto(Producto producto) throws Exception;
     
     //CRUD TipoProducto
@@ -74,8 +74,7 @@ public interface PerfilGerente {
     //Listado de Tranportitastas y su cantidad de entregas en comprendidas entre 2 fechas
     //KEY = Transportista, VALUE = cantidad de entregas
     public Map<Transportista, Integer> listarTransportistasPorEntregas(LocalDate inicio, LocalDate fin) throws Exception;
-    //Listado de Proveedores con su tiempo promedio de entrega
-    //KEY = Proveedor, VALUE = tiempo promedio de entrega
+    //Devuelve un mapa donde KEY = Proveedor, VALUE = tiempo promedio de entrega comprendido entre 2 fechas
     public Map<Proveedor, Float> listarProveedoresPorEntregas(LocalDate inicio, LocalDate fin);
     //Cantidad de usuarios registrados comprendido entre 2 fechas
     public int numeroUsuariosRegistrados(LocalDate inicio, LocalDate fin) throws Exception;

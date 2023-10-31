@@ -25,12 +25,18 @@ public interface PerfilAdministrativo {
     public void cambiarEstado(Pedido pedido, String estado);
     public void asignarRuta(Pedido pedido, Ruta ruta);
     public void asignarTransportista(Pedido pedido, Transportista transportista);
-    public void generarRemito(Pedido pedido);
-    public Remito obtenerRemito(Pedido pedido);
+    public Remito generarRemito(Pedido pedido);
+    
+    //Funciones relacionadas con mensajeria
+    public void responderTicket(Ticket ticket, String respuesta);
+    public Ticket buscarTicket(int idIicket);
+    public List<Ticket> listarTodosLosTickets();
+    public List<Ticket> listarTicketsPendientes();
+    public List<Ticket> listarTicketsSolucionados();
     
     //CRUD Transportista
     public Transportista buscarTransportista(String dni);
-    public Transportista buscarTransportista(String nombres, String apellidos);
+    public List<Transportista> buscarTransportista(String nombres, String apellidos);
     public List<Transportista> listarTransportistas();
     
     //CRUD Vehiculo
@@ -52,7 +58,7 @@ public interface PerfilAdministrativo {
     
     //Gestion Almacen
     public void agregarProducto(Almacen almacen, Producto producto, int cantidad) throws Exception;
-    public RenglonInventario buscarProducto(Almacen almacen, Producto producto);
+    public RenglonInventario buscarProductoEnAlmacen(Almacen almacen, Producto producto);
     public List<RenglonInventario> listarProductos(Almacen almacen);
     public void cambiarCantidadProducto(Almacen almacen, Producto producto, int cantidad) throws Exception;
     public void borrarProducto(Almacen almacen, Producto producto) throws Exception;

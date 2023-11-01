@@ -416,6 +416,11 @@ public final class General extends javax.swing.JFrame {
 
         ModProveedor.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         ModProveedor.setText("Modificar Proveedor");
+        ModProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ModProveedorActionPerformed(evt);
+            }
+        });
         Proveedores.add(ModProveedor);
 
         Menu.add(Proveedores);
@@ -548,7 +553,9 @@ public final class General extends javax.swing.JFrame {
     }//GEN-LAST:event_ajustesActionPerformed
 
     private void AgrProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgrProveedorActionPerformed
-        // TODO add your handling code here:
+        AgregarProveedores ap = new AgregarProveedores(sis);
+        escritorio.add(ap);
+        ap.setVisible(true);
     }//GEN-LAST:event_AgrProveedorActionPerformed
 
     private void ajususer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajususer1ActionPerformed
@@ -588,6 +595,12 @@ public final class General extends javax.swing.JFrame {
     private void contacto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contacto1ActionPerformed
         contactoActionPerformed(evt);
     }//GEN-LAST:event_contacto1ActionPerformed
+
+    private void ModProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModProveedorActionPerformed
+        ModProveedores mp = new ModProveedores(sis, escritorio);
+        escritorio.add(mp);
+        mp.setVisible(true);
+    }//GEN-LAST:event_ModProveedorActionPerformed
 
     /**
      * @param args the command line arguments

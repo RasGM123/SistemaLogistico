@@ -433,6 +433,11 @@ public final class General extends javax.swing.JFrame {
 
         AgrProducto.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         AgrProducto.setText("Agregar Producto");
+        AgrProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AgrProductoActionPerformed(evt);
+            }
+        });
         Productos.add(AgrProducto);
 
         ModProducto.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -538,7 +543,9 @@ public final class General extends javax.swing.JFrame {
     }//GEN-LAST:event_SalirActionPerformed
 
     private void ModProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModProductoActionPerformed
-        // TODO add your handling code here:
+        ModProducto mp = new ModProducto(sis);
+        escritorio.add(mp);
+        mp.setVisible(true);
     }//GEN-LAST:event_ModProductoActionPerformed
 
     private void ajustesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajustesActionPerformed
@@ -601,6 +608,12 @@ public final class General extends javax.swing.JFrame {
         escritorio.add(mp);
         mp.setVisible(true);
     }//GEN-LAST:event_ModProveedorActionPerformed
+
+    private void AgrProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgrProductoActionPerformed
+        AgregarProducto ap = new AgregarProducto(sis);
+        escritorio.add(ap);
+        ap.setVisible(true);
+    }//GEN-LAST:event_AgrProductoActionPerformed
 
     /**
      * @param args the command line arguments

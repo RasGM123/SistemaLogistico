@@ -5,6 +5,7 @@
 package ventanas.emergentes;
 
 import Modelo.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,13 +14,16 @@ import Modelo.*;
 public class ConProveedor extends javax.swing.JInternalFrame {
 
     private Sistema sis;
+    private Proveedor pro;
     /**
      * Creates new form ConProveedor
      * @param s
+     * @param p
      */
-    public ConProveedor(Sistema s) {
+    public ConProveedor(Sistema s, Proveedor p) {
         initComponents();
         this.sis = s;
+        this.pro = p;
     }
 
     /**
@@ -34,7 +38,7 @@ public class ConProveedor extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        descripcion = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         Fin = new com.toedter.calendar.JDateChooser();
@@ -50,9 +54,9 @@ public class ConProveedor extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Descripción:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 24))); // NOI18N
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        descripcion.setColumns(20);
+        descripcion.setRows(5);
+        jScrollPane1.setViewportView(descripcion);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -86,6 +90,11 @@ public class ConProveedor extends javax.swing.JInternalFrame {
         Aceptar.setText("Aceptar");
         Aceptar.setToolTipText("");
         Aceptar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        Aceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AceptarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -134,16 +143,30 @@ public class ConProveedor extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarActionPerformed
+        if(Inicio != null && Fin !=null){
+            Usuario us = sis.obtenerSesion();
+            if(us instanceof Gerente gen){
+                Contrato con = new Contrato(gen.listarContratos(pro).size()+1, descripcion.getText(), Inicio.getDate(), Fin.getDate());
+                gen.agregarContrato(pro, con);
+                JOptionPane.showMessageDialog(null, "Contrato creado!");
+                dispose();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Agrege los datos correspondientes!");
+        }
+    }//GEN-LAST:event_AceptarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Aceptar;
     private com.toedter.calendar.JDateChooser Fin;
     private com.toedter.calendar.JDateChooser Inicio;
+    private javax.swing.JTextArea descripcion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

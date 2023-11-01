@@ -246,7 +246,9 @@ public class ModProveedores extends javax.swing.JInternalFrame {
 
     private void ContratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ContratoActionPerformed
         if(proveedor != null){
-            
+            ConProveedor cp = new ConProveedor(sis, proveedor);
+            d.add(cp);
+            cp.setVisible(true);
         }
     }//GEN-LAST:event_ContratoActionPerformed
 

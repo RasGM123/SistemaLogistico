@@ -4,6 +4,7 @@
  */
 package ventanas.emergentes;
 
+import Modelo.*;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
@@ -15,8 +16,9 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form AgregarProducto
+     * @param s
      */
-    public AgregarProducto() {
+    public AgregarProducto(Sistema s) {
         initComponents();
         Icon icon = new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\cajas.png");
         setFrameIcon(icon);

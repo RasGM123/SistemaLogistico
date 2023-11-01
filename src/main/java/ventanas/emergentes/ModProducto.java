@@ -4,6 +4,7 @@
  */
 package ventanas.emergentes;
 
+import Modelo.*;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
@@ -13,13 +14,16 @@ import javax.swing.ImageIcon;
  */
 public class ModProducto extends javax.swing.JInternalFrame {
 
+    private Sistema sis;
     /**
      * Creates new form ModProducto
+     * @param s
      */
-    public ModProducto() {
+    public ModProducto(Sistema s) {
         initComponents();
         Icon icon = new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\cajas.png");
         setFrameIcon(icon);
+        this.sis = s;
     }
 
     /**

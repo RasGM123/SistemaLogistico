@@ -16,18 +16,12 @@ import java.util.Map;
  * @author Gustavo
  */
 public final class Sistema {
-    
     //Sistema es SINGLETON
     private static Sistema instancia;
-    
     //Clave = dni
     private Map<String,Usuario> usuarios;
-    //Clave = dni
-    private Map<String,Cliente> clientes;
     //Clave = id Pedido
     private Map<Integer,Pedido> pedidos;
-    //Clave = dni
-    private Map<String,Transportista> transportistas;
     private List<Vehiculo> vehiculos;
     private List<Ruta> rutas;
     private List<Producto> productos;
@@ -49,9 +43,7 @@ public final class Sistema {
     
     private Sistema() throws Exception{
         this.usuarios = new HashMap();
-        this.clientes = new HashMap();
         this.pedidos = new HashMap();
-        this.transportistas = new HashMap();
         this.vehiculos = new ArrayList();
         this.rutas = new ArrayList();
         this.productos = new ArrayList();
@@ -70,13 +62,13 @@ public final class Sistema {
     //Carga algunos datos en el Sistema para poder probarlo
     public void cargarDatos() throws Exception{
         //se crea un Usuario Gerente para probar el sistema
-        crearUsuario(new Gerente("113300022299", 1, "gerente", "gerente", "elon@musk.com", "Elon", "Mosquito", "33000222", "3788 671100", "CASA"));
+        crearUsuario(new Gerente("993300022200", "gerente", "gerente", "elon@musk.com", "Elon", "Mosquito", "33000222", "3788 671100", "CASA"));
         
         //se crea un Usuario Administrativo para probar el sistema
-        crearUsuario(new Administrativo("119900022299", 2, "empleado", "empleado", "marcos@gmail.com", "Marcos", "Zuck", "99000222", "3700 991100", "MARTE"));
+        crearUsuario(new Administrativo("119900022299", "empleado", "empleado", "marcos@gmail.com", "Marcos", "Zuck", "99000222", "3700 991100", "MARTE"));
         
         //se crea un Usuario Cliente para probar el sistema
-        crearUsuario(new Cliente(3, "cliente", "cliente", "jorgito@outlook.com", "Jorge", "Smith", "20111999", "3764 001122", "Argentina"));
+        crearUsuario(new Cliente("cliente", "cliente", "jorgito@outlook.com", "Jorge", "Smith", "20111999", "3764 001122", "Argentina"));
         
     }
     
@@ -95,6 +87,8 @@ public final class Sistema {
         if(existeCorreo(usuario.getEmail())){
             throw new Exception("El correo "+usuario.getEmail()+" no está disponible.");
         }
+        
+        usuario.setId(generarId(usuario));
         
         usuarios.put(usuario.getUsername(), usuario);
     }
@@ -135,17 +129,6 @@ public final class Sistema {
         
         return lista;
     }
-    
-    /*
-    public void editarUsuario(Usuario usuario, String email, String password) throws Exception{
-        if(!existeUsuario(usuario)){
-            throw new Exception("El usuario que quiere editar  no existe.");
-        }
-        
-        usuario.setEmail(email);
-        usuario.setPassword(password);
-    }
-    */
     
     public void borrarUsuario(Usuario usuario) throws Exception{
         if(!existeUsuario(usuario)){
@@ -231,7 +214,7 @@ public final class Sistema {
             usuarioAdministrativo.desconectar();
         }
         
-        sesion.setUsuario(null);
+        sesion.cerrar();
     }
     
     //Devuelve un Usuario si se inició sesión correctamente, caso contrario devuelve null
@@ -271,6 +254,18 @@ public final class Sistema {
     }
 
     public Map<String, Cliente> getClientes() {
+        Map<String, Cliente> clientes = new HashMap();
+        Cliente cliente;
+        Iterator iter = clientes.entrySet().iterator();
+        
+        while(iter.hasNext()){
+            cliente = (Cliente)iter.next();
+            
+            if(cliente instanceof Cliente){
+                clientes.put(cliente.getDni(), cliente);
+            }
+        }
+        
         return clientes;
     }
 
@@ -279,6 +274,18 @@ public final class Sistema {
     }
 
     public Map<String, Transportista> getTransportistas() {
+        Map<String, Transportista> transportistas = new HashMap();
+        Transportista transportista;
+        Iterator iter = transportistas.entrySet().iterator();
+        
+        while(iter.hasNext()){
+            transportista = (Transportista)iter.next();
+            
+            if(transportista instanceof Transportista){
+                transportistas.put(transportista.getDni(), transportista);
+            }
+        }
+        
         return transportistas;
     }
 
@@ -316,6 +323,11 @@ public final class Sistema {
 
     public List<Ticket> getTickets() {
         return tickets;
+    }
+    
+    //SACAR DESPUES DE IMPLMENTAR PERSISTENCIA
+    public int generarId(Object o){
+        return o.hashCode();
     }
 }
 

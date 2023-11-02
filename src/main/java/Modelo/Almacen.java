@@ -18,72 +18,24 @@ public class Almacen {
     private String nombreSucursal;
     private boolean esCentroDistribucion;
     private String direccion;
-
     private List<RenglonInventario> renglones;
 
-    public Almacen(int id, String nombre, boolean esCentroDistribucion, String direccion) {
-        this.id = id;
+    public Almacen() {
+    }
+
+    public Almacen(String nombre, boolean esCentroDistribucion, String direccion) {
         this.nombreSucursal = nombre;
         this.esCentroDistribucion = esCentroDistribucion;
         this.direccion = direccion;
         this.renglones = new ArrayList();
     }
 
-    //Funcionalidades
-    
-    public void agregarProducto(Producto producto, int cantidad) throws Exception{
-        RenglonInventario renglon = buscarRenglon(producto);
-        
-        if(renglon == null){
-            renglones.add(new RenglonInventario(this.getId(), cantidad, producto));
-        }else{
-            renglon.setCantidad(renglon.getCantidad()+cantidad);
-        }
-    }
-    
-    public RenglonInventario buscarRenglon(Producto producto){
-        
-        for(RenglonInventario renglon:renglones){
-            if(renglon.getProducto().equals(producto)){
-                return renglon;
-            }
-        }
-        
-        return null;
-    }
-    
-    public List<RenglonInventario> listarProductos(){
-        return renglones;
-    }
-    
-    public void cambiarCantidadProducto(Producto producto, int cantidad) throws Exception{
-        if(cantidad<0){
-            throw new Exception("La cantidad de un producto no puede ser menor a 0.");
-        }
-        
-        RenglonInventario renglon = buscarRenglon(producto);
-        
-        if(renglon == null){
-            throw new Exception("Este producto no fue cargado al almacen.");
-        }else{
-            renglon.setCantidad(cantidad);
-        }
-    }
-    
-    public void borrarProducto(Producto producto) throws Exception{
-        RenglonInventario renglon = buscarRenglon(producto);
-        
-        if(renglon == null){
-            throw new Exception("Este almacen no tiene el producto "+producto.getNombre()+" cargado.");
-        }
-        
-        renglones.remove(renglon);
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 53 * hash + Objects.hashCode(this.nombreSucursal);
+        hash = 97 * hash + Objects.hashCode(this.nombreSucursal);
+        hash = 97 * hash + (this.esCentroDistribucion ? 1 : 0);
+        hash = 97 * hash + Objects.hashCode(this.direccion);
         return hash;
     }
 
@@ -99,48 +51,97 @@ public class Almacen {
             return false;
         }
         final Almacen other = (Almacen) obj;
-        return Objects.equals(this.nombreSucursal, other.nombreSucursal);
+        return this.id == other.id;
+    }
+
+    //Funcionalidades
+    
+    public void agregarProducto(Producto producto, int cantidad) throws Exception{
+        RenglonInventario renglon = buscarRenglon(producto);
+        
+        if(renglon == null){
+            renglones.add(new RenglonInventario(cantidad, producto));
+        }else{
+            renglon.cambiarCantidad(renglon.getCantidad()+cantidad);
+        }
     }
     
-    //setters & getters
-
-    public int getId() {
-        return id;
+    public RenglonInventario buscarRenglon(Producto producto){
+        
+        for(RenglonInventario renglon:renglones){
+            if(renglon.getProducto().equals(producto)){
+                return renglon;
+            }
+        }
+        
+        return null;
     }
+    
+    public void cambiarCantidadProducto(Producto producto, int cantidad) throws Exception{
+        if(cantidad<0){
+            throw new Exception("La cantidad de un producto no puede ser menor a 0.");
+        }
+        
+        RenglonInventario renglon = buscarRenglon(producto);
+        
+        if(renglon == null){
+            throw new Exception("Este producto no fue cargado al almacen.");
+        }else{
+            renglon.cambiarCantidad(cantidad);
+        }
+    }
+    
+    public void borrarProducto(Producto producto) throws Exception{
+        RenglonInventario renglon = buscarRenglon(producto);
+        
+        if(renglon == null){
+            throw new Exception("Este almacen no tiene el producto "+producto.getNombre()+" cargado.");
+        }
+        
+        renglones.remove(renglon);
+    }
+    
+    //Setters
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getNombreSucursal() {
-        return nombreSucursal;
     }
 
     public void setNombreSucursal(String nombreSucursal) {
         this.nombreSucursal = nombreSucursal;
     }
 
-    public boolean isEsCentroDistribucion() {
-        return esCentroDistribucion;
-    }
-
     public void setEsCentroDistribucion(boolean esCentroDistribucion) {
         this.esCentroDistribucion = esCentroDistribucion;
-    }
-
-    public String getDireccion() {
-        return direccion;
     }
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
 
-    public List<RenglonInventario> getRenglones() {
-        return renglones;
-    }
-
     public void setRenglones(List<RenglonInventario> renglones) {
         this.renglones = renglones;
+    }
+    
+    //Getters
+
+    public int getId() {
+        return id;
+    }
+
+    public String getNombreSucursal() {
+        return nombreSucursal;
+    }
+
+    public boolean isEsCentroDistribucion() {
+        return esCentroDistribucion;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public List<RenglonInventario> getRenglones() {
+        return renglones;
     }
 }

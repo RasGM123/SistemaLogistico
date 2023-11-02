@@ -19,21 +19,19 @@ public class Sesion {
         this.ocurrencia = ocurrencia;
     }
     
-    //setters & getters
+    //Funcionalidades
+    
+    public void cerrar(){
+        this.usuario = null;
+    }
+    
+    //Getters
 
     public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
     public LocalDateTime getOcurrencia() {
         return ocurrencia;
-    }
-
-    public void setOcurrencia(LocalDateTime ocurrencia) {
-        this.ocurrencia = ocurrencia;
     }
 }

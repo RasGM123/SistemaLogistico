@@ -4,6 +4,8 @@
  */
 package Modelo;
 
+import java.util.Objects;
+
 /**
  *
  * @author Gustavo
@@ -15,44 +17,72 @@ class RenglonOrdenDeCompra {
     
     private Producto producto;
 
-    public RenglonOrdenDeCompra(int id, int cantidad, double precioUnitario, Producto producto) {
-        this.id = id;
+    public RenglonOrdenDeCompra() {
+    }
+
+    public RenglonOrdenDeCompra(int cantidad, double precioUnitario, Producto producto) {
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
         this.producto = producto;
     }
-    
-    //setters & getters
 
-    public int getId() {
-        return id;
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 67 * hash + this.cantidad;
+        hash = 67 * hash + (int) (Double.doubleToLongBits(this.precioUnitario) ^ (Double.doubleToLongBits(this.precioUnitario) >>> 32));
+        hash = 67 * hash + Objects.hashCode(this.producto);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final RenglonOrdenDeCompra other = (RenglonOrdenDeCompra) obj;
+        return this.id == other.id;
+    }
+    
+    //Setters
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getCantidad() {
-        return cantidad;
     }
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
 
-    public double getPrecioUnitario() {
-        return precioUnitario;
-    }
-
     public void setPrecioUnitario(double precioUnitario) {
         this.precioUnitario = precioUnitario;
     }
 
-    public Producto getProducto() {
-        return producto;
-    }
-
     public void setProducto(Producto producto) {
         this.producto = producto;
+    }
+    
+    //Getters
+
+    public int getId() {
+        return id;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public double getPrecioUnitario() {
+        return precioUnitario;
+    }
+
+    public Producto getProducto() {
+        return producto;
     }
 }

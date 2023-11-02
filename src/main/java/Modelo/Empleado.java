@@ -11,8 +11,11 @@ package Modelo;
 public abstract class Empleado extends Usuario{
     private String cuil;
 
-    public Empleado(String cuil, int id, String username, String password, String email, String nombres, String apellidos, String dni, String telefono, String direccion) {
-        super(id, username, password, email, nombres, apellidos, dni, telefono, direccion);
+    public Empleado() {
+    }
+
+    public Empleado(String cuil, String username, String password, String email, String nombres, String apellidos, String dni, String telefono, String direccion) {
+        super(username, password, email, nombres, apellidos, dni, telefono, direccion);
         this.cuil = cuil;
     }
     
@@ -23,13 +26,15 @@ public abstract class Empleado extends Usuario{
         this.setCuil(cuil);
     }
     
-    //setters & getters
+    //Setters
+    
+    public void setCuil(String cuil) {
+        this.cuil = cuil;
+    }
+    
+    //Getters
 
     public String getCuil() {
         return cuil;
-    }
-
-    public void setCuil(String cuil) {
-        this.cuil = cuil;
     }
 }

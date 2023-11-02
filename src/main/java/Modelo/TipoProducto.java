@@ -10,19 +10,21 @@ import java.util.Objects;
  *
  * @author Gustavo
  */
-public class TipoProducto {
+class TipoProducto {
     private int id;
     private String nombre;
 
-    public TipoProducto(int id, String nombre) {
-        this.id = id;
+    public TipoProducto() {
+    }
+
+    public TipoProducto(String nombre) {
         this.nombre = nombre;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 61 * hash + Objects.hashCode(this.nombre);
+        int hash = 3;
+        hash = 53 * hash + Objects.hashCode(this.nombre);
         return hash;
     }
 
@@ -38,24 +40,26 @@ public class TipoProducto {
             return false;
         }
         final TipoProducto other = (TipoProducto) obj;
-        return Objects.equals(this.nombre, other.nombre);
+        return this.id == other.id;
     }
     
-    //setters & getters
-
-    public int getId() {
-        return id;
-    }
+    //Setters
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    
+    //Getters
+
+    public int getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
     }
 }

@@ -13,21 +13,22 @@ import java.util.Objects;
  * @author Rodrigo
  */
 public class Proveedor {
+    private int id;
+    private String cuit;
+    private String nombre;
+    private String email;
+    private String telefono;
+    private String direccion;
+    private List<Contrato> contratos;
+    private List<Evaluacion> evaluaciones;
 
-  private int id;
-  private String cuit;
-  private String nombre;
-  private String email;
-  private String telefono;
-  private String direccion;
-  
-  private List<Contrato> contratos;
-  private List<Evaluacion> evaluaciones;
+    public Proveedor() {
+    }
 
-    public Proveedor(int id, String cuit, String nombre, String telefono, String direccion) {
-        this.id = id;
+    public Proveedor(String cuit, String nombre, String email, String telefono, String direccion) {
         this.cuit = cuit;
         this.nombre = nombre;
+        this.email = email;
         this.telefono = telefono;
         this.direccion = direccion;
         this.contratos = new ArrayList();
@@ -43,12 +44,15 @@ public class Proveedor {
     public void agregarEvaluacion(Evaluacion evaluacion){
         evaluaciones.add(evaluacion);
     }
-
+    
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + Objects.hashCode(this.nombre);
-        hash = 97 * hash + Objects.hashCode(this.cuit);
+        int hash = 5;
+        hash = 23 * hash + Objects.hashCode(this.cuit);
+        hash = 23 * hash + Objects.hashCode(this.nombre);
+        hash = 23 * hash + Objects.hashCode(this.email);
+        hash = 23 * hash + Objects.hashCode(this.telefono);
+        hash = 23 * hash + Objects.hashCode(this.direccion);
         return hash;
     }
 
@@ -64,75 +68,74 @@ public class Proveedor {
             return false;
         }
         final Proveedor other = (Proveedor) obj;
-        if (!Objects.equals(this.nombre, other.nombre)) {
-            return false;
-        }
-        return Objects.equals(this.cuit, other.cuit);
+        return this.id == other.id;
     }
     
-    //setters & getters
-
-    public int getId() {
-        return id;
-    }
+    //Setters
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getCuit() {
-        return cuit;
     }
 
     public void setCuit(String cuit) {
         this.cuit = cuit;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getTelefono() {
-        return telefono;
-    }
-
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
-
-    public String getDireccion() {
-        return direccion;
     }
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
 
-    public List<Contrato> listarContratos() {
-        return contratos;
-    }
-
     public void setContratos(List<Contrato> contratos) {
         this.contratos = contratos;
     }
 
-    public List<Evaluacion> listarEvaluaciones() {
-        return evaluaciones;
-    }
-
     public void setEvaluaciones(List<Evaluacion> evaluaciones) {
         this.evaluaciones = evaluaciones;
+    }
+    
+    //Getters
+
+    public int getId() {
+        return id;
+    }
+
+    public String getCuit() {
+        return cuit;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public List<Contrato> getContratos() {
+        return contratos;
+    }
+
+    public List<Evaluacion> getEvaluaciones() {
+        return evaluaciones;
     }
 }

@@ -5,56 +5,84 @@
 package Modelo;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  *
  * @author Rodrigo
  */
 public class Contrato {
+    private int id;
+    private String descripcion;
+    private Date fechaInicio;
+    private Date fechaFin;
 
-  private int id;
-  private String descripcion;
-  private Date fechaInicio;
-  private Date fechaFin;
+    public Contrato() {
+    }
 
-    public Contrato(int id, String descripcion, Date fechaInicio, Date fechaFin) {
-        this.id = id;
+    public Contrato(String descripcion, Date fechaInicio, Date fechaFin) {
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
     }
 
-  //Getters and setters
-
-    public int getId() {
-        return id;
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.descripcion);
+        hash = 97 * hash + Objects.hashCode(this.fechaInicio);
+        hash = 97 * hash + Objects.hashCode(this.fechaFin);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Contrato other = (Contrato) obj;
+        return this.id == other.id;
+    }
+    
+    //Setters
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
-    public Date getFechaInicio() {
-        return fechaInicio;
-    }
-
     public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public Date getFechaFin() {
-        return fechaFin;
-    }
-
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
+    }
+    
+    //Getters
+
+    public int getId() {
+        return id;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
     }
 }

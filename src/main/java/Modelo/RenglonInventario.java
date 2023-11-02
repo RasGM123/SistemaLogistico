@@ -13,19 +13,27 @@ import java.util.Objects;
 public class RenglonInventario {
     private int id;
     private int cantidad;
-    
     private Producto producto;
 
-    public RenglonInventario(int id, int cantidad, Producto producto) {
-        this.id = id;
+    public RenglonInventario() {
+    }
+
+    public RenglonInventario(int cantidad, Producto producto) {
         this.cantidad = cantidad;
         this.producto = producto;
+    }
+    
+    //Funcionalidades
+    
+    public void cambiarCantidad(int cantidad){
+        this.cantidad = cantidad;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + Objects.hashCode(this.producto);
+        int hash = 7;
+        hash = 43 * hash + this.cantidad;
+        hash = 43 * hash + Objects.hashCode(this.producto);
         return hash;
     }
 
@@ -41,36 +49,34 @@ public class RenglonInventario {
             return false;
         }
         final RenglonInventario other = (RenglonInventario) obj;
-        return Objects.equals(this.producto, other.producto);
+        return this.id == other.id;
     }
     
-    //setters & getters
-
-    public int getId() {
-        return id;
-    }
+    //Setters
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+    
+    //Getters
+
+    public int getId() {
+        return id;
     }
 
     public int getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) throws Exception {
-        if(cantidad<0){
-            throw new Exception("La cantidad del producto no puede ser menor a 0.");
-        }
-        
-        this.cantidad = cantidad;
-    }
-
     public Producto getProducto() {
         return producto;
-    }
-
-    public void setProducto(Producto producto) {
-        this.producto = producto;
     }
 }

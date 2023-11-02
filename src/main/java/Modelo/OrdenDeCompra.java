@@ -6,6 +6,7 @@ package Modelo;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -15,12 +16,13 @@ public class OrdenDeCompra {
     private int id;
     private LocalDateTime fechaEmision;
     private LocalDateTime fechaEntrega;
-    
     private Proveedor proveedor;
     private List<RenglonOrdenDeCompra> renglones;
 
-    public OrdenDeCompra(int id, Proveedor proveedor, List<RenglonOrdenDeCompra> renglones) {
-        this.id = id;
+    public OrdenDeCompra() {
+    }
+
+    public OrdenDeCompra(Proveedor proveedor, List<RenglonOrdenDeCompra> renglones) {
         this.fechaEmision = LocalDateTime.now();
         this.fechaEntrega = null;
         this.proveedor = proveedor;
@@ -40,7 +42,10 @@ public class OrdenDeCompra {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 29 * hash + this.id;
+        hash = 59 * hash + Objects.hashCode(this.fechaEmision);
+        hash = 59 * hash + Objects.hashCode(this.fechaEntrega);
+        hash = 59 * hash + Objects.hashCode(this.proveedor);
+        hash = 59 * hash + Objects.hashCode(this.renglones);
         return hash;
     }
 
@@ -59,45 +64,47 @@ public class OrdenDeCompra {
         return this.id == other.id;
     }
     
-    //setters & getters
-
-    public int getId() {
-        return id;
-    }
+    //Setters
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public LocalDateTime getFechaEmision() {
-        return fechaEmision;
     }
 
     public void setFechaEmision(LocalDateTime fechaEmision) {
         this.fechaEmision = fechaEmision;
     }
 
-    public Proveedor getProveedor() {
-        return proveedor;
+    public void setFechaEntrega(LocalDateTime fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
     }
 
     public void setProveedor(Proveedor proveedor) {
         this.proveedor = proveedor;
     }
 
-    public List<RenglonOrdenDeCompra> getRenglones() {
-        return renglones;
-    }
-
     public void setRenglones(List<RenglonOrdenDeCompra> renglones) {
         this.renglones = renglones;
+    }
+    
+    //Getters
+
+    public int getId() {
+        return id;
+    }
+
+    public LocalDateTime getFechaEmision() {
+        return fechaEmision;
     }
 
     public LocalDateTime getFechaEntrega() {
         return fechaEntrega;
     }
 
-    public void setFechaEntrega(LocalDateTime fechaEntrega) {
-        this.fechaEntrega = fechaEntrega;
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public List<RenglonOrdenDeCompra> getRenglones() {
+        return renglones;
     }
 }

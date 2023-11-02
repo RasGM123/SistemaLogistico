@@ -15,13 +15,18 @@ import java.util.Map;
  *
  * @author Rodrigo
  */
+
+
 public class Cliente extends Usuario implements PerfilCliente{
     private List<String> preferencias;
     private List<Pedido> pedidos;
     private List<Ticket> tickets;
 
-    public Cliente(int id, String username, String password, String email, String nombres, String apellidos, String dni, String telefono, String direccion) {
-        super(id, username, password, email, nombres, apellidos, dni, telefono, direccion);
+    public Cliente() {
+    }
+
+    public Cliente(String username, String password, String email, String nombres, String apellidos, String dni, String telefono, String direccion) {
+        super(username, password, email, nombres, apellidos, dni, telefono, direccion);
         
         this.preferencias = null;
         this.pedidos = null;
@@ -29,16 +34,17 @@ public class Cliente extends Usuario implements PerfilCliente{
     }
     
     //Funcionalidades
-    
+
     @Override
     public List<Pedido> listarPedidos() {
-        return pedidos;
+        return getPedidos();
     }
-    
+
     @Override
     public List<Pedido> listarPedidos(LocalDate inicio, LocalDate fin) throws Exception {
-        List<Pedido> lista = new ArrayList();
+        List<Pedido> pedidos = getPedidos();
         LocalDate fecha;
+        List<Pedido> lista = new ArrayList();
         
         for(Pedido p:pedidos){
             fecha = p.getFechaCreacion().toLocalDate();
@@ -55,11 +61,11 @@ public class Cliente extends Usuario implements PerfilCliente{
         if(inicio.isAfter(fin)){
             throw new Exception("La fecha de inicio debe ser menor o igual a la fecha fin.");
         }
-        
+
         if(fin.isBefore(inicio)){
             throw new Exception("La fecha de fin debe ser mayor o igual a la fecha inicio.");
         }
-        
+
         return !fecha.isBefore(inicio) && !fecha.isAfter(fin);
     }
 
@@ -96,7 +102,9 @@ public class Cliente extends Usuario implements PerfilCliente{
 
     @Override
     public void crearTicket(String motivo, String reclamo) {
-        Ticket ticket = new Ticket(this.getId(), motivo, reclamo);
+        Ticket ticket = new Ticket(motivo, reclamo);
+        
+        ticket.setId(this.tickets.size()+1);
         
         this.tickets.add(ticket);
     }
@@ -178,29 +186,31 @@ public class Cliente extends Usuario implements PerfilCliente{
         return listaPedidos;
     }
     
-    //setters & getters
-
-    public List<String> getPreferencias() {
-        return preferencias;
-    }
+    //Setters
 
     public void setPreferencias(List<String> preferencias) {
         this.preferencias = preferencias;
-    }
-
-    public List<Pedido> getPedidos() {
-        return pedidos;
     }
 
     public void setPedidos(List<Pedido> pedidos) {
         this.pedidos = pedidos;
     }
 
-    public List<Ticket> getTickets() {
-        return tickets;
-    }
-
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
+    }
+    
+    //Getters
+
+    public List<String> getPreferencias() {
+        return preferencias;
+    }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
     }
 }

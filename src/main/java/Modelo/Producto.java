@@ -6,28 +6,29 @@ package Modelo;
 
 import java.util.Objects;
 
+
 /**
  *
  * @author Rodrigo
  */
 public class Producto {
-
     private int id;
     private String nombre;
-  
     private TipoProducto tipoProducto;
 
-    public Producto(int id, String nombre, TipoProducto tipoProducto) {
-        this.id = id;
+    public Producto() {
+    }
+
+    public Producto(String nombre, TipoProducto tipoProducto) {
         this.nombre = nombre;
         this.tipoProducto = tipoProducto;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + Objects.hashCode(this.nombre);
-        hash = 53 * hash + Objects.hashCode(this.tipoProducto);
+        int hash = 7;
+        hash = 73 * hash + Objects.hashCode(this.nombre);
+        hash = 73 * hash + Objects.hashCode(this.tipoProducto);
         return hash;
     }
 
@@ -43,35 +44,34 @@ public class Producto {
             return false;
         }
         final Producto other = (Producto) obj;
-        if (!Objects.equals(this.nombre, other.nombre)) {
-            return false;
-        }
-        return Objects.equals(this.tipoProducto, other.tipoProducto);
+        return this.id == other.id;
     }
     
-    //Getters and setters
+    //Setters
 
-    public TipoProducto getTipoProducto() {
-        return tipoProducto;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public void setTipoProducto(TipoProducto tipoProducto) {
         this.tipoProducto = tipoProducto;
     }
+    
+    //Getters
 
     public int getId() {
-      return id;
-    }
-
-    public void setId(int id) {
-      this.id = id;
+        return id;
     }
 
     public String getNombre() {
-      return nombre;
+        return nombre;
     }
 
-    public void setNombre(String nombre) {
-      this.nombre = nombre;
+    public TipoProducto getTipoProducto() {
+        return tipoProducto;
     }
 }

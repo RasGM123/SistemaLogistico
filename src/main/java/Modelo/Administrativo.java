@@ -15,8 +15,11 @@ import java.util.Map;
 public class Administrativo extends Empleado implements PerfilAdministrativo{
     protected Sistema sistema = null;
 
-    public Administrativo(String cuil, int id, String username, String password, String email, String nombres, String apellidos, String dni, String telefono, String direccion) {
-        super(cuil, id, username, password, email, nombres, apellidos, dni, telefono, direccion);
+    public Administrativo() {
+    }
+
+    public Administrativo(String cuil, String username, String password, String email, String nombres, String apellidos, String dni, String telefono, String direccion) {
+        super(cuil, username, password, email, nombres, apellidos, dni, telefono, direccion);
     }
     
     /*
@@ -25,15 +28,20 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
     
     @Override
     public void crearPedido(Cliente cliente, Pedido pedido) throws Exception{
-        Map<Integer, Pedido> pedidosSistema = sistema.getPedidos();
+        Map<Integer, Pedido> pedidos = sistema.getPedidos();
         List<Pedido> pedidosCliente = cliente.getPedidos();
         
         if(existePedido(pedido)){
             throw new Exception("Ya existe un pedido con el ID "+pedido.getId()+" cargado en el sistema.");
         }
         
+        /*
+            GENERRAR ID
+        */
+        pedido.setId(generarId(pedido));
+        
         //Se agrega el Pedido al Sistema
-        pedidosSistema.put(pedido.getId(), pedido);
+        pedidos.put(pedido.getId(), pedido);
         
         //Se agrega el Pedido al Cliente
         pedidosCliente.add(pedido);
@@ -98,7 +106,7 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
     
     @Override
     public void cambiarEstado(Pedido pedido, String estado){
-        pedido.cambiarEstado(estado);
+        pedido.setEstado(estado);
     }
     
     @Override
@@ -168,8 +176,6 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
         return lista;
     }
     
-    
-    
     /*
         CRUD Transportista
     */
@@ -208,7 +214,7 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
     
     @Override
     public void asignarVehiculo(Transportista transportista, Vehiculo vehiculo){
-        transportista.asignarVehiculo(vehiculo);
+        transportista.setVehiculo(vehiculo);
     }
     
     /*
@@ -384,5 +390,10 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
     //Metodo que se llama al cerrar sesion
     public void desconectar(){
         this.sistema = null;
+    }
+    
+    //SACAR DESPUES DE IMPLEMENTAR PERSISTENCIA
+    public int generarId(Object o){
+        return o.hashCode();
     }
 }

@@ -11,18 +11,24 @@ package Modelo;
 public class Transportista extends Empleado{
     private Vehiculo vehiculo;
 
-    public Transportista(String cuil, int id, String username, String password, String email, String nombres, String apellidos, String dni, String telefono, String direccion) {
-        super(cuil, id, username, password, email, nombres, apellidos, dni, telefono, direccion);
+    public Transportista() {
+    }
+
+    public Transportista(String cuil, String username, String password, String email, String nombres, String apellidos, String dni, String telefono, String direccion) {
+        super(cuil, username, password, email, nombres, apellidos, dni, telefono, direccion);
+        
         this.vehiculo = null;
     }
     
-    //setters & getters
+    //Setters
 
-    public Vehiculo consultarVehiculo() {
-        return vehiculo;
-    }
-
-    public void asignarVehiculo(Vehiculo vehiculo) {
+    public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
+    }
+    
+    //Getters
+
+    public Vehiculo getVehiculo() {
+        return vehiculo;
     }
 }

@@ -4,28 +4,36 @@
  */
 package Modelo;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import javax.persistence.*;
 
 /**
  *
  * @author Rodrigo
  */
-public class Pedido {
+
+@Entity
+public class Pedido implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private LocalDateTime fechaCreacion;
     private String estado;
-
     private Ruta ruta;
     private Transportista transportista;
+    @OneToMany
     private List<RenglonPedido> renglones;
+    @OneToMany
     private List<Movimiento> movimientos;
+
+    public Pedido() {
+    }
     
-    //cuando se crea el Pedido el estado inicial es "Preparandose"
-    //el Transportista y el Remito se asignan despues de la creacion mediante un usuario Administrativo/Gerente
-    public Pedido(int id, LocalDateTime fechaCreacion, Ruta ruta, List<RenglonPedido> renglones) {
-        this.id = id;
+    public Pedido(LocalDateTime fechaCreacion, Ruta ruta, List<RenglonPedido> renglones) {
         this.fechaCreacion = fechaCreacion;
         this.estado = "Preparándose";
         this.ruta = ruta;
@@ -35,34 +43,9 @@ public class Pedido {
     }
     
     //Funcionalidades
-    
-    public void asignarTransportista(Transportista transportista){
-        
-        //Si el Pedido tiene un Transportista cuando se intenta asignarle uno, se cambia el Transportista anterior por el nuevo
-        if(this.transportista!=null){
-            Vehiculo vehiculo = this.getTransportista().consultarVehiculo();
-            
-            //Se libera el Vehiculo del Transportista anterior
-            this.transportista.asignarVehiculo(null);
-            
-            //Se asigna el Transportista nuevo al Pedido
-            this.setTransportista(transportista);
-            
-            //Se asigna el Vehiculo al nuevo Transportista
-            transportista.asignarVehiculo(vehiculo);
-        }
-        
-        this.transportista = transportista;
-    }
 
     public Remito generarRemito() {
-        return new Remito(this.getFechaCreacion(), LocalDateTime.now(), this.getRenglones());
-    }
-    
-    public void cambiarEstado(String estado){
-        movimientos.add(new Movimiento(this.getId(), LocalDateTime.now(), estado));
-        
-        this.setEstado(estado);
+        return new Remito(this.id, this.getFechaCreacion(), LocalDateTime.now(), this.getRenglones());
     }
     
     public int obtenerCantidadProducto(Producto producto){
@@ -77,8 +60,10 @@ public class Pedido {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 19 * hash + this.id;
+        int hash = 7;
+        hash = 31 * hash + Objects.hashCode(this.fechaCreacion);
+        hash = 31 * hash + Objects.hashCode(this.ruta);
+        hash = 31 * hash + Objects.hashCode(this.renglones);
         return hash;
     }
 
@@ -96,62 +81,85 @@ public class Pedido {
         final Pedido other = (Pedido) obj;
         return this.id == other.id;
     }
-
-  //Getters and setters
-
-    public int getId() {
-        return id;
-    }
+    
+    //Setters
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public LocalDateTime getFechaCreacion() {
-        return fechaCreacion;
     }
 
     public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
     public void setEstado(String estado) {
+        Movimiento movimiento = new Movimiento(LocalDateTime.now(), estado);
+        
+        //Se genera un nuevo Movimiento cada vez que cambia el estado del Pedido
+        movimientos.add(movimiento);
+        
         this.estado = estado;
-    }
-
-    public Ruta getRuta() {
-        return ruta;
     }
 
     public void setRuta(Ruta ruta) {
         this.ruta = ruta;
     }
 
-    public Transportista getTransportista() {
-        return transportista;
-    }
-
     public void setTransportista(Transportista transportista) {
+        //Si el Pedido tiene un Transportista, se cambia el Transportista anterior por el nuevo
+        if(this.transportista!=null){
+            
+            //Vehiculo que tenía asignado el Transportista anterior
+            Vehiculo vehiculo = this.getTransportista().getVehiculo();
+            
+            //Se libera el Vehiculo del Transportista anterior
+            this.transportista.setVehiculo(null);
+            
+            //Se asigna el Transportista nuevo al Pedido
+            this.transportista = transportista;
+            
+            //Se asigna el Vehiculo al nuevo Transportista
+            transportista.setVehiculo(vehiculo);
+        }
+        
         this.transportista = transportista;
-    }
-
-    public List<RenglonPedido> getRenglones() {
-        return renglones;
     }
 
     public void setRenglones(List<RenglonPedido> renglones) {
         this.renglones = renglones;
     }
 
-    public List<Movimiento> getMovimientos() {
-        return movimientos;
-    }
-
     public void setMovimientos(List<Movimiento> movimientos) {
         this.movimientos = movimientos;
+    }
+
+    //Getters
+
+    public int getId() {
+        return id;
+    }
+
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public Ruta getRuta() {
+        return ruta;
+    }
+
+    public Transportista getTransportista() {
+        return transportista;
+    }
+
+    public List<RenglonPedido> getRenglones() {
+        return renglones;
+    }
+
+    public List<Movimiento> getMovimientos() {
+        return movimientos;
     }
 }

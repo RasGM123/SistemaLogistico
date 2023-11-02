@@ -17,9 +17,11 @@ import java.util.Map;
  */
 
 public class Gerente extends Administrativo implements PerfilGerente{
+    public Gerente() {
+    }
 
-    public Gerente(String cuil, int id, String username, String password, String email, String nombres, String apellidos, String dni, String telefono, String direccion) {
-        super(cuil, id, username, password, email, nombres, apellidos, dni, telefono, direccion);
+    public Gerente(String cuil, String username, String password, String email, String nombres, String apellidos, String dni, String telefono, String direccion) {
+        super(cuil, username, password, email, nombres, apellidos, dni, telefono, direccion);
     }
     
     /*
@@ -34,6 +36,11 @@ public class Gerente extends Administrativo implements PerfilGerente{
         if(existeTransportista(transportista)){
             throw new Exception("El transportista "+transportista.getCuil()+" ya está cargado en el sistema");
         }
+        
+        /*
+            GENERRAR ID
+        */
+        transportista.setId(generarId(transportista));
         
         usuarios.put(transportista.getDni(), transportista);
         tranportistas.put(transportista.getDni(), transportista);
@@ -75,6 +82,11 @@ public class Gerente extends Administrativo implements PerfilGerente{
             throw new Exception("El vehículo "+vehiculo.getDominio()+" ya está cargado en el sistema");
         }
         
+        /*
+            GENERRAR ID
+        */
+        vehiculo.setId(generarId(vehiculo));
+        
         vehiculos.add(vehiculo);
     }
     
@@ -114,6 +126,11 @@ public class Gerente extends Administrativo implements PerfilGerente{
         if(existeRuta(ruta)){
             throw new Exception("La ruta "+ruta.getDestino()+" -> "+ruta.getDestino()+" ya está cargada en el sistema.");
         }
+        
+        /*
+            GENERRAR ID
+        */
+        ruta.setId(generarId(ruta));
         
         rutas.add(ruta);
     }
@@ -155,6 +172,11 @@ public class Gerente extends Administrativo implements PerfilGerente{
             throw new Exception("El proveedor "+proveedor.getNombre()+" ya está cargado en el sistema.");
         }
         
+        /*
+            GENERRAR ID
+        */
+        proveedor.setId(generarId(proveedor));
+        
         proveedores.add(proveedor);
     }
     
@@ -193,9 +215,9 @@ public class Gerente extends Administrativo implements PerfilGerente{
         }
         
         //Se borran los Contratos del Proveedor
-        proveedor.listarContratos().clear();
+        proveedor.getContratos().clear();
         //Se borran las Evaluaciones del Proveedor
-        proveedor.listarEvaluaciones().clear();
+        proveedor.getEvaluaciones().clear();
         
         proveedores.remove(proveedor);
     }
@@ -210,22 +232,32 @@ public class Gerente extends Administrativo implements PerfilGerente{
     
     @Override
     public void agregarEvaluacion(Proveedor proveedor, Evaluacion evaluacion){
+        /*
+            GENERRAR ID
+        */
+        evaluacion.setId(generarId(evaluacion));
+        
         proveedor.agregarEvaluacion(evaluacion);
     }
     
     @Override
     public List<Evaluacion> listarEvaluaciones(Proveedor proveedor){
-        return proveedor.listarEvaluaciones();
+        return proveedor.getEvaluaciones();
     }
     
     @Override
     public void agregarContrato(Proveedor proveedor, Contrato contrato){
+        /*
+            GENERRAR ID
+        */
+        contrato.setId(generarId(contrato));
+        
         proveedor.agregarContrato(contrato);
     }
     
     @Override
     public List<Contrato> listarContratos(Proveedor proveedor){
-        return proveedor.listarContratos();
+        return proveedor.getContratos();
     }
     
     /*
@@ -239,6 +271,11 @@ public class Gerente extends Administrativo implements PerfilGerente{
         if(existeAlmacen(almacen)){
             throw new Exception("El almacen "+almacen.getNombreSucursal()+" ya está cargado en el sistema.");
         }
+        
+        /*
+            GENERRAR ID
+        */
+        almacen.setId(generarId(almacen));
         
         almacenes.add(almacen);
     }
@@ -282,6 +319,11 @@ public class Gerente extends Administrativo implements PerfilGerente{
             throw new Exception("El producto "+producto.getNombre()+" ya está cargado en el sistema.");
         }
         
+        /*
+            GENERRAR ID
+        */
+        producto.setId(generarId(producto));
+        
         productos.add(producto);
     }
     
@@ -319,6 +361,11 @@ public class Gerente extends Administrativo implements PerfilGerente{
         if(existeTipoProducto(tipo)){
             throw new Exception("Ya existe un tipo de producto con el nombre "+tipo.getNombre()+".");
         }
+        
+        /*
+            GENERRAR ID
+        */
+        tipo.setId(generarId(tipo));
         
         tipos.add(tipo);
     }
@@ -371,6 +418,13 @@ public class Gerente extends Administrativo implements PerfilGerente{
         if(existeOrdenDeCompra(orden)){
             throw new Exception("Ya existe una orden de compra con el ID "+orden.getId()+" cargada en el sistema.");
         }
+        
+        /*
+            GENERRAR ID
+        */
+        orden.setId(generarId(orden));
+        
+        ordenes.add(orden);
     }
 
     @Override

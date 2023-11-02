@@ -18,26 +18,23 @@ public class Ruta {
     private LocalDateTime fechaSalida;
     private LocalDateTime fechaLlegada;
 
-    public Ruta(int id, String origen, String destino, LocalDateTime fechaSalida, LocalDateTime fechaLlegada) {
-        this.id = id;
+    public Ruta() {
+    }
+    
+    public Ruta(String origen, String destino, LocalDateTime fechaSalida, LocalDateTime fechaLlegada) {
         this.origen = origen;
         this.destino = destino;
         this.fechaSalida = fechaSalida;
         this.fechaLlegada = fechaLlegada;
     }
-    
-    @Override
-    public String toString(){
-        return origen+" -> "+destino;
-    }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 79 * hash + Objects.hashCode(this.origen);
-        hash = 79 * hash + Objects.hashCode(this.destino);
-        hash = 79 * hash + Objects.hashCode(this.fechaSalida);
-        hash = 79 * hash + Objects.hashCode(this.fechaLlegada);
+        int hash = 3;
+        hash = 61 * hash + Objects.hashCode(this.origen);
+        hash = 61 * hash + Objects.hashCode(this.destino);
+        hash = 61 * hash + Objects.hashCode(this.fechaSalida);
+        hash = 61 * hash + Objects.hashCode(this.fechaLlegada);
         return hash;
     }
 
@@ -53,57 +50,50 @@ public class Ruta {
             return false;
         }
         final Ruta other = (Ruta) obj;
-        if (!Objects.equals(this.origen, other.origen)) {
-            return false;
-        }
-        if (!Objects.equals(this.destino, other.destino)) {
-            return false;
-        }
-        if (!Objects.equals(this.fechaSalida, other.fechaSalida)) {
-            return false;
-        }
-        return Objects.equals(this.fechaLlegada, other.fechaLlegada);
+        return this.id == other.id;
     }
     
-    //setters & getters
-
-    public int getId() {
-        return id;
-    }
+    //Setters
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getOrigen() {
-        return origen;
     }
 
     public void setOrigen(String origen) {
         this.origen = origen;
     }
 
-    public String getDestino() {
-        return destino;
-    }
-
     public void setDestino(String destino) {
         this.destino = destino;
-    }
-
-    public LocalDateTime getFechaSalida() {
-        return fechaSalida;
     }
 
     public void setFechaSalida(LocalDateTime fechaSalida) {
         this.fechaSalida = fechaSalida;
     }
 
-    public LocalDateTime getFechaLlegada() {
-        return fechaLlegada;
-    }
-
     public void setFechaLlegada(LocalDateTime fechaLlegada) {
         this.fechaLlegada = fechaLlegada;
+    }
+    
+    //Getters
+
+    public int getId() {
+        return id;
+    }
+
+    public String getOrigen() {
+        return origen;
+    }
+
+    public String getDestino() {
+        return destino;
+    }
+
+    public LocalDateTime getFechaSalida() {
+        return fechaSalida;
+    }
+
+    public LocalDateTime getFechaLlegada() {
+        return fechaLlegada;
     }
 }

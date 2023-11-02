@@ -4,6 +4,8 @@
  */
 package Modelo;
 
+import java.util.Objects;
+
 /**
  *
  * @author Gustavo
@@ -14,50 +16,71 @@ public class Ticket {
     private String reclamo;
     private String respuesta;
 
-    public Ticket(int id, String motivo, String reclamo) {
-        this.id = id;
+    public Ticket() {
+    }
+
+    public Ticket(String motivo, String reclamo) {
         this.motivo = motivo;
         this.reclamo = reclamo;
         this.respuesta = null;
     }
-    
-    //Funcionalidades
-    
-    public void responderTicket(String mensaje){
-        this.respuesta = mensaje;
-    }
-    
-    //Setters & getters
 
-    public int getId() {
-        return id;
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.motivo);
+        hash = 67 * hash + Objects.hashCode(this.reclamo);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Ticket other = (Ticket) obj;
+        return this.id == other.id;
+    }
+    
+    //Setters
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getMotivo() {
-        return motivo;
     }
 
     public void setMotivo(String motivo) {
         this.motivo = motivo;
     }
 
-    public String getReclamo() {
-        return reclamo;
-    }
-
     public void setReclamo(String reclamo) {
         this.reclamo = reclamo;
     }
 
-    public String getRespuesta() {
-        return respuesta;
-    }
-
     public void setRespuesta(String respuesta) {
         this.respuesta = respuesta;
+    }
+    
+    //Getters
+
+    public int getId() {
+        return id;
+    }
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public String getReclamo() {
+        return reclamo;
+    }
+
+    public String getRespuesta() {
+        return respuesta;
     }
 }

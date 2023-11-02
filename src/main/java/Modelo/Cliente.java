@@ -16,7 +16,6 @@ import java.util.Map;
  * @author Rodrigo
  */
 
-
 public class Cliente extends Usuario implements PerfilCliente{
     private List<String> preferencias;
     private List<Pedido> pedidos;
@@ -28,9 +27,9 @@ public class Cliente extends Usuario implements PerfilCliente{
     public Cliente(String username, String password, String email, String nombres, String apellidos, String dni, String telefono, String direccion) {
         super(username, password, email, nombres, apellidos, dni, telefono, direccion);
         
-        this.preferencias = null;
-        this.pedidos = null;
-        this.tickets = null;
+        this.preferencias = new ArrayList();
+        this.pedidos = new ArrayList();
+        this.tickets = new ArrayList();
     }
     
     //Funcionalidades
@@ -104,7 +103,7 @@ public class Cliente extends Usuario implements PerfilCliente{
     public void crearTicket(String motivo, String reclamo) {
         Ticket ticket = new Ticket(motivo, reclamo);
         
-        ticket.setId(this.tickets.size()+1);
+        ticket.setId(ticket.hashCode());
         
         this.tickets.add(ticket);
     }
@@ -212,5 +211,9 @@ public class Cliente extends Usuario implements PerfilCliente{
 
     public List<Ticket> getTickets() {
         return tickets;
+    }
+
+    private List<Ticket> ArrayList() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

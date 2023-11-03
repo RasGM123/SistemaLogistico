@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
 public final class General extends javax.swing.JFrame {
 
     private Sistema sis;
-    private Sesion ses;
 
     public General() throws Exception {
         initComponents();
@@ -54,6 +53,7 @@ public final class General extends javax.swing.JFrame {
             Productos1.setVisible(false);
             Informe1.setVisible(false);
             Envio1.setVisible(false);
+            Mensajes.setVisible(false);
         } else {
             if (sis.obtenerCodigoUsuario(sis.obtenerSesion()) == 1) {
                 Usuario.setVisible(true);
@@ -76,16 +76,31 @@ public final class General extends javax.swing.JFrame {
                 Productos1.setVisible(true);
                 Informe1.setVisible(true);
                 Envio1.setVisible(true);
+                Mensajes.setVisible(true);
             }
         }
     }
 
-    public void AutoLogin() {
+    private void AutoLogin() {
         if (sis.getSesion() == null) {
             Login lo = new Login(escritorio, sis, this);
             addcentrarpanel(lo);
         }
         mostrarmenu();
+    }
+
+    private int setcantidadMensajes() {
+        int can = 0;
+        try {
+            for (Ticket t : sis.getTickets()) {
+                if (t.getRespuesta() != null) {
+                    can += 1;
+                }
+            }
+            return can;
+        } catch (Exception e) {
+            return can;
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -123,6 +138,7 @@ public final class General extends javax.swing.JFrame {
         inicio = new javax.swing.JMenu();
         Login = new javax.swing.JMenuItem();
         Register = new javax.swing.JMenuItem();
+        cerrarses = new javax.swing.JMenuItem();
         Salir = new javax.swing.JMenuItem();
         Usuario = new javax.swing.JMenu();
         ajususer = new javax.swing.JMenuItem();
@@ -143,6 +159,8 @@ public final class General extends javax.swing.JFrame {
         Envio = new javax.swing.JMenu();
         CrearEnvio = new javax.swing.JMenuItem();
         gestionarenvio = new javax.swing.JMenuItem();
+        Mensajes = new javax.swing.JMenu();
+        Ver = new javax.swing.JMenuItem();
 
         Usuario1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         Usuario1.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\circulo-de-usuario.png"));
@@ -331,6 +349,14 @@ public final class General extends javax.swing.JFrame {
         });
         inicio.add(Register);
 
+        cerrarses.setText("Cerrar Sesión");
+        cerrarses.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cerrarsesActionPerformed(evt);
+            }
+        });
+        inicio.add(cerrarses);
+
         Salir.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         Salir.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\salida.png"));
         Salir.setText("Salir");
@@ -493,6 +519,28 @@ public final class General extends javax.swing.JFrame {
 
         Menu.add(Envio);
 
+        Mensajes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Mensajes.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\campana.png"));
+        Mensajes.setText(String.valueOf(setcantidadMensajes())+" "+"Mensajes"
+        );
+        Mensajes.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        Mensajes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MensajesActionPerformed(evt);
+            }
+        });
+
+        Ver.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        Ver.setText("Ver");
+        Ver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VerActionPerformed(evt);
+            }
+        });
+        Mensajes.add(Ver);
+
+        Menu.add(Mensajes);
+
         setJMenuBar(Menu);
 
         pack();
@@ -533,7 +581,7 @@ public final class General extends javax.swing.JFrame {
     }//GEN-LAST:event_CrearEnvioActionPerformed
 
     private void gestionarenvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gestionarenvioActionPerformed
-        Envio en = new Envio(sis,escritorio);
+        Envio en = new Envio(sis, escritorio);
         escritorio.add(en);
         en.setVisible(true);
     }//GEN-LAST:event_gestionarenvioActionPerformed
@@ -610,10 +658,28 @@ public final class General extends javax.swing.JFrame {
     }//GEN-LAST:event_ModProveedorActionPerformed
 
     private void AgrProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgrProductoActionPerformed
-        AgregarProducto ap = new AgregarProducto(sis);
+        AgregarProducto ap = new AgregarProducto(sis, escritorio);
         escritorio.add(ap);
         ap.setVisible(true);
     }//GEN-LAST:event_AgrProductoActionPerformed
+
+    private void MensajesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MensajesActionPerformed
+
+    }//GEN-LAST:event_MensajesActionPerformed
+
+    private void VerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerActionPerformed
+        Buzon b = new Buzon(sis);
+        escritorio.add(b);
+        b.setVisible(true);
+    }//GEN-LAST:event_VerActionPerformed
+
+    private void cerrarsesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarsesActionPerformed
+        try {
+            sis.cerrarSesion();
+        } catch (Exception ex) {
+            Logger.getLogger(General.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cerrarsesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -665,6 +731,7 @@ public final class General extends javax.swing.JFrame {
     private javax.swing.JMenu Informe;
     private javax.swing.JMenu Informe1;
     private javax.swing.JMenuItem Login;
+    private javax.swing.JMenu Mensajes;
     private javax.swing.JMenuBar Menu;
     private javax.swing.JMenuItem ModProducto;
     private javax.swing.JMenuItem ModProducto1;
@@ -680,12 +747,14 @@ public final class General extends javax.swing.JFrame {
     private javax.swing.JMenu Seguimiento1;
     private javax.swing.JMenu Usuario;
     private javax.swing.JMenu Usuario1;
+    private javax.swing.JMenuItem Ver;
     private javax.swing.JMenuItem ajuste1;
     private javax.swing.JMenuItem ajustes;
     private javax.swing.JMenuItem ajususer;
     private javax.swing.JMenuItem ajususer1;
     private javax.swing.JMenuItem amov;
     private javax.swing.JMenuItem amov1;
+    private javax.swing.JMenuItem cerrarses;
     private javax.swing.JMenuItem contacto;
     private javax.swing.JMenuItem contacto1;
     private javax.swing.JDesktopPane escritorio;

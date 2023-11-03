@@ -121,7 +121,7 @@ public class EvaProveedor extends javax.swing.JInternalFrame {
         try {
             Usuario us = sis.obtenerSesion();
             if (us instanceof Gerente gen) {
-                Evaluacion ev = new Evaluacion(gen.listarEvaluaciones(pro).size() + 1, Integer.getInteger(Puntuacion.getText()), Comentario.getText());
+                Evaluacion ev = new Evaluacion( Integer.getInteger(Puntuacion.getText()), Comentario.getText());
                 pro.agregarEvaluacion(ev);
                 dispose();
             }

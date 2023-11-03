@@ -147,7 +147,7 @@ public class ConProveedor extends javax.swing.JInternalFrame {
         if(Inicio != null && Fin !=null){
             Usuario us = sis.obtenerSesion();
             if(us instanceof Gerente gen){
-                Contrato con = new Contrato(gen.listarContratos(pro).size()+1, descripcion.getText(), Inicio.getDate(), Fin.getDate());
+                Contrato con = new Contrato( descripcion.getText(), Inicio.getDate(), Fin.getDate());
                 gen.agregarContrato(pro, con);
                 JOptionPane.showMessageDialog(null, "Contrato creado!");
                 dispose();

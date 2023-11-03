@@ -89,7 +89,7 @@ public class Encli extends javax.swing.JInternalFrame {
             LocalDateTime fechaLlegada = LocalDateTime.parse(
                     fechaLlegadaField.getText(), format);
 
-            Ruta ru = new Ruta(sis.getRutas().size()+1, origen, destino, fechaSalida, fechaLlegada);
+            Ruta ru = new Ruta( origen, destino, fechaSalida, fechaLlegada);
             return ru;
         }else{
             return null;
@@ -117,8 +117,6 @@ public class Encli extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         IngresarCliente = new javax.swing.JTextField();
         BuscarCliente = new javax.swing.JButton();
-        Estado = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
 
         Mod.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
 
@@ -217,34 +215,16 @@ public class Encli extends javax.swing.JInternalFrame {
             }
         });
 
-        Estado.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        Estado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Preimposicion", "Proceso", "Poseeción del cartero", "Entregado" }));
-        Estado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        Estado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EstadoActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel3.setText("Estado:");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(IngresarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(BuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Estado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(IngresarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(BuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(172, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,10 +233,6 @@ public class Encli extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(IngresarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BuscarCliente))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Estado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -283,7 +259,7 @@ public class Encli extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(AgregarProducto)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -319,7 +295,7 @@ public class Encli extends javax.swing.JInternalFrame {
 
     private void AgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarProductoActionPerformed
         try {
-            RenglonPedido rp1 = new RenglonPedido(rp.size() + 1, 0, null);
+            RenglonPedido rp1 = new RenglonPedido( 0, null);
             AgrProductoEnvio ape = new AgrProductoEnvio(rp1, sis);
             ape.setVisible(true);
             String data[] = {String.valueOf(rp1.getId()), rp1.getProducto().getNombre(), String.valueOf(rp1.getCantidad()), rp1.getProducto().getTipoProducto().getNombre()};
@@ -363,7 +339,7 @@ public class Encli extends javax.swing.JInternalFrame {
         Ruta ru = optenerruta();
         if (use instanceof Administrativo admin ) {
             if(us instanceof Cliente cli){
-                Pedido pe = new Pedido(sis.getPedidos().size() + 1, LocalDateTime.now(),ru, rp);
+                Pedido pe = new Pedido( LocalDateTime.now(),ru, rp);
                 admin.crearPedido(cli, pe);
             }
         }
@@ -372,10 +348,6 @@ public class Encli extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_EnviarActionPerformed
 
-    private void EstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EstadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_EstadoActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Agregar;
@@ -383,12 +355,10 @@ public class Encli extends javax.swing.JInternalFrame {
     private javax.swing.JButton BuscarCliente;
     private javax.swing.JMenuItem Eliminar;
     private javax.swing.JButton Enviar;
-    private javax.swing.JComboBox<String> Estado;
     private javax.swing.JTextField IngresarCliente;
     private javax.swing.JTable ListaProductos;
     private javax.swing.JPopupMenu Mod;
     private javax.swing.JMenuItem Modificar;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

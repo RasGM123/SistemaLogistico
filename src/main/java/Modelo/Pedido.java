@@ -9,25 +9,19 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.*;
 
 /**
  *
  * @author Rodrigo
  */
 
-@Entity
 public class Pedido implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private LocalDateTime fechaCreacion;
     private String estado;
     private Ruta ruta;
     private Transportista transportista;
-    @OneToMany
     private List<RenglonPedido> renglones;
-    @OneToMany
     private List<Movimiento> movimientos;
 
     public Pedido() {

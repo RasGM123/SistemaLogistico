@@ -161,7 +161,7 @@ public class AgregarProveedores extends javax.swing.JInternalFrame {
 
     private void AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarActionPerformed
         try{
-            Proveedor pro = new Proveedor(sis.getProveedores().size()+1, Cuit.getText(), Nombre.getText(), Tel.getText(), Direccion.getText());
+            Proveedor pro = new Proveedor(Cuit.getText(), Nombre.getText(), Email.getText(), Tel.getText(), Direccion.getText());
             Usuario us = sis.obtenerSesion();
             if(us instanceof Gerente ger){
                 ger.crearProveedor(pro);

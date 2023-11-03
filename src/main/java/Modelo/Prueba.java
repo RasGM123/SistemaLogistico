@@ -18,7 +18,7 @@ public class Prueba {
             
             int codigo;
             
-            Usuario miUsuario = new Transportista("1122200", 4, "rodrigo", "rodrigo", "correo@correo.com", "rodrigo", "rodrigo", "222", "222", "222");
+            Usuario miUsuario = new Transportista("32", "ras", "123", "ras@gmail.com", "ras", "ras", "123456", "123456", "calle 888");
                    
             sistema.crearUsuario(miUsuario);
             

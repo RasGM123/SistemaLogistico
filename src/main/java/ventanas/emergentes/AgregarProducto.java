@@ -5,8 +5,12 @@
 package ventanas.emergentes;
 
 import Modelo.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,16 +18,32 @@ import javax.swing.ImageIcon;
  */
 public class AgregarProducto extends javax.swing.JInternalFrame {
 
+    private Sistema sis;
+    private JDesktopPane escritorio;
     /**
      * Creates new form AgregarProducto
      * @param s
+     * @param d
      */
-    public AgregarProducto(Sistema s) {
+    public AgregarProducto(Sistema s, JDesktopPane d) {
         initComponents();
         Icon icon = new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\cajas.png");
         setFrameIcon(icon);
+        this.sis = s;
+        this.escritorio = d;
+        setAlmacenes();
     }
 
+    private void setAlmacenes(){
+        Almacen.removeAllItems();
+        Usuario us = sis.obtenerSesion();
+        if(us instanceof Administrativo admin){
+            for(Almacen a: admin.listarAlmacenes()){
+                 Almacen.addItem(a.getNombreSucursal());
+            }
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,11 +63,11 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         Nombre = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        Categoria = new javax.swing.JComboBox<>();
         AgregarCategoria = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        Guardar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        Cantidad = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -66,6 +86,11 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
         AgregarAlmacen.setText("Agregar Almacen");
         AgregarAlmacen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         AgregarAlmacen.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        AgregarAlmacen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AgregarAlmacenActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel2.setText("Producto:");
@@ -85,23 +110,33 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel5.setText("Categoria:");
 
-        jComboBox1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        jComboBox1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        Categoria.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        Categoria.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
         AgregarCategoria.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         AgregarCategoria.setText("Agregar");
         AgregarCategoria.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         AgregarCategoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        AgregarCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AgregarCategoriaActionPerformed(evt);
+            }
+        });
 
-        jButton2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jButton2.setText("Guardar");
-        jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        Guardar.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        Guardar.setText("Guardar");
+        Guardar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        Guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GuardarActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel6.setText("Cantidad:");
 
-        jTextField1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        Cantidad.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        Cantidad.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -120,26 +155,25 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Nombre))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabel6)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField1))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel2)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel5)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(AgregarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Cantidad))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(AgregarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -157,7 +191,7 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3)
                     .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -165,10 +199,10 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Categoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AgregarCategoria))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(Guardar)
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
@@ -177,15 +211,58 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void AgregarAlmacenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarAlmacenActionPerformed
+        AgrAlmacen aa = new AgrAlmacen(sis);
+        escritorio.add(aa);
+        aa.setVisible(true);
+        setAlmacenes();
+    }//GEN-LAST:event_AgregarAlmacenActionPerformed
+
+    private void AgregarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarCategoriaActionPerformed
+        Usuario us = sis.obtenerSesion();
+        if(us instanceof Gerente gen){
+            String cat = JOptionPane.showInputDialog("Ingrese El nombre de la categoria: ");
+            TipoProducto tp = new TipoProducto( cat);
+            try {
+                gen.crearTipoDeProducto(tp);
+            } catch (Exception ex) {
+                Logger.getLogger(AgrProductoEnvio.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showInternalInputDialog(null, "No tiene permiso para hacer esto!");
+        }
+    }//GEN-LAST:event_AgregarCategoriaActionPerformed
+
+    private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
+        Usuario us = sis.obtenerSesion();
+        if(us instanceof Administrativo admin){
+            String bus1 = (String)Almacen.getSelectedItem(); 
+            Almacen a = admin.buscarAlmacen(bus1);
+            String bus2 =(String) Categoria.getSelectedItem();
+            TipoProducto tp = admin.buscarTipoDeProducto(bus2);
+            Producto pro = new Producto( Nombre.getText(), tp);
+            try {
+                admin.agregarProducto(a, pro, Integer.getInteger(Cantidad.getText()));
+            } catch (Exception ex) {
+                Logger.getLogger(AgregarProducto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            JOptionPane.showInternalInputDialog(null, "Producto guardado!");
+            dispose();
+        }else{
+            JOptionPane.showInternalInputDialog(null, "No tiene permiso para hacer esto!");
+        }
+    }//GEN-LAST:event_GuardarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AgregarAlmacen;
     private javax.swing.JButton AgregarCategoria;
     private javax.swing.JComboBox<String> Almacen;
+    private javax.swing.JTextField Cantidad;
+    private javax.swing.JComboBox<String> Categoria;
+    private javax.swing.JButton Guardar;
     private javax.swing.JTextField ID;
     private javax.swing.JTextField Nombre;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -193,6 +270,5 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

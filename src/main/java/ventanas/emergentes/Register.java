@@ -313,7 +313,7 @@ public class Register extends javax.swing.JInternalFrame {
                 String con1 = new String(c1);
                 String con2 = new String(c2);
                 if (con1.equals(con2)) {
-                    Usuario usu = new Cliente(sistem.getUsuarios().size()+1,nick.getText(),con1,Correo.getText() ,Nombre.getText() , Apellido.getText(), DNI.getText(), Tel.getText(), Direccion.getText());
+                    Usuario usu = new Cliente(nick.getText(),con1,Correo.getText() ,Nombre.getText() , Apellido.getText(), DNI.getText(), Tel.getText(), Direccion.getText());
                     sistem.crearUsuario(usu);
                     dispose();
                 }else{

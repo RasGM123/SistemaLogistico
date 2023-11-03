@@ -2,6 +2,8 @@
 package ventanas.emergentes;
 
 import Modelo.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -34,6 +36,7 @@ public class AgrProductoEnvio extends javax.swing.JInternalFrame {
     }
 
     private void SetCategoria(){
+        Categoria.removeAllItems();
         for(TipoProducto tp : sis.getTiposDeProductos()){
             Categoria.addItem(tp.getNombre());
         }
@@ -102,11 +105,21 @@ public class AgrProductoEnvio extends javax.swing.JInternalFrame {
         AgregarCategoria.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         AgregarCategoria.setContentAreaFilled(false);
         AgregarCategoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        AgregarCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AgregarCategoriaActionPerformed(evt);
+            }
+        });
 
         Buscar.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         Buscar.setText("Buscar");
         Buscar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         Buscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -180,13 +193,37 @@ public class AgrProductoEnvio extends javax.swing.JInternalFrame {
                String sele= (String) Categoria.getSelectedItem();
                this.tp = admin.buscarTipoDeProducto(sele);
            }
-           Producto pro = new Producto(Integer.getInteger(ID.getText()), Nombre.getText(), this.tp);
+           Producto pro = new Producto( Nombre.getText(), this.tp);
            rp.setProducto(pro);
            dispose();
        }catch(Exception e){
            JOptionPane.showMessageDialog(this, e.getMessage());
        }
     }//GEN-LAST:event_AgregarActionPerformed
+
+    private void AgregarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarCategoriaActionPerformed
+        Usuario us = sis.obtenerSesion();
+        if(us instanceof Gerente gen){
+            String cat = JOptionPane.showInputDialog("Ingrese El nombre de la categoria: ");
+            TipoProducto tp = new TipoProducto( cat);
+            try {
+                gen.crearTipoDeProducto(tp);
+            } catch (Exception ex) {
+                Logger.getLogger(AgrProductoEnvio.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showInternalInputDialog(null, "No tiene permiso para hacer esto!");
+        }
+    }//GEN-LAST:event_AgregarCategoriaActionPerformed
+
+    private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
+        Usuario us = sis.obtenerSesion();
+        if(us instanceof Administrativo admin){
+            Producto pro = admin.buscarProducto(ID.getText());
+            Nombre.setText(pro.getNombre());
+            Categoria.setSelectedItem(pro.getTipoProducto().getNombre());
+        }
+    }//GEN-LAST:event_BuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

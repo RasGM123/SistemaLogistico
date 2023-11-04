@@ -75,9 +75,9 @@ public interface PerfilGerente {
     //KEY = Transportista, VALUE = cantidad de entregas
     public Map<Transportista, Integer> listarTransportistasPorEntregas(LocalDate inicio, LocalDate fin) throws Exception;
     //Devuelve un mapa donde KEY = Proveedor, VALUE = tiempo promedio de entrega comprendido entre 2 fechas
-    public Map<Proveedor, Float> listarProveedoresPorEntregas(LocalDate inicio, LocalDate fin);
+    public Map<Proveedor, Float> listarProveedoresPorTiempoDeEntrega(LocalDate inicio, LocalDate fin) throws Exception;
     //Cantidad de usuarios registrados comprendido entre 2 fechas
-    public int numeroUsuariosRegistrados(LocalDate inicio, LocalDate fin) throws Exception;
+    public int contarClientesRegistrados(LocalDate inicio, LocalDate fin) throws Exception;
     //Cantidad promedio de Pedidos por Cliente
-    public double promedioPedidos(LocalDate inicio, LocalDate fin) throws Exception;
+    public double calcularPromedioPedidos(LocalDate inicio, LocalDate fin) throws Exception;
 }

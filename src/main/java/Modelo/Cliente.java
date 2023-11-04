@@ -20,6 +20,8 @@ public class Cliente extends Usuario implements PerfilCliente{
     private List<String> preferencias;
     private List<Pedido> pedidos;
     private List<Ticket> tickets;
+    
+    private Sistema sistema;
 
     public Cliente() {
     }
@@ -30,6 +32,7 @@ public class Cliente extends Usuario implements PerfilCliente{
         this.preferencias = new ArrayList();
         this.pedidos = new ArrayList();
         this.tickets = new ArrayList();
+        this.sistema = null;
     }
     
     //Funcionalidades
@@ -104,6 +107,8 @@ public class Cliente extends Usuario implements PerfilCliente{
         Ticket ticket = new Ticket(motivo, reclamo);
         
         ticket.setId(ticket.hashCode());
+        
+        this.sistema.getTickets().add(ticket);
         
         this.tickets.add(ticket);
     }
@@ -183,6 +188,19 @@ public class Cliente extends Usuario implements PerfilCliente{
         listaPedidos = listaPedidos.subList(0, cantidad-1);
         
         return listaPedidos;
+    }
+    
+    /*
+        LOGIN
+    */
+    
+    public void conectar(Sistema sistema){
+        this.sistema = sistema;
+    }
+    
+    //Metodo que se llama al cerrar sesion
+    public void desconectar(){
+        this.sistema = null;
     }
     
     //Setters

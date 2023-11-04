@@ -5,6 +5,7 @@
 package Modelo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +24,58 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
     }
     
     /*
-        AMB Pedido
+        CRUD Cliente
+    */
+
+    @Override
+    public Cliente buscarClientePorDni(String dni) {
+        Map<String, Usuario> usuarios = sistema.getUsuarios();
+        
+        for(Usuario u:usuarios.values()){
+            if(u instanceof Cliente cliente){
+                if(cliente.getDni().equals(dni)){
+                    return cliente;
+                }
+            }
+        }
+        
+        return null;
+    }
+
+    @Override
+    public List<Cliente> buscarClientePorApellido(String apellido) {
+        Map<String, Usuario> usuarios = sistema.getUsuarios();
+        List<Cliente> lista = new ArrayList();
+        
+        for(Usuario u:usuarios.values()){
+            if(u instanceof Cliente cliente){
+                if(cliente.getApellidos().equalsIgnoreCase(apellido)){
+                    lista.add(cliente);
+                }
+            }
+        }
+        
+        return lista;
+    }
+    
+    @Override
+    public List<Cliente> listarClientes() {
+        Map<String, Usuario> usuarios = sistema.getUsuarios();
+        List<Cliente> lista = new ArrayList();
+        
+        for(Usuario u:usuarios.values()){
+            if(u instanceof Cliente cliente){
+                lista.add(cliente);
+            }
+        }
+        
+        return lista;
+    }
+    
+    
+    
+    /*
+        CRUD Pedido
     */
     
     @Override
@@ -151,29 +203,29 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
     @Override
     public List<Ticket> listarTicketsPendientes() {
         List<Ticket> tickets = sistema.getTickets();
-        List<Ticket> lista = new ArrayList();
+        List<Ticket> pendientes = new ArrayList();
         
         for(Ticket t:tickets){
             if(t.getRespuesta() == null){
-                lista.add(t);
+                pendientes.add(t);
             }
         }
         
-        return lista;
+        return pendientes;
     }
 
     @Override
     public List<Ticket> listarTicketsSolucionados() {
         List<Ticket> tickets = sistema.getTickets();
-        List<Ticket> lista = new ArrayList();
+        List<Ticket> solucionados = new ArrayList();
         
         for(Ticket t:tickets){
             if(t.getRespuesta() != null){
-                lista.add(t);
+                solucionados.add(t);
             }
         }
         
-        return lista;
+        return solucionados;
     }
     
     /*
@@ -182,18 +234,24 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
     
     @Override
     public Transportista buscarTransportista(String dni){
-        Map<String, Transportista> transportistas = sistema.getTransportistas();
+        List<Transportista> transportistas = sistema.getTransportistas();
         
-        return transportistas.get(dni);
+        for(Transportista t:transportistas){
+            if(t.getDni().equals(dni)){
+                return t;
+            }
+        }
+        
+        return null;
     }
     
     //Devuelve una lista de los Transportistas por nombre y apellido
     @Override
     public List<Transportista> buscarTransportista(String nombres, String apellidos){
-        Map<String, Transportista> transportistas = sistema.getTransportistas();
+        List<Transportista> transportistas = sistema.getTransportistas();
         List<Transportista> lista = new ArrayList();
         
-        for(Transportista t:transportistas.values()){
+        for(Transportista t:transportistas){
             if(t.getNombres().equalsIgnoreCase(nombres) || t.getApellidos().equalsIgnoreCase(apellidos)){
                 lista.add(t);
             }
@@ -204,10 +262,7 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
     
     @Override
     public List<Transportista> listarTransportistas(){
-        Map<String, Transportista> transportistas = sistema.getTransportistas();
-        List<Transportista> lista = new ArrayList(transportistas.values());
-        
-        return lista;
+        return sistema.getTransportistas();
     }
     
     //Operaciones con Transportista

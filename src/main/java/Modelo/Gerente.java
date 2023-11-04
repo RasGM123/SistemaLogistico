@@ -30,7 +30,6 @@ public class Gerente extends Administrativo implements PerfilGerente{
     
     @Override
     public void crearTransportista(Transportista transportista) throws Exception{
-        Map<String, Transportista> tranportistas = sistema.getTransportistas();
         Map<String, Usuario> usuarios = sistema.getUsuarios();
         
         if(existeTransportista(transportista)){
@@ -42,8 +41,7 @@ public class Gerente extends Administrativo implements PerfilGerente{
         */
         transportista.setId(generarId(transportista));
         
-        usuarios.put(transportista.getDni(), transportista);
-        tranportistas.put(transportista.getDni(), transportista);
+        usuarios.put(transportista.getUsername(), transportista);
     }
     
     @Override
@@ -53,21 +51,17 @@ public class Gerente extends Administrativo implements PerfilGerente{
     
     @Override
     public void borrarTransportista(Transportista transportista) throws Exception{
-        Map<String, Transportista> transportistas = sistema.getTransportistas();
         Map<String, Usuario> usuarios = sistema.getUsuarios();
         
         if(!existeTransportista(transportista)){
             throw new Exception("El tranportista que desea borrar no está cargado en el sistema.");
         }
         
-        transportistas.remove(transportista.getDni());
-        usuarios.remove(transportista.getDni());
+        usuarios.remove(transportista.getUsername());
     }
     
     public boolean existeTransportista(Transportista transportista){
-        Map<String, Transportista> transportistas = sistema.getTransportistas();
-        
-        return transportistas.containsKey(transportista.getDni());
+        return sistema.existeUsuario(transportista);
     }
     
     /*
@@ -501,13 +495,13 @@ public class Gerente extends Administrativo implements PerfilGerente{
             for(Pedido pedido:pedidos.values()){
                 
                 //Se verifica que el Pedido se encuentre en el rango de fecha
-                if(estaEntre(pedido.getFechaCreacion().toLocalDate(), inicio, fin)){
+                if(estaDentroRangoFechas(pedido.getFechaCreacion().toLocalDate(), inicio, fin)){
                     
                     //Cantidad del Producto en el Pedido
                     cantidad = pedido.obtenerCantidadProducto(producto);
                     
                     if(cantidad > 0){
-                        listado.put(producto, listado.get(producto));
+                        listado.put(producto, listado.get(producto)+cantidad);
                     }
                 }
             }
@@ -528,7 +522,7 @@ public class Gerente extends Administrativo implements PerfilGerente{
         }
         
         for(Pedido p:pedidos.values()){
-            if(estaEntre(p.getFechaCreacion().toLocalDate(), inicio, fin) && p.getEstado().equalsIgnoreCase("Entregado")){
+            if(estaDentroRangoFechas(p.getFechaCreacion().toLocalDate(), inicio, fin) && p.getEstado().equalsIgnoreCase("Entregado")){
                 
                 t = p.getTransportista();
                 
@@ -544,28 +538,28 @@ public class Gerente extends Administrativo implements PerfilGerente{
     }
     
     @Override
-    public Map<Proveedor, Float> listarProveedoresPorEntregas(LocalDate inicio, LocalDate fin) {
+    public Map<Proveedor, Float> listarProveedoresPorTiempoDeEntrega(LocalDate inicio, LocalDate fin) throws Exception {
         List<OrdenDeCompra> ordenes = sistema.getOrdenesDeCompra();
         Map<Proveedor, Float> tiemposEntrega = new HashMap();
         Map<Proveedor, Float> cantidadOrdenes = new HashMap();
         
-        float diferencia;
+        float demora;
         float tiempoPromedio;
         
         for(OrdenDeCompra o:ordenes){
             
             //Se comprueba que la OrdenDeCompra haya sido entregada
-            if(o.getFechaEntrega() != null){
+            if(estaDentroRangoFechas(o.getFechaEmision().toLocalDate(), inicio, fin) && o.getFechaEntrega() != null){
                 
                 //Diferencia en HORAS entre la fecha de emision y la fecha de entrega de una orden de trabajo
-                diferencia = Duration.between(o.getFechaEmision(), o.getFechaEntrega()).toHours();
+                demora = Duration.between(o.getFechaEmision(), o.getFechaEntrega()).toHours();
                 
                 if(tiemposEntrega.containsKey(o.getProveedor())){
-                    tiemposEntrega.put(o.getProveedor(), tiemposEntrega.get(o.getProveedor())+diferencia);
+                    tiemposEntrega.put(o.getProveedor(), tiemposEntrega.get(o.getProveedor())+demora);
                     
                     cantidadOrdenes.put(o.getProveedor(), cantidadOrdenes.get(o.getProveedor())+1);
                 }else{
-                    tiemposEntrega.put(o.getProveedor(), diferencia);
+                    tiemposEntrega.put(o.getProveedor(), demora);
                     
                     cantidadOrdenes.put(o.getProveedor(), 1f);
                 }
@@ -583,17 +577,16 @@ public class Gerente extends Administrativo implements PerfilGerente{
         return tiemposEntrega;
     }
     
-
-    //Cantidad de usuarios registrados
     //Devuelve la cantidad de Usuario Clientes registrados comprendido entre 2 fechas
     @Override
-    public int numeroUsuariosRegistrados(LocalDate inicio, LocalDate fin) throws Exception {
-        Map<String, Cliente> clientes = sistema.getClientes();
+    public int contarClientesRegistrados(LocalDate inicio, LocalDate fin) throws Exception {
+        List<Cliente> clientes = sistema.getClientes();
+        
         int contador = 0;
         
-        for(Cliente c:clientes.values()){
+        for(Cliente c:clientes){
             
-            if(estaEntre(c.getFechaCreacion().toLocalDate(), inicio, fin)){
+            if(estaDentroRangoFechas(c.getFechaCreacion().toLocalDate(), inicio, fin)){
                 contador++;
             }
         }
@@ -601,7 +594,7 @@ public class Gerente extends Administrativo implements PerfilGerente{
         return contador;
     }
     
-    private boolean estaEntre(LocalDate fecha, LocalDate inicio, LocalDate fin) throws Exception{
+    private boolean estaDentroRangoFechas(LocalDate fecha, LocalDate inicio, LocalDate fin) throws Exception{
         if(inicio.isAfter(fin)){
             throw new Exception("La fecha de inicio debe ser menor o igual a la fecha fin.");
         }
@@ -613,23 +606,21 @@ public class Gerente extends Administrativo implements PerfilGerente{
         return !fecha.isBefore(inicio) && !fecha.isAfter(fin);
     }
     
-    //Cantidad promedio de Pedidos por Cliente
-    //Devuelve la cantidad de promedio de Pedido de los Clientes comprendidos entre 2 fechas
     @Override
-    public double promedioPedidos(LocalDate inicio, LocalDate fin) throws Exception{
-        Map<String, Cliente> clientes = sistema.getClientes();
-        double totalPedidos = 0;
+    public double calcularPromedioPedidos(LocalDate inicio, LocalDate fin) throws Exception{
+        List<Cliente> clientes = sistema.getClientes();
+        double cantidadTotalPedidos = 0;
         int cantidadClientes = clientes.size();
         
         if(cantidadClientes == 0){
             throw new Exception("El sistema no tiene cargado clientes.");
         }
         
-        for(Cliente c:clientes.values()){
+        for(Cliente c:clientes){
             
-            totalPedidos += c.listarPedidos(inicio, fin).size();
+            cantidadTotalPedidos += c.listarPedidos(inicio, fin).size();
         }
         
-        return totalPedidos/cantidadClientes;
+        return cantidadTotalPedidos/cantidadClientes;
     }
 }

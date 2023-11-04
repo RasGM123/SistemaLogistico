@@ -7,7 +7,6 @@ package Modelo;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +17,7 @@ import java.util.Map;
 public final class Sistema {
     //Sistema es SINGLETON
     private static Sistema instancia;
-    //Clave = dni
+    //Clave = nombre usuario
     private Map<String,Usuario> usuarios;
     //Clave = id Pedido
     private Map<Integer,Pedido> pedidos;
@@ -111,20 +110,11 @@ public final class Sistema {
         return null;
     }
     
-    public List<Usuario> listarUsuarios() throws Exception{
-        if(usuarios.isEmpty()){
-            throw new Exception("El sistema no tiene ningún usuario cargado.");
-        }
-        
+    public List<Usuario> listarUsuarios(){
         List<Usuario> lista = new ArrayList();
-        Iterator iter = usuarios.entrySet().iterator();
-        Usuario usuario;
         
-        //Se recorre el Mapa que contiene lo usuarios y se los agrega a la Lista
-        while(iter.hasNext()){
-            usuario = (Usuario) iter.next();
-            
-            lista.add(usuario);
+        for(Usuario u:usuarios.values()){
+            lista.add(u);
         }
         
         return lista;
@@ -157,7 +147,7 @@ public final class Sistema {
         return false;
     }
     
-    public boolean existeUsuario(Usuario usuario) throws Exception{
+    public boolean existeUsuario(Usuario usuario){
         if(usuarios.isEmpty()){
             return false;
         }
@@ -177,7 +167,6 @@ public final class Sistema {
         LOGIN
     */
     
-    //Se debe iniciar sesion, luego 
     public void iniciarSesion(String username, String password) throws Exception{
         if(!existeUsuario(username)){
             throw new Exception("El usuario no existe en el sistema.");
@@ -194,10 +183,16 @@ public final class Sistema {
         //Si las contraseñas coinciden se retorna el usuario 
         Usuario usuario = usuarios.get(username);
         
-        //Si es un UsuarioAdministrativo o UsuarioGerente se conecta a todo el Sistema
-        //el UsuarioCliente solo conoce sus Pedidos
-        if(usuario instanceof Administrativo usuarioAdministrativo){
-            usuarioAdministrativo.conectar(this);
+        if(usuario instanceof Cliente cliente){
+            cliente.conectar(this);
+        }else{
+            if(usuario instanceof Administrativo usuarioAdministrativo){
+                usuarioAdministrativo.conectar(this);
+            }else{
+                if(usuario instanceof Gerente usuarioGerente){
+                    usuarioGerente.conectar(this);
+                }
+            }
         }
         
         this.sesion = new Sesion(usuario, LocalDateTime.now());
@@ -210,8 +205,16 @@ public final class Sistema {
         
         Usuario usuario = sesion.getUsuario();
         
-        if(usuario instanceof Administrativo usuarioAdministrativo){
-            usuarioAdministrativo.desconectar();
+        if(usuario instanceof Cliente cliente){
+            cliente.desconectar();
+        }else{
+            if(usuario instanceof Administrativo usuarioAdministrativo){
+                usuarioAdministrativo.desconectar();
+            }else{
+                if(usuario instanceof Gerente usuarioGerente){
+                    usuarioGerente.desconectar();
+                }
+            }
         }
         
         sesion.cerrar();
@@ -253,40 +256,32 @@ public final class Sistema {
         return usuarios;
     }
 
-    public Map<String, Cliente> getClientes() {
-        Map<String, Cliente> clientes = new HashMap();
-        Cliente cliente;
-        Iterator iter = clientes.entrySet().iterator();
+    public List<Cliente> getClientes() {
+        List<Cliente> lista = new ArrayList();
         
-        while(iter.hasNext()){
-            cliente = (Cliente)iter.next();
-            
-            if(cliente instanceof Cliente){
-                clientes.put(cliente.getDni(), cliente);
+        for(Usuario u:getUsuarios().values()){
+            if(u instanceof Cliente cliente){
+                lista.add(cliente);
             }
         }
         
-        return clientes;
+        return lista;
     }
 
     public Map<Integer, Pedido> getPedidos() {
         return pedidos;
     }
 
-    public Map<String, Transportista> getTransportistas() {
-        Map<String, Transportista> transportistas = new HashMap();
-        Transportista transportista;
-        Iterator iter = transportistas.entrySet().iterator();
+    public List<Transportista> getTransportistas() {
+        List<Transportista> lista = new ArrayList();
         
-        while(iter.hasNext()){
-            transportista = (Transportista)iter.next();
-            
-            if(transportista instanceof Transportista){
-                transportistas.put(transportista.getDni(), transportista);
+        for(Usuario u:getUsuarios().values()){
+            if(u instanceof Transportista transportista){
+                lista.add(transportista);
             }
         }
         
-        return transportistas;
+        return lista;
     }
 
     public List<Vehiculo> getVehiculos() {
@@ -322,7 +317,7 @@ public final class Sistema {
     }
 
     public List<Ticket> getTickets() {
-        return tickets;
+        return this.tickets;
     }
     
     //SACAR DESPUES DE IMPLMENTAR PERSISTENCIA

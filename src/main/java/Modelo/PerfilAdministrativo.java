@@ -12,6 +12,11 @@ import java.util.List;
  */
 public interface PerfilAdministrativo {
     
+    //CRUD Cliente
+    public Cliente buscarClientePorDni(String dni);
+    public List<Cliente> buscarClientePorApellido(String apellido);
+    public List<Cliente> listarClientes();
+    
     //CRUD Pedido
     public void crearPedido(Cliente cliente, Pedido pedido) throws Exception;
     public Pedido buscarPedido(Cliente cliente, int idPedido);

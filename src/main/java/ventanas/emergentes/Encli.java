@@ -310,6 +310,7 @@ public class Encli extends javax.swing.JInternalFrame {
     private void BuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarClienteActionPerformed
         try {
             us = sis.buscarUsuario(IngresarCliente.getText());
+            JOptionPane.showInternalConfirmDialog(null, "Usuario: " + us.getUsername()+" selecionado!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }

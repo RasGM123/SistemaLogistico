@@ -118,6 +118,7 @@ public class mensaje extends javax.swing.JInternalFrame {
         Usuario us = sis.obtenerSesion();
         if(us instanceof Cliente cli){
             cli.crearTicket(Motivo.getText(), textoarea.getText());
+            
             JOptionPane.showMessageDialog(null, "Mensaje enviado");
         }
         dispose();

@@ -1,4 +1,3 @@
-
 package ventanas.emergentes;
 
 import Modelo.*;
@@ -15,33 +14,36 @@ public class AgrProductoEnvio extends javax.swing.JInternalFrame {
     private RenglonPedido rp;
     private Sistema sis;
     private TipoProducto tp = null;
+
     /**
      * Creates new form AgrProductoEnvio
+     *
      * @param p
      * @param s
      */
-    public AgrProductoEnvio(RenglonPedido p,Sistema s) {
+    public AgrProductoEnvio(RenglonPedido p, Sistema s) {
         initComponents();
         this.rp = p;
         this.sis = s;
         SetCategoria();
         SetProductos();
     }
-    
-    private void SetProductos(){
-        ID.setText(String.valueOf(rp.getId()));
-        Cantidad.setText(String.valueOf(rp.getCantidad()));
-        Nombre.setText(rp.getProducto().getNombre());
-        Categoria.setSelectedItem(rp.getProducto().getTipoProducto().getNombre());
+
+    private void SetProductos() {
+            ID.setText(String.valueOf(rp.getId()));
+            Cantidad.setText(String.valueOf(rp.getCantidad()));
+            Nombre.setText(rp.getProducto().getNombre());
+            Categoria.setSelectedItem(rp.getProducto().getTipoProducto().getNombre());
     }
 
-    private void SetCategoria(){
+    private void SetCategoria() {
         Categoria.removeAllItems();
-        for(TipoProducto tp : sis.getTiposDeProductos()){
+        Categoria.addItem("Seleción...");
+        for (TipoProducto tp : sis.getTiposDeProductos()) {
             Categoria.addItem(tp.getNombre());
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -186,39 +188,39 @@ public class AgrProductoEnvio extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarActionPerformed
-       try{
-           rp.setCantidad(Integer.getInteger(Cantidad.getText()));
-           Usuario us = sis.obtenerSesion();
-           if(us instanceof Administrativo admin){
-               String sele= (String) Categoria.getSelectedItem();
-               this.tp = admin.buscarTipoDeProducto(sele);
-           }
-           Producto pro = new Producto( Nombre.getText(), this.tp);
-           rp.setProducto(pro);
-           dispose();
-       }catch(Exception e){
-           JOptionPane.showMessageDialog(this, e.getMessage());
-       }
+        try {
+            rp.setCantidad(Integer.getInteger(Cantidad.getText()));
+            Usuario us = sis.obtenerSesion();
+            if (us instanceof Administrativo admin) {
+                String sele = (String) Categoria.getSelectedItem();
+                this.tp = admin.buscarTipoDeProducto(sele);
+            }
+            Producto pro = new Producto(Nombre.getText(), this.tp);
+            rp.setProducto(pro);
+            dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
     }//GEN-LAST:event_AgregarActionPerformed
 
     private void AgregarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarCategoriaActionPerformed
         Usuario us = sis.obtenerSesion();
-        if(us instanceof Gerente gen){
+        if (us instanceof Gerente gen) {
             String cat = JOptionPane.showInputDialog("Ingrese El nombre de la categoria: ");
-            TipoProducto tp = new TipoProducto( cat);
+            TipoProducto tp = new TipoProducto(cat);
             try {
                 gen.crearTipoDeProducto(tp);
             } catch (Exception ex) {
                 Logger.getLogger(AgrProductoEnvio.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }else{
+        } else {
             JOptionPane.showInternalInputDialog(null, "No tiene permiso para hacer esto!");
         }
     }//GEN-LAST:event_AgregarCategoriaActionPerformed
 
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
         Usuario us = sis.obtenerSesion();
-        if(us instanceof Administrativo admin){
+        if (us instanceof Administrativo admin) {
             Producto pro = admin.buscarProducto(ID.getText());
             Nombre.setText(pro.getNombre());
             Categoria.setSelectedItem(pro.getTipoProducto().getNombre());

@@ -28,7 +28,7 @@ public final class General extends javax.swing.JFrame {
         this.setTitle("Fenix Global Delibery");
         this.sis = Sistema.iniciar();
         this.AutoLogin();
-        mostrarmenu();
+        setVisibleMenu();
     }
 
     public void addcentrarpanel(Component com) {
@@ -39,32 +39,38 @@ public final class General extends javax.swing.JFrame {
         com.setVisible(true);
     }
 
+    private void setVisibleMenu() {
+        Usuariom.setVisible(false);
+        Seguimiento.setVisible(false);
+        Proveedores.setVisible(false);
+        Productos.setVisible(false);
+        Informe.setVisible(false);
+        Envio.setVisible(false);
+        Usuario1.setVisible(false);
+        Seguimiento1.setVisible(false);
+        Proveedores1.setVisible(false);
+        Productos1.setVisible(false);
+        Informe1.setVisible(false);
+        Envio1.setVisible(false);
+        Mensajes.setVisible(false);
+        Loginm.setVisible(true);
+        Registerm.setVisible(true);
+    }
+
     public void mostrarmenu() {
-        if (sis.getSesion() == null) {
-            Usuario.setVisible(false);
-            Seguimiento.setVisible(false);
-            Proveedores.setVisible(false);
-            Productos.setVisible(false);
-            Informe.setVisible(false);
-            Envio.setVisible(false);
-            Usuario1.setVisible(false);
-            Seguimiento1.setVisible(false);
-            Proveedores1.setVisible(false);
-            Productos1.setVisible(false);
-            Informe1.setVisible(false);
-            Envio1.setVisible(false);
-            Mensajes.setVisible(false);
-        } else {
-            if (sis.obtenerCodigoUsuario(sis.obtenerSesion()) == 1) {
-                Usuario.setVisible(true);
+        try {
+            Usuario us = sis.obtenerSesion();
+            if (us instanceof Cliente c) {
+                Usuariom.setVisible(true);
                 Seguimiento.setVisible(true);
-                Envio.setVisible(true);
                 Usuario1.setVisible(true);
                 Seguimiento1.setVisible(true);
-                Envio1.setVisible(true);
                 ajususer.setVisible(false);
-            } else {
-                Usuario.setVisible(true);
+                ajususer1.setVisible(false);
+                Loginm.setVisible(false);
+                Registerm.setVisible(false);
+            } else if (us instanceof Administrativo a) {
+                Usuariom.setVisible(true);
                 Seguimiento.setVisible(true);
                 Proveedores.setVisible(true);
                 Productos.setVisible(true);
@@ -77,7 +83,46 @@ public final class General extends javax.swing.JFrame {
                 Informe1.setVisible(true);
                 Envio1.setVisible(true);
                 Mensajes.setVisible(true);
+                Loginm.setVisible(false);
+                Registerm.setVisible(false);
+            } else if (us instanceof Gerente g) {
+                Usuariom.setVisible(true);
+                Seguimiento.setVisible(true);
+                Proveedores.setVisible(true);
+                Productos.setVisible(true);
+                Informe.setVisible(true);
+                Envio.setVisible(true);
+                Usuario1.setVisible(true);
+                Seguimiento1.setVisible(true);
+                Proveedores1.setVisible(true);
+                Productos1.setVisible(true);
+                Informe1.setVisible(true);
+                Envio1.setVisible(true);
+                Mensajes.setVisible(true);
+                Loginm.setVisible(false);
+                Registerm.setVisible(false);
+            } else if (us instanceof Transportista t) {
+                Usuariom.setVisible(true);
+                Seguimiento.setVisible(true);
+                Proveedores.setVisible(false);
+                Productos.setVisible(false);
+                Informe.setVisible(false);
+                Envio.setVisible(false);
+                Usuario1.setVisible(true);
+                Seguimiento1.setVisible(true);
+                Proveedores1.setVisible(false);
+                Productos1.setVisible(false);
+                Informe1.setVisible(false);
+                Envio1.setVisible(false);
+                Mensajes.setVisible(true);
+                Loginm.setVisible(false);
+                Registerm.setVisible(false);
+            } else if (us == null) {
+                setVisibleMenu();
             }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }
 
@@ -86,7 +131,7 @@ public final class General extends javax.swing.JFrame {
             Login lo = new Login(escritorio, sis, this);
             addcentrarpanel(lo);
         }
-        mostrarmenu();
+        /*mostrarmenu();*/
     }
 
     private int setcantidadMensajes() {
@@ -136,11 +181,11 @@ public final class General extends javax.swing.JFrame {
         };
         Menu = new javax.swing.JMenuBar();
         inicio = new javax.swing.JMenu();
-        Login = new javax.swing.JMenuItem();
-        Register = new javax.swing.JMenuItem();
+        Loginm = new javax.swing.JMenuItem();
+        Registerm = new javax.swing.JMenuItem();
         cerrarses = new javax.swing.JMenuItem();
         Salir = new javax.swing.JMenuItem();
-        Usuario = new javax.swing.JMenu();
+        Usuariom = new javax.swing.JMenu();
         ajususer = new javax.swing.JMenuItem();
         ajustes = new javax.swing.JMenuItem();
         contacto = new javax.swing.JMenuItem();
@@ -329,25 +374,25 @@ public final class General extends javax.swing.JFrame {
         inicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         inicio.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
-        Login.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        Login.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\usuario.png"));
-        Login.setText("Login");
-        Login.addActionListener(new java.awt.event.ActionListener() {
+        Loginm.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        Loginm.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\usuario.png"));
+        Loginm.setText("Login");
+        Loginm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LoginActionPerformed(evt);
+                LoginmActionPerformed(evt);
             }
         });
-        inicio.add(Login);
+        inicio.add(Loginm);
 
-        Register.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        Register.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\agregar-usuario.png"));
-        Register.setText("Register");
-        Register.addActionListener(new java.awt.event.ActionListener() {
+        Registerm.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        Registerm.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\agregar-usuario.png"));
+        Registerm.setText("Register");
+        Registerm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegisterActionPerformed(evt);
+                RegistermActionPerformed(evt);
             }
         });
-        inicio.add(Register);
+        inicio.add(Registerm);
 
         cerrarses.setText("Cerrar Sesión");
         cerrarses.addActionListener(new java.awt.event.ActionListener() {
@@ -369,11 +414,11 @@ public final class General extends javax.swing.JFrame {
 
         Menu.add(inicio);
 
-        Usuario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        Usuario.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\circulo-de-usuario.png"));
-        Usuario.setText("Usuario");
-        Usuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Usuario.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        Usuariom.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Usuariom.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\circulo-de-usuario.png"));
+        Usuariom.setText("Usuario");
+        Usuariom.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Usuariom.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
         ajususer.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         ajususer.setText("Ajuste de Usuario");
@@ -382,7 +427,7 @@ public final class General extends javax.swing.JFrame {
                 ajususerActionPerformed(evt);
             }
         });
-        Usuario.add(ajususer);
+        Usuariom.add(ajususer);
 
         ajustes.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         ajustes.setText("Ajustes");
@@ -391,7 +436,7 @@ public final class General extends javax.swing.JFrame {
                 ajustesActionPerformed(evt);
             }
         });
-        Usuario.add(ajustes);
+        Usuariom.add(ajustes);
 
         contacto.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         contacto.setText("Contacto");
@@ -400,9 +445,9 @@ public final class General extends javax.swing.JFrame {
                 contactoActionPerformed(evt);
             }
         });
-        Usuario.add(contacto);
+        Usuariom.add(contacto);
 
-        Menu.add(Usuario);
+        Menu.add(Usuariom);
 
         Seguimiento.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         Seguimiento.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\envio-rapido.png"));
@@ -547,20 +592,17 @@ public final class General extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
-        if (sis.getSesion() == null) {
-            Login lo = new Login(escritorio, sis, this);
-            escritorio.add(lo);
-            lo.setVisible(true);
-        }
-    }//GEN-LAST:event_LoginActionPerformed
+    private void LoginmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginmActionPerformed
+        Login lo = new Login(escritorio, sis, this);
+        escritorio.add(lo);
+        lo.setVisible(true);
+        mostrarmenu();
+    }//GEN-LAST:event_LoginmActionPerformed
 
-    private void RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterActionPerformed
-        if (sis.getSesion() == null) {
-            Register res = new Register(sis);
-            addcentrarpanel(res);
-        }
-    }//GEN-LAST:event_RegisterActionPerformed
+    private void RegistermActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistermActionPerformed
+        Register res = new Register(sis);
+        addcentrarpanel(res);
+    }//GEN-LAST:event_RegistermActionPerformed
 
     private void ajususerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajususerActionPerformed
         AjusteUsuario aus = new AjusteUsuario(sis);
@@ -676,6 +718,8 @@ public final class General extends javax.swing.JFrame {
     private void cerrarsesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarsesActionPerformed
         try {
             sis.cerrarSesion();
+            mostrarmenu();
+            JOptionPane.showMessageDialog(null, "Cerraste la sección!");
         } catch (Exception ex) {
             Logger.getLogger(General.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -730,7 +774,7 @@ public final class General extends javax.swing.JFrame {
     private javax.swing.JMenu Envio1;
     private javax.swing.JMenu Informe;
     private javax.swing.JMenu Informe1;
-    private javax.swing.JMenuItem Login;
+    private javax.swing.JMenuItem Loginm;
     private javax.swing.JMenu Mensajes;
     private javax.swing.JMenuBar Menu;
     private javax.swing.JMenuItem ModProducto;
@@ -741,12 +785,12 @@ public final class General extends javax.swing.JFrame {
     private javax.swing.JMenu Productos1;
     private javax.swing.JMenu Proveedores;
     private javax.swing.JMenu Proveedores1;
-    private javax.swing.JMenuItem Register;
+    private javax.swing.JMenuItem Registerm;
     private javax.swing.JMenuItem Salir;
     private javax.swing.JMenu Seguimiento;
     private javax.swing.JMenu Seguimiento1;
-    private javax.swing.JMenu Usuario;
     private javax.swing.JMenu Usuario1;
+    private javax.swing.JMenu Usuariom;
     private javax.swing.JMenuItem Ver;
     private javax.swing.JMenuItem ajuste1;
     private javax.swing.JMenuItem ajustes;

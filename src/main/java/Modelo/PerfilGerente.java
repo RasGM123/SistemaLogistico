@@ -27,7 +27,7 @@ public interface PerfilGerente {
     
     //CRUD Ruta
     public void crearRuta(Ruta ruta) throws Exception;
-    public void editarRuta(Ruta ruta, String origen, String destino, LocalDateTime fechaSalida, LocalDateTime fechaLlegada);
+    public void editarRuta(Ruta ruta, String origen, String destino, LocalDate fechaSalida, LocalDate fechaLlegada);
     public void borrarRuta(Ruta ruta) throws Exception;
     
     //CRUD Proveedor

@@ -129,8 +129,7 @@ public class Gerente extends Administrativo implements PerfilGerente{
         rutas.add(ruta);
     }
     
-    @Override
-    public void editarRuta(Ruta ruta, String origen, String destino, LocalDateTime fechaSalida, LocalDateTime fechaLlegada){
+    public void editarRuta(Ruta ruta, String origen, String destino, LocalDate fechaSalida, LocalDate fechaLlegada){
         ruta.setOrigen(origen);
         ruta.setDestino(destino);
         ruta.setFechaSalida(fechaSalida);

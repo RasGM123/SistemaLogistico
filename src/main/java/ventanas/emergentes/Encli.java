@@ -8,7 +8,10 @@ import Modelo.*;
 import com.toedter.calendar.JCalendar;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -121,10 +124,14 @@ public class Encli extends javax.swing.JInternalFrame {
             String origen = origenField.getText();
             String destino = destinoField.getText();
 
-            LocalDateTime fechaSalida = LocalDateTime.;
+            
+            Date llegada = fechallegada.getDate();
+            Date salida = fechasalida.getDate();
+            Instant instant1 = llegada.toInstant();
+            Instant instant2 = salida.toInstant();
+            LocalDate fechaSalida = instant2.atZone(ZoneId.systemDefault()).toLocalDate();
 
-            LocalDateTime fechaLlegada = LocalDateTime.parse(
-                    fechaLlegadaField.getText(), format);
+            LocalDate fechaLlegada = instant1.atZone(ZoneId.systemDefault()).toLocalDate();
 
             Ruta ru = new Ruta(origen, destino, fechaSalida, fechaLlegada);
             return ru;
@@ -148,6 +155,7 @@ public class Encli extends javax.swing.JInternalFrame {
         Modificar = new javax.swing.JMenuItem();
         Eliminar = new javax.swing.JMenuItem();
         Agregar = new javax.swing.JMenuItem();
+        jScrollPane2 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         Enviar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -196,6 +204,7 @@ public class Encli extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setResizable(true);
         setTitle("Crear Envio");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -263,7 +272,7 @@ public class Encli extends javax.swing.JInternalFrame {
                 .addComponent(IngresarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -279,7 +288,7 @@ public class Encli extends javax.swing.JInternalFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Producto:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 18))); // NOI18N
 
         Agregar1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        Agregar1.setIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\agregar.png");
+        Agregar1.setIcon(new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\agregar.png"));
         Agregar1.setText("Agregar");
         Agregar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         Agregar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -387,20 +396,12 @@ public class Encli extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 649, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Enviar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 661, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Enviar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -416,7 +417,9 @@ public class Encli extends javax.swing.JInternalFrame {
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel2, java.awt.BorderLayout.PAGE_START);
+        jScrollPane2.setViewportView(jPanel2);
+
+        getContentPane().add(jScrollPane2, java.awt.BorderLayout.LINE_END);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -477,6 +480,7 @@ public class Encli extends javax.swing.JInternalFrame {
                 if (us instanceof Cliente cli) {
                     Pedido pe = new Pedido(LocalDateTime.now(), ru, rp);
                     admin.crearPedido(cli, pe);
+                    dispose();
                 }
             }
         } catch (Exception e) {
@@ -535,5 +539,6 @@ public class Encli extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

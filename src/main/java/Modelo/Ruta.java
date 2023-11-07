@@ -4,7 +4,7 @@
  */
 package Modelo;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -15,13 +15,13 @@ public class Ruta {
     private int id;
     private String origen;
     private String destino;
-    private LocalDateTime fechaSalida;
-    private LocalDateTime fechaLlegada;
+    private LocalDate fechaSalida;
+    private LocalDate fechaLlegada;
 
     public Ruta() {
     }
     
-    public Ruta(String origen, String destino, LocalDateTime fechaSalida, LocalDateTime fechaLlegada) {
+    public Ruta(String origen, String destino, LocalDate fechaSalida, LocalDate fechaLlegada) {
         this.origen = origen;
         this.destino = destino;
         this.fechaSalida = fechaSalida;
@@ -67,11 +67,11 @@ public class Ruta {
         this.destino = destino;
     }
 
-    public void setFechaSalida(LocalDateTime fechaSalida) {
+    public void setFechaSalida(LocalDate fechaSalida) {
         this.fechaSalida = fechaSalida;
     }
 
-    public void setFechaLlegada(LocalDateTime fechaLlegada) {
+    public void setFechaLlegada(LocalDate fechaLlegada) {
         this.fechaLlegada = fechaLlegada;
     }
     
@@ -89,11 +89,11 @@ public class Ruta {
         return destino;
     }
 
-    public LocalDateTime getFechaSalida() {
+    public LocalDate getFechaSalida() {
         return fechaSalida;
     }
 
-    public LocalDateTime getFechaLlegada() {
+    public LocalDate getFechaLlegada() {
         return fechaLlegada;
     }
 }

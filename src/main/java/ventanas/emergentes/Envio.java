@@ -22,7 +22,7 @@ public class Envio extends javax.swing.JInternalFrame {
 
     private Sistema sis;
     private JDesktopPane escritorio;
-    private DefaultListModel modelo;
+    private DefaultListModel modelo ;
     /**
      * Creates new form Envio
      * @param s
@@ -40,7 +40,8 @@ public class Envio extends javax.swing.JInternalFrame {
     
     private void ponerListaPedidos(){
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        if(sis.obtenerSesion() instanceof Administrativo admin){
+        Usuario us = sis.obtenerSesion();
+        if(us instanceof Administrativo admin){
             List<Pedido> pe = admin.listarPedidosSistema();
             for(Pedido p: pe){
                 

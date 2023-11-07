@@ -11,9 +11,12 @@ import static java.nio.file.Files.list;
 import java.util.ArrayList;
 import static java.util.Collections.list;
 import java.util.List;
+import java.util.Vector;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -22,7 +25,6 @@ import javax.swing.ImageIcon;
 public class Buzon extends javax.swing.JInternalFrame {
 
     private Sistema sis;
-    private List<Integer> ids;
     private Ticket mensaje;
 
     /**
@@ -31,7 +33,6 @@ public class Buzon extends javax.swing.JInternalFrame {
      * @param s
      */
     public Buzon(Sistema s) {
-        this.ids = new ArrayList<>();
         initComponents();
         Icon icon = new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\campana.png");
         this.setFrameIcon(icon);
@@ -42,38 +43,31 @@ public class Buzon extends javax.swing.JInternalFrame {
 
     private void setLista() {
         ListaMensajes.removeAll();
-        DefaultListModel<String> modelo = new DefaultListModel<>();
+        DefaultTableModel model = (DefaultTableModel) ListaMensajes.getModel();
         Usuario us = sis.obtenerSesion();
         if (us instanceof Administrativo admin) {
             List<Ticket> ts = admin.listarTodosLosTickets();
+            Vector<Object> format = new Vector<>();
             for (Ticket t : ts) {
-                if (t.getRespuesta() != null) {
-                    String men = String.valueOf(t.getId()) + " " + t.getMotivo() + "" + "Leído";
-                    modelo.addElement(men);
-                    ids.add(t.getId());
-                } else {
-                    String men = String.valueOf(t.getId()) + " " + t.getMotivo() + "" + "Nuevo";
-                    modelo.addElement(men);
-                    ids.add(t.getId());
-                }
+                format.addElement(t.getId());
+                format.addElement(t.getMotivo());
+                model.addRow(format);
             }
-            ListaMensajes.setModel(modelo);
+            model.fireTableDataChanged();
         }
     }
 
     private void selectitemlist() {
         ListaMensajes.addMouseListener(new MouseAdapter() {
-            @Override
             public void mouseClicked(MouseEvent evt) {
-                if (evt.getClickCount() == 1) {
-                    int index = ListaMensajes.locationToIndex(evt.getPoint());
-                    index +=1;
-                    Usuario us = sis.obtenerSesion();
-                    if(us instanceof Administrativo admin){
-                        mensaje = admin.buscarTicket(index);
-                        Motivo.setText(mensaje.getMotivo());
-                        Mensaje.setText(mensaje.getReclamo());
-                    }
+
+                int index = ListaMensajes.rowAtPoint(evt.getPoint());
+                int id = (int) ListaMensajes.getValueAt(index, 0);
+                Usuario us = sis.obtenerSesion();
+                if (us instanceof Administrativo admin) {
+                    mensaje = admin.buscarTicket(id);
+                    Motivo.setText(mensaje.getMotivo());
+                    Mensaje.setText(mensaje.getReclamo());
                 }
             }
         });
@@ -90,8 +84,8 @@ public class Buzon extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        ListaMensajes = new javax.swing.JList<>();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        ListaMensajes = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         Motivo = new javax.swing.JLabel();
@@ -114,9 +108,30 @@ public class Buzon extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lista de Mensajes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 18))); // NOI18N
 
-        ListaMensajes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        ListaMensajes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jScrollPane1.setViewportView(ListaMensajes);
+        ListaMensajes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Motivo"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane4.setViewportView(ListaMensajes);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -124,14 +139,15 @@ public class Buzon extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -200,6 +216,11 @@ public class Buzon extends javax.swing.JInternalFrame {
         Contestar.setText("Contestar");
         Contestar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         Contestar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Contestar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ContestarActionPerformed(evt);
+            }
+        });
 
         Contestar1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         Contestar1.setText("Eliminar");
@@ -244,7 +265,7 @@ public class Buzon extends javax.swing.JInternalFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(Contestar)
                                     .addComponent(Contestar1))
-                                .addGap(0, 52, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(Contestar2))))
@@ -257,12 +278,20 @@ public class Buzon extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void ContestarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ContestarActionPerformed
+        Usuario us = sis.obtenerSesion();
+        if(us instanceof Administrativo admin){
+            admin.responderTicket(mensaje, Respuesta.getText());
+            JOptionPane.showInternalInputDialog(null, "Tiket contestado!");
+        }
+    }//GEN-LAST:event_ContestarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Contestar;
     private javax.swing.JButton Contestar1;
     private javax.swing.JButton Contestar2;
-    private javax.swing.JList<String> ListaMensajes;
+    private javax.swing.JTable ListaMensajes;
     private javax.swing.JTextArea Mensaje;
     private javax.swing.JLabel Motivo;
     private javax.swing.JTextArea Respuesta;
@@ -271,8 +300,8 @@ public class Buzon extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     // End of variables declaration//GEN-END:variables
 }

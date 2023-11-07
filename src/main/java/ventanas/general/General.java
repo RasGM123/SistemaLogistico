@@ -139,10 +139,10 @@ public final class General extends javax.swing.JFrame {
     private int setcantidadMensajes() {
         int can = 0;
         try {
-            for (Ticket t : sis.getTickets()) {
-                if (t.getRespuesta() != null) {
-                    can += 1;
-                }
+            Usuario us = sis.obtenerSesion();
+            if(us instanceof Administrativo admin){
+                List<Ticket> ts = admin.listarTicketsPendientes();
+                can = ts.size();
             }
             return can;
         } catch (Exception e) {

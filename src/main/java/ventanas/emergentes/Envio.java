@@ -188,7 +188,7 @@ public class Envio extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void CrearEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearEnvioActionPerformed
-        Encli ec = new Encli(sis);
+        Encli ec = new Encli(sis,escritorio);
         escritorio.add(ec);
         ec.setVisible(true);
     }//GEN-LAST:event_CrearEnvioActionPerformed

@@ -60,7 +60,7 @@ public final class General extends javax.swing.JFrame {
     public void mostrarmenu() {
         try {
             Usuario us = sis.obtenerSesion();
-            if (us instanceof Cliente c) {
+            if (us instanceof PerfilCliente) {
                 Usuariom.setVisible(true);
                 Seguimiento.setVisible(true);
                 Usuario1.setVisible(true);
@@ -69,7 +69,7 @@ public final class General extends javax.swing.JFrame {
                 ajususer1.setVisible(false);
                 Loginm.setVisible(false);
                 Registerm.setVisible(false);
-            } else if (us instanceof Administrativo a) {
+            } else if (us instanceof PerfilAdministrativo) {
                 Usuariom.setVisible(true);
                 Seguimiento.setVisible(true);
                 Proveedores.setVisible(true);
@@ -85,7 +85,7 @@ public final class General extends javax.swing.JFrame {
                 Mensajes.setVisible(true);
                 Loginm.setVisible(false);
                 Registerm.setVisible(false);
-            } else if (us instanceof Gerente g) {
+            } else if (us instanceof PerfilGerente) {
                 Usuariom.setVisible(true);
                 Seguimiento.setVisible(true);
                 Proveedores.setVisible(true);
@@ -101,6 +101,8 @@ public final class General extends javax.swing.JFrame {
                 Mensajes.setVisible(true);
                 Loginm.setVisible(false);
                 Registerm.setVisible(false);
+                nuevacategoria.setVisible(true);
+                nuevacategoria1.setVisible(true);
             } else if (us instanceof Transportista t) {
                 Usuariom.setVisible(true);
                 Seguimiento.setVisible(true);
@@ -166,6 +168,7 @@ public final class General extends javax.swing.JFrame {
         Productos1 = new javax.swing.JMenu();
         AgrProducto1 = new javax.swing.JMenuItem();
         ModProducto1 = new javax.swing.JMenuItem();
+        nuevacategoria1 = new javax.swing.JMenuItem();
         Informe1 = new javax.swing.JMenu();
         newinfo1 = new javax.swing.JMenuItem();
         BusInfo = new javax.swing.JMenuItem();
@@ -198,6 +201,7 @@ public final class General extends javax.swing.JFrame {
         Productos = new javax.swing.JMenu();
         AgrProducto = new javax.swing.JMenuItem();
         ModProducto = new javax.swing.JMenuItem();
+        nuevacategoria = new javax.swing.JMenuItem();
         Informe = new javax.swing.JMenu();
         newinfo = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -302,6 +306,9 @@ public final class General extends javax.swing.JFrame {
             }
         });
         Productos1.add(ModProducto1);
+
+        nuevacategoria1.setText("Categorias");
+        Productos1.add(nuevacategoria1);
 
         popMenu.add(Productos1);
 
@@ -520,6 +527,14 @@ public final class General extends javax.swing.JFrame {
         });
         Productos.add(ModProducto);
 
+        nuevacategoria.setText("Categorias");
+        nuevacategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevacategoriaActionPerformed(evt);
+            }
+        });
+        Productos.add(nuevacategoria);
+
         Menu.add(Productos);
 
         Informe.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -617,7 +632,7 @@ public final class General extends javax.swing.JFrame {
     }//GEN-LAST:event_amovActionPerformed
 
     private void CrearEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearEnvioActionPerformed
-        Encli ec = new Encli(sis);
+        Encli ec = new Encli(sis, escritorio);
         escritorio.add(ec);
         ec.setVisible(true);
     }//GEN-LAST:event_CrearEnvioActionPerformed
@@ -725,6 +740,12 @@ public final class General extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cerrarsesActionPerformed
 
+    private void nuevacategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevacategoriaActionPerformed
+        Categoria c = new Categoria(sis);
+        escritorio.add(c);
+        c.setVisible(true);
+    }//GEN-LAST:event_nuevacategoriaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -810,6 +831,8 @@ public final class General extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem newinfo;
     private javax.swing.JMenuItem newinfo1;
+    private javax.swing.JMenuItem nuevacategoria;
+    private javax.swing.JMenuItem nuevacategoria1;
     private javax.swing.JPopupMenu popMenu;
     // End of variables declaration//GEN-END:variables
 }

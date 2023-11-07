@@ -226,7 +226,7 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
             try {
                 gen.crearTipoDeProducto(tp);
             } catch (Exception ex) {
-                Logger.getLogger(AgrProductoEnvio.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.print(ex.getMessage());
             }
         }else{
             JOptionPane.showInternalInputDialog(null, "No tiene permiso para hacer esto!");

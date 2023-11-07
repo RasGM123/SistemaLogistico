@@ -7,17 +7,15 @@ package Modelo;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import javax.persistence.*;
 
 /**
  *
  * @author Gustavo
  */
 
-@Entity
+
 public class Movimiento implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     private int id;
     private LocalDateTime fecha;
     private String detalle;

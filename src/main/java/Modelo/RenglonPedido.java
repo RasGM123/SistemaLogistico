@@ -6,17 +6,15 @@ package Modelo;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.*;
+
 
 /**
  *
  * @author Gustavo
  */
 
-@Entity
+
 public class RenglonPedido implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private int cantidad;
     private Producto producto;

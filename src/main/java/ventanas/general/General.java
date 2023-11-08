@@ -69,6 +69,8 @@ public final class General extends javax.swing.JFrame {
                 ajususer1.setVisible(false);
                 Loginm.setVisible(false);
                 Registerm.setVisible(false);
+                infoenvio.setVisible(false);
+                infoenvio1.setVisible(false);
             } else if (us instanceof PerfilAdministrativo) {
                 Usuariom.setVisible(true);
                 Seguimiento.setVisible(true);
@@ -127,6 +129,7 @@ public final class General extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }
+
 
     private void AutoLogin() {
         if (sis.getSesion() == null) {
@@ -191,6 +194,7 @@ public final class General extends javax.swing.JFrame {
         Usuariom = new javax.swing.JMenu();
         ajususer = new javax.swing.JMenuItem();
         ajustes = new javax.swing.JMenuItem();
+        restickets = new javax.swing.JMenuItem();
         contacto = new javax.swing.JMenuItem();
         Seguimiento = new javax.swing.JMenu();
         amov = new javax.swing.JMenuItem();
@@ -444,6 +448,17 @@ public final class General extends javax.swing.JFrame {
             }
         });
         Usuariom.add(ajustes);
+
+        restickets.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        restickets.setIcon(new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\punto-de-sobre.png")
+        );
+        restickets.setText("Respuestas Tickets");
+        restickets.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resticketsActionPerformed(evt);
+            }
+        });
+        Usuariom.add(restickets);
 
         contacto.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         contacto.setText("Contacto");
@@ -746,6 +761,12 @@ public final class General extends javax.swing.JFrame {
         c.setVisible(true);
     }//GEN-LAST:event_nuevacategoriaActionPerformed
 
+    private void resticketsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resticketsActionPerformed
+        ResTickets rt = new ResTickets(sis);
+        escritorio.add(rt);
+        rt.setVisible(true);
+    }//GEN-LAST:event_resticketsActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -834,5 +855,6 @@ public final class General extends javax.swing.JFrame {
     private javax.swing.JMenuItem nuevacategoria;
     private javax.swing.JMenuItem nuevacategoria1;
     private javax.swing.JPopupMenu popMenu;
+    private javax.swing.JMenuItem restickets;
     // End of variables declaration//GEN-END:variables
 }

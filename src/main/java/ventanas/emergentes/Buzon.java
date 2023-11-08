@@ -11,7 +11,6 @@ import static java.nio.file.Files.list;
 import java.util.ArrayList;
 import static java.util.Collections.list;
 import java.util.List;
-import java.util.Vector;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -26,7 +25,7 @@ public class Buzon extends javax.swing.JInternalFrame {
 
     private Sistema sis;
     private Ticket mensaje;
-
+    private DefaultTableModel model ;
     /**
      * Creates new form Buzon
      *
@@ -42,16 +41,16 @@ public class Buzon extends javax.swing.JInternalFrame {
     }
 
     private void setLista() {
-        ListaMensajes.removeAll();
-        DefaultTableModel model = (DefaultTableModel) ListaMensajes.getModel();
+        model = (DefaultTableModel) ListaMensajes.getModel();
+        model.setRowCount(0);
         Usuario us = sis.obtenerSesion();
         if (us instanceof Administrativo admin) {
-            List<Ticket> ts = admin.listarTodosLosTickets();
-            Vector<Object> format = new Vector<>();
+            List<Ticket> ts = admin.listarTicketsPendientes();
             for (Ticket t : ts) {
-                format.addElement(t.getId());
-                format.addElement(t.getMotivo());
-                model.addRow(format);
+                Object[] fila = new Object[2];
+                fila[0]= t.getId();
+                fila[1]= t.getMotivo();
+                model.addRow(fila);
             }
             model.fireTableDataChanged();
         }
@@ -59,6 +58,7 @@ public class Buzon extends javax.swing.JInternalFrame {
 
     private void selectitemlist() {
         ListaMensajes.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent evt) {
 
                 int index = ListaMensajes.rowAtPoint(evt.getPoint());
@@ -226,11 +226,21 @@ public class Buzon extends javax.swing.JInternalFrame {
         Contestar1.setText("Eliminar");
         Contestar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         Contestar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Contestar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Contestar1ActionPerformed(evt);
+            }
+        });
 
         Contestar2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         Contestar2.setText("Salir");
         Contestar2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         Contestar2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Contestar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Contestar2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -282,9 +292,23 @@ public class Buzon extends javax.swing.JInternalFrame {
         Usuario us = sis.obtenerSesion();
         if(us instanceof Administrativo admin){
             admin.responderTicket(mensaje, Respuesta.getText());
-            JOptionPane.showInternalInputDialog(null, "Tiket contestado!");
+            JOptionPane.showMessageDialog(this, "Tiket contestado!");
+            setLista();
         }
     }//GEN-LAST:event_ContestarActionPerformed
+
+    private void Contestar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Contestar2ActionPerformed
+        dispose();
+    }//GEN-LAST:event_Contestar2ActionPerformed
+
+    private void Contestar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Contestar1ActionPerformed
+        Usuario us = sis.obtenerSesion();
+        if(us instanceof Administrativo admin){
+            admin.responderTicket(mensaje, "Mensaje Eliminado!");
+            JOptionPane.showMessageDialog(this, "Tiket Contestado!");
+            setLista();
+        }
+    }//GEN-LAST:event_Contestar1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

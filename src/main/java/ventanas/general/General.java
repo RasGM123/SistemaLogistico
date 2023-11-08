@@ -122,7 +122,7 @@ public final class General extends javax.swing.JFrame {
             } else if (us == null) {
                 setVisibleMenu();
             }
-
+            Mensajes.setText(String.valueOf(setcantidadMensajes())+" "+"Mensajes");
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
@@ -133,21 +133,21 @@ public final class General extends javax.swing.JFrame {
             Login lo = new Login(escritorio, sis, this);
             addcentrarpanel(lo);
         }
-        /*mostrarmenu();*/
     }
 
     private int setcantidadMensajes() {
         int can = 0;
         try {
             Usuario us = sis.obtenerSesion();
-            if(us instanceof Administrativo admin){
+            if (us instanceof Administrativo admin) {
                 List<Ticket> ts = admin.listarTicketsPendientes();
                 can = ts.size();
             }
             return can;
         } catch (Exception e) {
-            return can;
+            System.out.println(e.getMessage());
         }
+        return can;
     }
 
     @SuppressWarnings("unchecked")
@@ -581,8 +581,7 @@ public final class General extends javax.swing.JFrame {
 
         Mensajes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         Mensajes.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\campana.png"));
-        Mensajes.setText(String.valueOf(setcantidadMensajes())+" "+"Mensajes"
-        );
+        Mensajes.setText("Mensaje");
         Mensajes.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         Mensajes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -728,6 +727,7 @@ public final class General extends javax.swing.JFrame {
         Buzon b = new Buzon(sis);
         escritorio.add(b);
         b.setVisible(true);
+        setcantidadMensajes();
     }//GEN-LAST:event_VerActionPerformed
 
     private void cerrarsesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarsesActionPerformed

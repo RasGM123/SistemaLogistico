@@ -627,9 +627,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="new javax.swing.ImageIcon(System.getProperty(&quot;user.dir&quot;)+&quot;\\src\\main\\java\\imagenes\\minicon\\campana.png&quot;)" type="code"/>
             </Property>
-            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="String.valueOf(setcantidadMensajes())+&quot; &quot;+&quot;Mensajes&quot;&#xa;    " type="code"/>
-            </Property>
+            <Property name="text" type="java.lang.String" value="Mensaje"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Times New Roman" size="14" style="1"/>
             </Property>

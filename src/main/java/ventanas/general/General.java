@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.Action;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 public final class General extends javax.swing.JFrame {
 
@@ -37,6 +38,7 @@ public final class General extends javax.swing.JFrame {
         Dimension comSize = com.getSize();
         com.setLocation((escSize.width - comSize.width) / 2, (escSize.height - comSize.height) / 2);
         com.setVisible(true);
+        actualizarNotificaciones();
     }
 
     private void setVisibleMenu() {
@@ -124,12 +126,16 @@ public final class General extends javax.swing.JFrame {
             } else if (us == null) {
                 setVisibleMenu();
             }
-            Mensajes.setText(String.valueOf(setcantidadMensajes())+" "+"Mensajes");
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }
 
+    private void actualizarNotificaciones(){
+        Mensajes.setText(String.valueOf(setcantidadMensajes())+" "+"Mensajes");
+        Timer t = new Timer(5000, e -> actualizarNotificaciones());
+        t.start();
+    }
 
     private void AutoLogin() {
         if (sis.getSesion() == null) {
@@ -488,6 +494,11 @@ public final class General extends javax.swing.JFrame {
 
         infoenvio.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         infoenvio.setText("Info Envio");
+        infoenvio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                infoenvioActionPerformed(evt);
+            }
+        });
         Seguimiento.add(infoenvio);
 
         Menu.add(Seguimiento);
@@ -766,6 +777,12 @@ public final class General extends javax.swing.JFrame {
         escritorio.add(rt);
         rt.setVisible(true);
     }//GEN-LAST:event_resticketsActionPerformed
+
+    private void infoenvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoenvioActionPerformed
+        MovimientosPedidos mp = new MovimientosPedidos(sis);
+        escritorio.add(mp);
+        mp.setVisible(true);
+    }//GEN-LAST:event_infoenvioActionPerformed
 
     /**
      * @param args the command line arguments

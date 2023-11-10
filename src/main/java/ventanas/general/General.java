@@ -205,6 +205,9 @@ public final class General extends javax.swing.JFrame {
         Seguimiento = new javax.swing.JMenu();
         amov = new javax.swing.JMenuItem();
         infoenvio = new javax.swing.JMenuItem();
+        Envio = new javax.swing.JMenu();
+        CrearEnvio = new javax.swing.JMenuItem();
+        gestionarenvio = new javax.swing.JMenuItem();
         Proveedores = new javax.swing.JMenu();
         AgrProveedor = new javax.swing.JMenuItem();
         ModProveedor = new javax.swing.JMenuItem();
@@ -214,10 +217,6 @@ public final class General extends javax.swing.JFrame {
         nuevacategoria = new javax.swing.JMenuItem();
         Informe = new javax.swing.JMenu();
         newinfo = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        Envio = new javax.swing.JMenu();
-        CrearEnvio = new javax.swing.JMenuItem();
-        gestionarenvio = new javax.swing.JMenuItem();
         Mensajes = new javax.swing.JMenu();
         Ver = new javax.swing.JMenuItem();
 
@@ -503,6 +502,32 @@ public final class General extends javax.swing.JFrame {
 
         Menu.add(Seguimiento);
 
+        Envio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Envio.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\caja-abierta.png"));
+        Envio.setText("Envio");
+        Envio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Envio.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+
+        CrearEnvio.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        CrearEnvio.setText("Crear Envio");
+        CrearEnvio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CrearEnvioActionPerformed(evt);
+            }
+        });
+        Envio.add(CrearEnvio);
+
+        gestionarenvio.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        gestionarenvio.setText("Gestionar Envio");
+        gestionarenvio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gestionarenvioActionPerformed(evt);
+            }
+        });
+        Envio.add(gestionarenvio);
+
+        Menu.add(Envio);
+
         Proveedores.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         Proveedores.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\carrito-de-compras.png"));
         Proveedores.setText("Proveedores");
@@ -570,40 +595,10 @@ public final class General extends javax.swing.JFrame {
         Informe.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
         newinfo.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        newinfo.setText("Nuevo Informe");
+        newinfo.setText("Análisis");
         Informe.add(newinfo);
 
-        jMenuItem1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jMenuItem1.setText("Buscar Informe");
-        Informe.add(jMenuItem1);
-
         Menu.add(Informe);
-
-        Envio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        Envio.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\caja-abierta.png"));
-        Envio.setText("Envio");
-        Envio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Envio.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-
-        CrearEnvio.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        CrearEnvio.setText("Crear Envio");
-        CrearEnvio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CrearEnvioActionPerformed(evt);
-            }
-        });
-        Envio.add(CrearEnvio);
-
-        gestionarenvio.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        gestionarenvio.setText("Gestionar Envio");
-        gestionarenvio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                gestionarenvioActionPerformed(evt);
-            }
-        });
-        Envio.add(gestionarenvio);
-
-        Menu.add(Envio);
 
         Mensajes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         Mensajes.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\campana.png"));
@@ -866,7 +861,6 @@ public final class General extends javax.swing.JFrame {
     private javax.swing.JMenuItem infoenvio;
     private javax.swing.JMenuItem infoenvio1;
     private javax.swing.JMenu inicio;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem newinfo;
     private javax.swing.JMenuItem newinfo1;
     private javax.swing.JMenuItem nuevacategoria;

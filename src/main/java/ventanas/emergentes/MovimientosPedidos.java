@@ -137,6 +137,11 @@ public class MovimientosPedidos extends javax.swing.JInternalFrame {
         estados.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         estados.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Proceso", "En espera", "En posesión del cartero", "Entregado" }));
         estados.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        estados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                estadosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -273,7 +278,6 @@ public class MovimientosPedidos extends javax.swing.JInternalFrame {
         ListaMovimientos.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
-
                 int index = ListaMovimientos.rowAtPoint(evt.getPoint());
                 int id = (int) ListaMovimientos.getValueAt(index, 0);
                 Usuario us = sis.obtenerSesion();
@@ -358,6 +362,10 @@ public class MovimientosPedidos extends javax.swing.JInternalFrame {
     private void eliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminar1ActionPerformed
         EliminarActionPerformed(evt);
     }//GEN-LAST:event_eliminar1ActionPerformed
+
+    private void estadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_estadosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

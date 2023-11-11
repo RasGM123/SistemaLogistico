@@ -138,6 +138,7 @@ public class AgrAlmacen extends javax.swing.JInternalFrame {
             } catch (Exception ex) {
                 Logger.getLogger(AgrAlmacen.class.getName()).log(Level.SEVERE, null, ex);
             }
+            dispose();
         }else{
             JOptionPane.showMessageDialog(null, "No tienes los permisos necesario para hacer esto!");
         }

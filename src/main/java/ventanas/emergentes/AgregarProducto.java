@@ -11,6 +11,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 /**
  *
@@ -31,7 +32,11 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
         setFrameIcon(icon);
         this.sis = s;
         this.escritorio = d;
-        setAlmacenes();
+        actualizarNotificaciones();
+    }
+    private void actualizarNotificaciones(){
+        Timer t = new Timer(1000, e -> setAlmacenes());
+        t.start();
     }
 
     private void setAlmacenes(){
@@ -40,6 +45,9 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
         if(us instanceof Administrativo admin){
             for(Almacen a: admin.listarAlmacenes()){
                  Almacen.addItem(a.getNombreSucursal());
+            }
+            for(TipoProducto tp: admin.listarTipoProducto()){
+                Categoria.addItem(tp.getNombre());
             }
         }
     }
@@ -215,7 +223,6 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
         AgrAlmacen aa = new AgrAlmacen(sis);
         escritorio.add(aa);
         aa.setVisible(true);
-        setAlmacenes();
     }//GEN-LAST:event_AgregarAlmacenActionPerformed
 
     private void AgregarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarCategoriaActionPerformed
@@ -242,7 +249,7 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
             TipoProducto tp = admin.buscarTipoDeProducto(bus2);
             Producto pro = new Producto( Nombre.getText(), tp);
             try {
-                admin.agregarProducto(a, pro, Integer.getInteger(Cantidad.getText()));
+                admin.agregarProducto(a, pro, Integer.parseInt(Cantidad.getText()));
             } catch (Exception ex) {
                 Logger.getLogger(AgregarProducto.class.getName()).log(Level.SEVERE, null, ex);
             }

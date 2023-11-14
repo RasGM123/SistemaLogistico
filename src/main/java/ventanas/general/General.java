@@ -593,6 +593,11 @@ public final class General extends javax.swing.JFrame {
         Informe.setText("Informe");
         Informe.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Informe.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        Informe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InformeActionPerformed(evt);
+            }
+        });
 
         newinfo.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         newinfo.setText("Análisis");
@@ -778,6 +783,10 @@ public final class General extends javax.swing.JFrame {
         escritorio.add(mp);
         mp.setVisible(true);
     }//GEN-LAST:event_infoenvioActionPerformed
+
+    private void InformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InformeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_InformeActionPerformed
 
     /**
      * @param args the command line arguments

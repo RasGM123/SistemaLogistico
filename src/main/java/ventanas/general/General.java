@@ -202,12 +202,14 @@ public final class General extends javax.swing.JFrame {
         ajustes = new javax.swing.JMenuItem();
         restickets = new javax.swing.JMenuItem();
         contacto = new javax.swing.JMenuItem();
+        AsigVehiculo = new javax.swing.JMenuItem();
         Seguimiento = new javax.swing.JMenu();
         amov = new javax.swing.JMenuItem();
         infoenvio = new javax.swing.JMenuItem();
         Envio = new javax.swing.JMenu();
         CrearEnvio = new javax.swing.JMenuItem();
         gestionarenvio = new javax.swing.JMenuItem();
+        transporte = new javax.swing.JMenuItem();
         Proveedores = new javax.swing.JMenu();
         AgrProveedor = new javax.swing.JMenuItem();
         ModProveedor = new javax.swing.JMenuItem();
@@ -474,6 +476,14 @@ public final class General extends javax.swing.JFrame {
         });
         Usuariom.add(contacto);
 
+        AsigVehiculo.setText("Asignar Vehículo");
+        AsigVehiculo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AsigVehiculoActionPerformed(evt);
+            }
+        });
+        Usuariom.add(AsigVehiculo);
+
         Menu.add(Usuariom);
 
         Seguimiento.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -525,6 +535,14 @@ public final class General extends javax.swing.JFrame {
             }
         });
         Envio.add(gestionarenvio);
+
+        transporte.setText("Transporte");
+        transporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                transporteActionPerformed(evt);
+            }
+        });
+        Envio.add(transporte);
 
         Menu.add(Envio);
 
@@ -601,6 +619,11 @@ public final class General extends javax.swing.JFrame {
 
         newinfo.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         newinfo.setText("Análisis");
+        newinfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newinfoActionPerformed(evt);
+            }
+        });
         Informe.add(newinfo);
 
         Menu.add(Informe);
@@ -788,6 +811,24 @@ public final class General extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_InformeActionPerformed
 
+    private void transporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transporteActionPerformed
+        AsigTransportista at = new AsigTransportista(sis);
+        escritorio.add(at);
+        at.setVisible(true);
+    }//GEN-LAST:event_transporteActionPerformed
+
+    private void AsigVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AsigVehiculoActionPerformed
+        VehiculoCrear vc = new VehiculoCrear(sis);
+        escritorio.add(vc);
+        vc.setVisible(true);
+    }//GEN-LAST:event_AsigVehiculoActionPerformed
+
+    private void newinfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newinfoActionPerformed
+        Analisis a = new Analisis(sis);
+        escritorio.add(a);
+        a.setVisible(true);
+    }//GEN-LAST:event_newinfoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -830,6 +871,7 @@ public final class General extends javax.swing.JFrame {
     private javax.swing.JMenuItem AgrProducto1;
     private javax.swing.JMenuItem AgrProveedor;
     private javax.swing.JMenuItem AgrProveedor1;
+    private javax.swing.JMenuItem AsigVehiculo;
     private javax.swing.JMenuItem BusInfo;
     private javax.swing.JMenuItem CrearEnvio;
     private javax.swing.JMenuItem CrearEnvio1;
@@ -876,5 +918,6 @@ public final class General extends javax.swing.JFrame {
     private javax.swing.JMenuItem nuevacategoria1;
     private javax.swing.JPopupMenu popMenu;
     private javax.swing.JMenuItem restickets;
+    private javax.swing.JMenuItem transporte;
     // End of variables declaration//GEN-END:variables
 }

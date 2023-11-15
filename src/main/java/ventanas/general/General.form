@@ -415,6 +415,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="contactoActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="AsigVehiculo">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Asignar Veh&#xed;culo"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AsigVehiculoActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="Seguimiento">
@@ -499,6 +507,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="gestionarenvioActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="transporte">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Transporte"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="transporteActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -626,6 +642,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="An&#xe1;lisis"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newinfoActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

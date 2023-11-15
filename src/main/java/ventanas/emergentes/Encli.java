@@ -419,7 +419,7 @@ public class Encli extends javax.swing.JInternalFrame {
 
         jScrollPane2.setViewportView(jPanel2);
 
-        getContentPane().add(jScrollPane2, java.awt.BorderLayout.LINE_END);
+        getContentPane().add(jScrollPane2, java.awt.BorderLayout.PAGE_END);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

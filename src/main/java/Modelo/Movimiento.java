@@ -5,25 +5,30 @@
 package Modelo;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  *
  * @author Gustavo
  */
 
-
+@Entity
 public class Movimiento implements Serializable {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private LocalDateTime fecha;
+    private LocalDate fecha;
     private String detalle;
 
     public Movimiento() {
     }
 
-    public Movimiento(LocalDateTime fecha, String detalle) {
+    public Movimiento(LocalDate fecha, String detalle) {
         this.fecha = fecha;
         this.detalle = detalle;
     }
@@ -57,7 +62,7 @@ public class Movimiento implements Serializable {
         this.id = id;
     }
 
-    public void setFecha(LocalDateTime fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
@@ -71,7 +76,7 @@ public class Movimiento implements Serializable {
         return id;
     }
 
-    public LocalDateTime getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 

@@ -6,17 +6,24 @@ package Modelo;
 
 import java.io.Serializable;
 import java.util.Objects;
-
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author Gustavo
  */
 
-
+@Entity
 public class RenglonPedido implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int cantidad;
+    @OneToOne
     private Producto producto;
 
     public RenglonPedido() {

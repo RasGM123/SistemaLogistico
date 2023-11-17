@@ -4,23 +4,32 @@
  */
 package Modelo;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 /**
  *
  * @author Rodrigo
  */
 
-public class Cliente extends Usuario implements PerfilCliente{
+@Entity
+public class Cliente extends Usuario implements PerfilCliente, Serializable{
+    @OneToMany
     private List<String> preferencias;
+    @OneToMany
     private List<Pedido> pedidos;
+    @OneToMany
     private List<Ticket> tickets;
     
+    @Transient
     private Sistema sistema;
 
     public Cliente() {
@@ -49,7 +58,7 @@ public class Cliente extends Usuario implements PerfilCliente{
         List<Pedido> lista = new ArrayList();
         
         for(Pedido p:pedidos){
-            fecha = p.getFechaCreacion().toLocalDate();
+            fecha = p.getFechaCreacion();
             
             if(estaEntre(fecha, inicio, fin)){
                 lista.add(p);

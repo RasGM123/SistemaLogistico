@@ -4,26 +4,39 @@
  */
 package Modelo;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author Gustavo
  */
-public class OrdenDeCompra {
+
+@Entity
+public class OrdenDeCompra implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private LocalDateTime fechaEmision;
-    private LocalDateTime fechaEntrega;
+    private LocalDate fechaEmision;
+    private LocalDate fechaEntrega;
+    @OneToOne
     private Proveedor proveedor;
+    @OneToMany
     private List<RenglonOrdenDeCompra> renglones;
 
     public OrdenDeCompra() {
     }
 
     public OrdenDeCompra(Proveedor proveedor, List<RenglonOrdenDeCompra> renglones) {
-        this.fechaEmision = LocalDateTime.now();
+        this.fechaEmision = LocalDate.now();
         this.fechaEntrega = null;
         this.proveedor = proveedor;
         this.renglones = renglones;
@@ -31,7 +44,7 @@ public class OrdenDeCompra {
     
     //Funcionalidades
     
-    public void establecerEntrega(LocalDateTime fechaEntrega) throws Exception{
+    public void establecerEntrega(LocalDate fechaEntrega) throws Exception{
         if(fechaEntrega.isBefore(fechaEmision)){
             throw new Exception("La fecha de entrega no puede ocurrir antes de la fecha de emisión.");
         }
@@ -70,11 +83,11 @@ public class OrdenDeCompra {
         this.id = id;
     }
 
-    public void setFechaEmision(LocalDateTime fechaEmision) {
+    public void setFechaEmision(LocalDate fechaEmision) {
         this.fechaEmision = fechaEmision;
     }
 
-    public void setFechaEntrega(LocalDateTime fechaEntrega) {
+    public void setFechaEntrega(LocalDate fechaEntrega) {
         this.fechaEntrega = fechaEntrega;
     }
 
@@ -92,11 +105,11 @@ public class OrdenDeCompra {
         return id;
     }
 
-    public LocalDateTime getFechaEmision() {
+    public LocalDate getFechaEmision() {
         return fechaEmision;
     }
 
-    public LocalDateTime getFechaEntrega() {
+    public LocalDate getFechaEntrega() {
         return fechaEntrega;
     }
 

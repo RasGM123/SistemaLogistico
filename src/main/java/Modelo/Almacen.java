@@ -4,20 +4,30 @@
  */
 package Modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author Rodrigo
  */
 
-public class Almacen {
+@Entity
+public class Almacen implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nombreSucursal;
     private boolean esCentroDistribucion;
     private String direccion;
+    @OneToMany
     private List<RenglonInventario> renglones;
 
     public Almacen() {

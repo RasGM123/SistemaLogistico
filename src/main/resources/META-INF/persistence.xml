@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence           http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+  <persistence-unit name="persistencia_postgresql" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>Modelo.Almacen</class>
+    <class>Modelo.Cliente</class>
+    <class>Modelo.Contrato</class>
+    <class>Modelo.Evaluacion</class>
+    <class>Modelo.Movimiento</class>
+    <class>Modelo.OrdenDeCompra</class>
+    <class>Modelo.Pedido</class>
+    <class>Modelo.Producto</class>
+    <class>Modelo.Proveedor</class>
+    <class>Modelo.RenglonInventario</class>
+    <class>Modelo.RenglonOrdenDeCompra</class>
+    <class>Modelo.RenglonPedido</class>
+    <class>Modelo.Ruta</class>
+    <class>Modelo.Ticket</class>
+    <class>Modelo.TipoProducto</class>
+    <class>Modelo.Transportista</class>
+    <class>Modelo.Usuario</class>
+    <class>Modelo.Vehiculo</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/sistema_logistico"/>
+      <property name="javax.persistence.jdbc.user" value="postgres"/>
+      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="64f6@8k*&amp;p6%FE8cQ8Xj5!T@dK5%A^"/>
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+    </properties>
+  </persistence-unit>
+</persistence>

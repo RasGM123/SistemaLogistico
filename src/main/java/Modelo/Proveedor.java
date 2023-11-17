@@ -4,22 +4,34 @@
  */
 package Modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author Rodrigo
  */
-public class Proveedor {
+
+@Entity
+public class Proveedor implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String cuit;
     private String nombre;
     private String email;
     private String telefono;
     private String direccion;
+    @OneToMany
     private List<Contrato> contratos;
+    @OneToMany
     private List<Evaluacion> evaluaciones;
 
     public Proveedor() {

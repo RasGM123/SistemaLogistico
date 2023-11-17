@@ -129,6 +129,7 @@ public class Gerente extends Administrativo implements PerfilGerente{
         rutas.add(ruta);
     }
     
+    @Override
     public void editarRuta(Ruta ruta, String origen, String destino, LocalDate fechaSalida, LocalDate fechaLlegada){
         ruta.setOrigen(origen);
         ruta.setDestino(destino);
@@ -321,9 +322,9 @@ public class Gerente extends Administrativo implements PerfilGerente{
     }
     
     @Override
-    public void editarProducto(Producto producto, String nombre, TipoProducto tipo){
+    public void editarProducto(Producto producto, String nombre, TipoProducto tipoProducto){
         producto.setNombre(nombre);
-        producto.setTipoProducto(tipo);
+        producto.setTipoProducto(tipoProducto);
     }
     
     @Override
@@ -348,53 +349,53 @@ public class Gerente extends Administrativo implements PerfilGerente{
      */
     
     @Override
-    public void crearTipoDeProducto(TipoProducto tipo) throws Exception{
+    public void crearTipoDeProducto(TipoProducto tipoProducto) throws Exception{
         List<TipoProducto> tipos = sistema.getTiposDeProductos();
         
-        if(existeTipoProducto(tipo)){
-            throw new Exception("Ya existe un tipo de producto con el nombre "+tipo.getNombre()+".");
+        if(existeTipoProducto(tipoProducto)){
+            throw new Exception("Ya existe un tipo de producto con el nombre "+tipoProducto.getNombre()+".");
         }
         
         /*
             GENERRAR ID
         */
-        tipo.setId(generarId(tipo));
+        tipoProducto.setId(generarId(tipoProducto));
         
-        tipos.add(tipo);
+        tipos.add(tipoProducto);
     }
     
     @Override
-    public void editarTipoProducto(TipoProducto tipo, String nombre){
-        tipo.setNombre(nombre);
+    public void editarTipoProducto(TipoProducto tipoProducto, String nombre){
+        tipoProducto.setNombre(nombre);
     }
     
     @Override
-    public void borrarTipoDeProducto(TipoProducto tipo) throws Exception{
+    public void borrarTipoDeProducto(TipoProducto tipoProducto) throws Exception{
         List<TipoProducto> tipos = sistema.getTiposDeProductos();
         
-        if(!existeTipoProducto(tipo)){
+        if(!existeTipoProducto(tipoProducto)){
             throw new Exception("El tipo de producto que desea borrar no está cargado en el sistema.");
         }
         
-        if(estaTipoProductoEnUso(tipo)){
+        if(estaTipoProductoEnUso(tipoProducto)){
             throw new Exception("No se puede borrar un tipo de producto que esté siendo usado en algún producto.");
         }
         
-        tipos.remove(tipo);
+        tipos.remove(tipoProducto);
     }
     
-    public boolean existeTipoProducto(TipoProducto tipo){
+    public boolean existeTipoProducto(TipoProducto tipoProducto){
         List<TipoProducto> tipos = sistema.getTiposDeProductos();
         
-        return tipos.contains(tipo);
+        return tipos.contains(tipoProducto);
     }
     
     //Se verifica si al menos 1 Producto tiene relacion con un TipoProducto
-    public boolean estaTipoProductoEnUso(TipoProducto tipo){
+    public boolean estaTipoProductoEnUso(TipoProducto tipoProducto){
         List<Producto> productos = sistema.getProductos();
         
         for(Producto p:productos){
-            if(p.getTipoProducto().equals(tipo)){
+            if(p.getTipoProducto().equals(tipoProducto)){
                 return true;
             }
         }
@@ -464,7 +465,7 @@ public class Gerente extends Administrativo implements PerfilGerente{
     //Otras operaciones con OrdenDeCompra
 
     @Override
-    public void establecerEntregaOrdenDeCompra(OrdenDeCompra orden, LocalDateTime fechaEntrega) throws Exception{
+    public void establecerEntregaOrdenDeCompra(OrdenDeCompra orden, LocalDate fechaEntrega) throws Exception{
         orden.establecerEntrega(fechaEntrega);
     }
     
@@ -494,7 +495,7 @@ public class Gerente extends Administrativo implements PerfilGerente{
             for(Pedido pedido:pedidos.values()){
                 
                 //Se verifica que el Pedido se encuentre en el rango de fecha
-                if(estaDentroRangoFechas(pedido.getFechaCreacion().toLocalDate(), inicio, fin)){
+                if(estaDentroRangoFechas(pedido.getFechaCreacion(), inicio, fin)){
                     
                     //Cantidad del Producto en el Pedido
                     cantidad = pedido.obtenerCantidadProducto(producto);
@@ -521,7 +522,7 @@ public class Gerente extends Administrativo implements PerfilGerente{
         }
         
         for(Pedido p:pedidos.values()){
-            if(estaDentroRangoFechas(p.getFechaCreacion().toLocalDate(), inicio, fin) && p.getEstado().equalsIgnoreCase("Entregado")){
+            if(estaDentroRangoFechas(p.getFechaCreacion(), inicio, fin) && p.getEstado().equalsIgnoreCase("Entregado")){
                 
                 t = p.getTransportista();
                 
@@ -548,7 +549,7 @@ public class Gerente extends Administrativo implements PerfilGerente{
         for(OrdenDeCompra o:ordenes){
             
             //Se comprueba que la OrdenDeCompra haya sido entregada
-            if(estaDentroRangoFechas(o.getFechaEmision().toLocalDate(), inicio, fin) && o.getFechaEntrega() != null){
+            if(estaDentroRangoFechas(o.getFechaEmision(), inicio, fin) && o.getFechaEntrega() != null){
                 
                 //Diferencia en HORAS entre la fecha de emision y la fecha de entrega de una orden de trabajo
                 demora = Duration.between(o.getFechaEmision(), o.getFechaEntrega()).toHours();

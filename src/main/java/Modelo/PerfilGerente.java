@@ -5,7 +5,6 @@
 package Modelo;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -54,9 +53,9 @@ public interface PerfilGerente {
     public void borrarProducto(Producto producto) throws Exception;
     
     //CRUD TipoProducto
-    public void crearTipoDeProducto(TipoProducto tipo) throws Exception;
-    public void editarTipoProducto(TipoProducto tipo, String nombre);
-    public void borrarTipoDeProducto(TipoProducto tipo) throws Exception;
+    public void crearTipoDeProducto(TipoProducto tipoProducto) throws Exception;
+    public void editarTipoProducto(TipoProducto tipoProducto, String nombre);
+    public void borrarTipoDeProducto(TipoProducto tipoProducto) throws Exception;
     
     //CRUD OrdenDeCompra
     public void crearOrdenDeCompra(OrdenDeCompra orden) throws Exception;
@@ -65,7 +64,7 @@ public interface PerfilGerente {
     public void editarOrdenDeCompra(OrdenDeCompra orden, Proveedor proveedor, List<RenglonOrdenDeCompra> renglones);
     public void borrarOrdenDeCompra(OrdenDeCompra orden) throws Exception;
     //Otras operaciones con OrdenDeCompra
-    public void establecerEntregaOrdenDeCompra(OrdenDeCompra orden, LocalDateTime fechaEntrega) throws Exception;
+    public void establecerEntregaOrdenDeCompra(OrdenDeCompra orden, LocalDate fechaEntrega) throws Exception;
     
     //Generacion de informes
     //Numero de veces que se pidieron los Productos comprendido entre 2 fechas

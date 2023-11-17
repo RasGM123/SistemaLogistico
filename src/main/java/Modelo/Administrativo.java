@@ -5,15 +5,16 @@
 package Modelo;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.Transient;
 
 /**
  *
  * @author Gustavo
  */
 public class Administrativo extends Empleado implements PerfilAdministrativo{
+    @Transient
     protected Sistema sistema = null;
 
     public Administrativo() {
@@ -269,7 +270,7 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
     
     @Override
     public void asignarVehiculo(Transportista transportista, Vehiculo vehiculo){
-        transportista.setVehiculo(vehiculo);
+        transportista.setVehiculoAsignado(vehiculo);
     }
     
     /*

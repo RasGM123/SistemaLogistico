@@ -14,9 +14,11 @@ import java.util.Map;
  *
  * @author Gustavo
  */
+
 public final class Sistema {
     //Sistema es SINGLETON
     private static Sistema instancia;
+    
     //Clave = nombre usuario
     private Map<String,Usuario> usuarios;
     //Clave = id Pedido
@@ -60,6 +62,9 @@ public final class Sistema {
     
     //Carga algunos datos en el Sistema para poder probarlo
     public void cargarDatos() throws Exception{
+        
+        
+        
         //se crea un Usuario Gerente para probar el sistema
         crearUsuario(new Gerente("993300022200", "gerente", "gerente", "elon@musk.com", "Elon", "Mosquito", "33000222", "3788 671100", "CASA"));
         
@@ -68,7 +73,6 @@ public final class Sistema {
         
         //se crea un Usuario Cliente para probar el sistema
         crearUsuario(new Cliente("cliente", "cliente", "jorgito@outlook.com", "Jorge", "Smith", "20111999", "3764 001122", "Argentina"));
-        
     }
     
     //Funcionalidades

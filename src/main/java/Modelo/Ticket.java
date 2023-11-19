@@ -35,6 +35,11 @@ public class Ticket implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "Ticket{" + "id=" + id + ", motivo=" + motivo + ", reclamo=" + reclamo + ", respuesta=" + respuesta + '}';
+    }
+
+    @Override
     public int hashCode() {
         int hash = 7;
         hash = 67 * hash + Objects.hashCode(this.motivo);

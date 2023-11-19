@@ -63,8 +63,6 @@ public final class Sistema {
     //Carga algunos datos en el Sistema para poder probarlo
     public void cargarDatos() throws Exception{
         
-        
-        
         //se crea un Usuario Gerente para probar el sistema
         crearUsuario(new Gerente("993300022200", "gerente", "gerente", "elon@musk.com", "Elon", "Mosquito", "33000222", "3788 671100", "CASA"));
         

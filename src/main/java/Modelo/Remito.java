@@ -30,6 +30,11 @@ class Remito {
     }
 
     @Override
+    public String toString() {
+        return "Remito{" + "id=" + id + ", fechaCreacionPedido=" + fechaCreacionPedido + ", fechaEntrega=" + fechaEntrega + '}';
+    }
+
+    @Override
     public int hashCode() {
         int hash = 5;
         hash = 37 * hash + Objects.hashCode(this.fechaCreacionPedido);

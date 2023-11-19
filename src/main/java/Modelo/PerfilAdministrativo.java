@@ -73,6 +73,6 @@ public interface PerfilAdministrativo {
     public List<Producto> listarProductos();
     
     //CRUD TipoProducto
-    public TipoProducto buscarTipoDeProducto(String nombre);
+    public TipoProducto buscarTipoProducto(String nombre);
     public List<TipoProducto> listarTipoProducto();
 }

@@ -5,7 +5,7 @@
 package ventanas.emergentes;
 
 import Modelo.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -121,7 +121,7 @@ public class EvaProveedor extends javax.swing.JInternalFrame {
         try {
             Usuario us = sis.obtenerSesion();
             if (us instanceof Gerente gen) {
-                Evaluacion ev = new Evaluacion( Integer.getInteger(Puntuacion.getText()), Comentario.getText());
+                Evaluacion ev = new Evaluacion( LocalDate.now(), Integer.getInteger(Puntuacion.getText()), Comentario.getText());
                 pro.agregarEvaluacion(ev);
                 dispose();
             }

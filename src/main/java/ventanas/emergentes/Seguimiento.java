@@ -5,7 +5,7 @@
 package ventanas.emergentes;
 
 import Modelo.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 public class Seguimiento extends javax.swing.JInternalFrame {
 
     private Sistema sis;
-    private LocalDateTime fecha;
+    private LocalDate fecha;
     private String estado;
     private DefaultListModel modelo;
     /**

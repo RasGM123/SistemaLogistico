@@ -36,6 +36,11 @@ public class Producto implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "Producto{" + "id=" + id + ", nombre=" + nombre + ", tipoProducto=" + tipoProducto + '}';
+    }
+
+    @Override
     public int hashCode() {
         int hash = 7;
         hash = 73 * hash + Objects.hashCode(this.nombre);

@@ -47,6 +47,8 @@ public class Proveedor implements Serializable {
         this.evaluaciones = new ArrayList();
     }
     
+    
+    
     //Funcionalidades
     
     public void agregarContrato(Contrato contrato){
@@ -55,6 +57,11 @@ public class Proveedor implements Serializable {
     
     public void agregarEvaluacion(Evaluacion evaluacion){
         evaluaciones.add(evaluacion);
+    }
+
+    @Override
+    public String toString() {
+        return "Proveedor{" + "id=" + id + ", cuit=" + cuit + ", nombre=" + nombre + ", email=" + email + ", telefono=" + telefono + ", direccion=" + direccion + '}';
     }
     
     @Override

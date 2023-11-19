@@ -7,8 +7,7 @@ package ventanas.emergentes;
 import Modelo.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -289,7 +288,7 @@ public class MovimientosPedidos extends javax.swing.JInternalFrame {
                         estados.addActionListener(e -> {
                             String es = (String) estados.getSelectedItem();
                             m.setDetalle(es);
-                            LocalDateTime fe = LocalDateTime.now();
+                            LocalDate fe = LocalDate.now();
                             m.setFecha(fe);
                         });
                         BuscarActionPerformed(e);
@@ -347,7 +346,7 @@ public class MovimientosPedidos extends javax.swing.JInternalFrame {
             List<Movimiento> movs = p.getMovimientos();
             estados.addActionListener(e -> {
                 String es = (String) estados.getSelectedItem();
-                LocalDateTime fe = LocalDateTime.now();
+                LocalDate fe = LocalDate.now();
                 this.mov = new Movimiento(fe, es);
             });
             movs.add(mov);

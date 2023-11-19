@@ -36,6 +36,11 @@ class RenglonOrdenDeCompra implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "RenglonOrdenDeCompra{" + "id=" + id + ", cantidad=" + cantidad + ", precioUnitario=" + precioUnitario + ", producto=" + producto + '}';
+    }
+
+    @Override
     public int hashCode() {
         int hash = 5;
         hash = 67 * hash + this.cantidad;

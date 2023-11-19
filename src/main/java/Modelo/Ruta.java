@@ -38,6 +38,11 @@ public class Ruta implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "Ruta{" + "id=" + id + ", origen=" + origen + ", destino=" + destino + ", fechaSalida=" + fechaSalida + ", fechaLlegada=" + fechaLlegada + '}';
+    }
+
+    @Override
     public int hashCode() {
         int hash = 3;
         hash = 61 * hash + Objects.hashCode(this.origen);

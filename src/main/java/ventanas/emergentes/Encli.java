@@ -10,7 +10,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -478,7 +477,7 @@ public class Encli extends javax.swing.JInternalFrame {
             Ruta ru = optenerruta();
             if (use instanceof Administrativo admin) {
                 if (us instanceof Cliente cli) {
-                    Pedido pe = new Pedido(LocalDateTime.now(), ru, rp);
+                    Pedido pe = new Pedido(LocalDate.now(), ru, rp);
                     admin.crearPedido(cli, pe);
                     dispose();
                 }
@@ -492,7 +491,7 @@ public class Encli extends javax.swing.JInternalFrame {
         try {
             Usuario us = sis.obtenerSesion();
             if (us instanceof Administrativo admin) {
-                TipoProducto t = admin.buscarTipoDeProducto(Categorias.getItemAt(Categorias.getSelectedIndex()));
+                TipoProducto t = admin.buscarTipoProducto(Categorias.getItemAt(Categorias.getSelectedIndex()));
                 RenglonPedido r = new RenglonPedido(Integer.parseInt(Cantidad.getText()), new Producto(Nombre.getText(), t));
                 rp.add(r);
                 setModelLista(r);

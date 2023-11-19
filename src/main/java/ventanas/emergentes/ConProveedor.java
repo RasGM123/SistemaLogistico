@@ -5,6 +5,7 @@
 package ventanas.emergentes;
 
 import Modelo.*;
+import java.time.ZoneId;
 import javax.swing.JOptionPane;
 
 /**
@@ -147,7 +148,9 @@ public class ConProveedor extends javax.swing.JInternalFrame {
         if(Inicio != null && Fin !=null){
             Usuario us = sis.obtenerSesion();
             if(us instanceof Gerente gen){
-                Contrato con = new Contrato( descripcion.getText(), Inicio.getDate(), Fin.getDate());
+                Contrato con = new Contrato( descripcion.getText(), 
+                        Inicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+                        Fin.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
                 gen.agregarContrato(pro, con);
                 JOptionPane.showMessageDialog(null, "Contrato creado!");
                 dispose();

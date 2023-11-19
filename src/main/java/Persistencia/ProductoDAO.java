@@ -4,15 +4,15 @@
  */
 package Persistencia;
 
-import Modelo.TipoProducto;
+import Modelo.Producto;
 
 /**
  *
  * @author Gustavo
  */
-public class TipoProductoDAO extends GenericDAO <TipoProducto> {
-    
-    public TipoProductoDAO() {
-        super(TipoProducto.class);
+public class ProductoDAO extends GenericDAO <Producto> {
+
+    public ProductoDAO() {
+        super(Producto.class);
     }
 }

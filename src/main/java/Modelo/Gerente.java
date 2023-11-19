@@ -4,8 +4,9 @@
  */
 package Modelo;
 
+import Persistencia.GenericDAO;
+import Persistencia.TipoProductoDAO;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
@@ -349,29 +350,32 @@ public class Gerente extends Administrativo implements PerfilGerente{
      */
     
     @Override
-    public void crearTipoDeProducto(TipoProducto tipoProducto) throws Exception{
+    public void crearTipoProducto(TipoProducto tipoProducto) throws Exception{
         List<TipoProducto> tipos = sistema.getTiposDeProductos();
+        TipoProductoDAO dao = new TipoProductoDAO();
         
         if(existeTipoProducto(tipoProducto)){
             throw new Exception("Ya existe un tipo de producto con el nombre "+tipoProducto.getNombre()+".");
         }
         
-        /*
-            GENERRAR ID
-        */
-        tipoProducto.setId(generarId(tipoProducto));
-        
         tipos.add(tipoProducto);
+        
+        dao.crear(tipoProducto);
     }
     
     @Override
     public void editarTipoProducto(TipoProducto tipoProducto, String nombre){
+        TipoProductoDAO dao = new TipoProductoDAO();
+        
         tipoProducto.setNombre(nombre);
+        
+        dao.editar(tipoProducto);
     }
     
     @Override
-    public void borrarTipoDeProducto(TipoProducto tipoProducto) throws Exception{
+    public void borrarTipoProducto(TipoProducto tipoProducto) throws Exception{
         List<TipoProducto> tipos = sistema.getTiposDeProductos();
+        TipoProductoDAO dao = new TipoProductoDAO();
         
         if(!existeTipoProducto(tipoProducto)){
             throw new Exception("El tipo de producto que desea borrar no está cargado en el sistema.");
@@ -382,6 +386,8 @@ public class Gerente extends Administrativo implements PerfilGerente{
         }
         
         tipos.remove(tipoProducto);
+        
+        dao.borrar(tipoProducto.getId());
     }
     
     public boolean existeTipoProducto(TipoProducto tipoProducto){
@@ -393,6 +399,10 @@ public class Gerente extends Administrativo implements PerfilGerente{
     //Se verifica si al menos 1 Producto tiene relacion con un TipoProducto
     public boolean estaTipoProductoEnUso(TipoProducto tipoProducto){
         List<Producto> productos = sistema.getProductos();
+        
+        if(productos.isEmpty()){
+            return false;
+        }
         
         for(Producto p:productos){
             if(p.getTipoProducto().equals(tipoProducto)){

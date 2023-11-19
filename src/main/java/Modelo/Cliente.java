@@ -22,7 +22,6 @@ import javax.persistence.Transient;
 
 @Entity
 public class Cliente extends Usuario implements PerfilCliente, Serializable{
-    @OneToMany
     private List<String> preferencias;
     @OneToMany
     private List<Pedido> pedidos;

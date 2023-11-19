@@ -53,9 +53,9 @@ public interface PerfilGerente {
     public void borrarProducto(Producto producto) throws Exception;
     
     //CRUD TipoProducto
-    public void crearTipoDeProducto(TipoProducto tipoProducto) throws Exception;
+    public void crearTipoProducto(TipoProducto tipoProducto) throws Exception;
     public void editarTipoProducto(TipoProducto tipoProducto, String nombre);
-    public void borrarTipoDeProducto(TipoProducto tipoProducto) throws Exception;
+    public void borrarTipoProducto(TipoProducto tipoProducto) throws Exception;
     
     //CRUD OrdenDeCompra
     public void crearOrdenDeCompra(OrdenDeCompra orden) throws Exception;

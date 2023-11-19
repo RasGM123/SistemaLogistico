@@ -103,7 +103,7 @@ public class Categoria extends javax.swing.JInternalFrame {
         if(us instanceof Gerente gen){
             TipoProducto tp = new TipoProducto(name.getText());
             try {
-                gen.crearTipoDeProducto(tp);
+                gen.crearTipoProducto(tp);
                 dispose();
             } catch (Exception ex) {
                 Logger.getLogger(Categoria.class.getName()).log(Level.SEVERE, null, ex);

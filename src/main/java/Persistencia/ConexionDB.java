@@ -12,9 +12,13 @@ import javax.persistence.Persistence;
  * @author Gustavo
  */
 public class ConexionDB {
-    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistencia_postgresql");
+    private static EntityManagerFactory emf = null;
     
     public static EntityManagerFactory getEntityManagerFactory(){
+        if(emf == null){
+            emf = Persistence.createEntityManagerFactory("persistencia_postgresql");
+        }
+        
         return emf;
     }
 }

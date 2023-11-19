@@ -231,7 +231,7 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
             String cat = JOptionPane.showInputDialog("Ingrese El nombre de la categoria: ");
             TipoProducto tp = new TipoProducto( cat);
             try {
-                gen.crearTipoDeProducto(tp);
+                gen.crearTipoProducto(tp);
             } catch (Exception ex) {
                 System.out.print(ex.getMessage());
             }
@@ -246,7 +246,7 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
             String bus1 = (String)Almacen.getSelectedItem(); 
             Almacen a = admin.buscarAlmacen(bus1);
             String bus2 =(String) Categoria.getSelectedItem();
-            TipoProducto tp = admin.buscarTipoDeProducto(bus2);
+            TipoProducto tp = admin.buscarTipoProducto(bus2);
             Producto pro = new Producto( Nombre.getText(), tp);
             try {
                 admin.agregarProducto(a, pro, Integer.parseInt(Cantidad.getText()));

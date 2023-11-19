@@ -33,6 +33,11 @@ public class RenglonInventario implements Serializable {
         this.cantidad = cantidad;
         this.producto = producto;
     }
+
+    @Override
+    public String toString() {
+        return "RenglonInventario{" + "id=" + id + ", cantidad=" + cantidad + ", producto=" + producto + '}';
+    }
     
     //Funcionalidades
     

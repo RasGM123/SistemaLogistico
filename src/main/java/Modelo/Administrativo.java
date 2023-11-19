@@ -4,6 +4,7 @@
  */
 package Modelo;
 
+import Persistencia.TipoProductoDAO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -393,7 +394,7 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
     */
     
     @Override
-    public TipoProducto buscarTipoDeProducto(String nombre){
+    public TipoProducto buscarTipoProducto(String nombre){
         List<TipoProducto> tipos = sistema.getTiposDeProductos();
         
         for(TipoProducto t:tipos){
@@ -407,7 +408,11 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
     
     @Override
     public List<TipoProducto> listarTipoProducto(){
-        return sistema.getTiposDeProductos();
+        TipoProductoDAO dao = new TipoProductoDAO();
+        
+        return dao.listar();
+        
+        //return sistema.getTiposDeProductos();
     }
     
     //Gestion Almacen

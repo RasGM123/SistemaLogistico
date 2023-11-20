@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,9 +28,9 @@ public class OrdenDeCompra implements Serializable {
     private int id;
     private LocalDate fechaEmision;
     private LocalDate fechaEntrega;
-    @OneToOne
+    @OneToOne (fetch = FetchType.EAGER)
     private Proveedor proveedor;
-    @OneToMany
+    @OneToMany (fetch = FetchType.EAGER)
     private List<RenglonOrdenDeCompra> renglones;
 
     public OrdenDeCompra() {
@@ -50,6 +51,17 @@ public class OrdenDeCompra implements Serializable {
         }
         
         this.fechaEntrega = fechaEntrega;
+    }
+    
+    public boolean tieneProducto(Producto producto){
+        
+        for(RenglonOrdenDeCompra r:this.renglones){
+            if(r.getProducto().equals(producto)){
+                return true;
+            }
+        }
+        
+        return false;
     }
 
     @Override

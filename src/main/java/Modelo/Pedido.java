@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
 
 /**
  *
@@ -29,13 +29,13 @@ public class Pedido implements Serializable {
     private int id;
     private LocalDate fechaCreacion;
     private String estado;
-    @OneToOne
+    @OneToOne (fetch = FetchType.EAGER)
     private Ruta ruta;
-    @OneToOne
+    @OneToOne (fetch = FetchType.EAGER)
     private Transportista transportista;
-    @OneToMany
+    @OneToMany (fetch = FetchType.EAGER)
     private List<RenglonPedido> renglones;
-    @OneToMany
+    @OneToMany (fetch = FetchType.EAGER)
     private List<Movimiento> movimientos;
 
     public Pedido() {

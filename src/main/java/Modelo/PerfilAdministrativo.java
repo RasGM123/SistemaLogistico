@@ -64,9 +64,9 @@ public interface PerfilAdministrativo {
     //Gestion Almacen
     public void agregarProducto(Almacen almacen, Producto producto, int cantidad) throws Exception;
     public RenglonInventario buscarProductoEnAlmacen(Almacen almacen, Producto producto);
-    public List<RenglonInventario> listarProductos(Almacen almacen);
+    public List<RenglonInventario> listarProductosEnAlmacen(Almacen almacen);
     public void cambiarCantidadProducto(Almacen almacen, Producto producto, int cantidad) throws Exception;
-    public void borrarProducto(Almacen almacen, Producto producto) throws Exception;
+    public void borrarProductoDeAlmacen(Almacen almacen, Producto producto) throws Exception;
     
     //CRUD Producto
     public Producto buscarProducto(String nombre);

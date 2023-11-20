@@ -36,6 +36,11 @@ public class Evaluacion implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "Evaluacion{" + "id=" + id + ", fecha=" + fecha + ", puntuacion=" + puntuacion + ", comentario=" + comentario + '}';
+    }
+
+    @Override
     public int hashCode() {
         int hash = 5;
         hash = 23 * hash + Objects.hashCode(this.fecha);

@@ -4,16 +4,15 @@
  */
 package Persistencia;
 
-import Modelo.Pedido;
+import Modelo.Contrato;
 
 /**
  *
  * @author Gustavo
  */
-
-public class PedidoDAO extends GenericDAO <Pedido>{
+public class ContratoDAO extends GenericDAO <Contrato> {
     
-    public PedidoDAO() {
-        super(Pedido.class);
+    public ContratoDAO() {
+        super(Contrato.class);
     }
 }

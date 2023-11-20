@@ -11,6 +11,7 @@ import javax.persistence.Persistence;
  *
  * @author Gustavo
  */
+
 public class ConexionDB {
     private static EntityManagerFactory emf = null;
     

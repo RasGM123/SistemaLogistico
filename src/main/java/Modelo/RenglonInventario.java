@@ -7,6 +7,7 @@ package Modelo;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +24,7 @@ public class RenglonInventario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int cantidad;
-    @OneToOne
+    @OneToOne (fetch = FetchType.EAGER)
     private Producto producto;
 
     public RenglonInventario() {

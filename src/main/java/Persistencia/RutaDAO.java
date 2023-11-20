@@ -4,16 +4,15 @@
  */
 package Persistencia;
 
-import Modelo.Pedido;
+import Modelo.Ruta;
 
 /**
  *
  * @author Gustavo
  */
-
-public class PedidoDAO extends GenericDAO <Pedido>{
+public class RutaDAO extends GenericDAO <Ruta> {
     
-    public PedidoDAO() {
-        super(Pedido.class);
+    public RutaDAO() {
+        super(Ruta.class);
     }
 }

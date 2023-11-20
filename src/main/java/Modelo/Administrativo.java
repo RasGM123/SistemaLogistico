@@ -4,16 +4,19 @@
  */
 package Modelo;
 
-import Persistencia.TipoProductoDAO;
+import Persistencia.AlmacenDAO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.Entity;
 import javax.persistence.Transient;
 
 /**
  *
  * @author Gustavo
  */
+
+@Entity
 public class Administrativo extends Empleado implements PerfilAdministrativo{
     @Transient
     protected Sistema sistema = null;
@@ -85,14 +88,10 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
         Map<Integer, Pedido> pedidos = sistema.getPedidos();
         List<Pedido> pedidosCliente = cliente.getPedidos();
         
+        
         if(existePedido(pedido)){
             throw new Exception("Ya existe un pedido con el ID "+pedido.getId()+" cargado en el sistema.");
         }
-        
-        /*
-            GENERRAR ID
-        */
-        pedido.setId(generarId(pedido));
         
         //Se agrega el Pedido al Sistema
         pedidos.put(pedido.getId(), pedido);
@@ -408,17 +407,17 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
     
     @Override
     public List<TipoProducto> listarTipoProducto(){
-        TipoProductoDAO dao = new TipoProductoDAO();
-        
-        return dao.listar();
-        
-        //return sistema.getTiposDeProductos();
+        return sistema.getTiposDeProductos();
     }
     
     //Gestion Almacen
     @Override
     public void agregarProducto(Almacen almacen, Producto producto, int cantidad) throws Exception {
+        AlmacenDAO dao = new AlmacenDAO();
+        
         almacen.agregarProducto(producto, cantidad);
+        
+        dao.editar(almacen);
     }
 
     @Override
@@ -427,23 +426,32 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
     }
 
     @Override
-    public List<RenglonInventario> listarProductos(Almacen almacen) {
+    public List<RenglonInventario> listarProductosEnAlmacen(Almacen almacen) {
         return almacen.getRenglones();
     }
     
     @Override
     public void cambiarCantidadProducto(Almacen almacen, Producto producto, int cantidad) throws Exception{
+        AlmacenDAO dao = new AlmacenDAO();
+        
         almacen.cambiarCantidadProducto(producto, cantidad);
+        
+        dao.editar(almacen);
     }
 
     @Override
-    public void borrarProducto(Almacen almacen, Producto producto) throws Exception {
-        almacen.borrarProducto(producto);
+    public void borrarProductoDeAlmacen(Almacen almacen, Producto producto) throws Exception {
+        AlmacenDAO dao = new AlmacenDAO();
+        
+        almacen.quitarProducto(producto);
+        
+        dao.editar(almacen);
     }
     
     /*
         Login
     */
+    
     public void conectar(Sistema sistema){
         this.sistema = sistema;
     }

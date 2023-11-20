@@ -5,6 +5,7 @@
 package Modelo;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 
 /**
@@ -14,7 +15,7 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Transportista extends Empleado{
-    @OneToOne
+    @OneToOne (fetch = FetchType.EAGER)
     private Vehiculo vehiculoAsignado;
 
     public Transportista() {

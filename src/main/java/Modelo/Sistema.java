@@ -4,11 +4,17 @@
  */
 package Modelo;
 
+import Persistencia.AlmacenDAO;
+import Persistencia.ProductoDAO;
+import Persistencia.ProveedorDAO;
+import Persistencia.RutaDAO;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import Persistencia.TipoProductoDAO;
+import Persistencia.VehiculoDAO;
 
 /**
  *
@@ -57,11 +63,18 @@ public final class Sistema {
         //El Sistema no tiene iniciada la Sesion al crearse
         this.sesion = null;
         
-        cargarDatos();
+        cargarDB();
     }
     
-    //Carga algunos datos en el Sistema para poder probarlo
-    public void cargarDatos() throws Exception{
+    public void cargarDB() throws Exception{
+        VehiculoDAO daoVehiculo = new VehiculoDAO();
+        RutaDAO daoRuta = new RutaDAO();
+        ProductoDAO daoProducto = new ProductoDAO();
+        TipoProductoDAO daoTipoProducto = new TipoProductoDAO();
+        AlmacenDAO daoAlmacen = new AlmacenDAO();
+        
+        ProveedorDAO daoProveedor = new ProveedorDAO();
+        
         
         //se crea un Usuario Gerente para probar el sistema
         crearUsuario(new Gerente("993300022200", "gerente", "gerente", "elon@musk.com", "Elon", "Mosquito", "33000222", "3788 671100", "CASA"));
@@ -71,6 +84,15 @@ public final class Sistema {
         
         //se crea un Usuario Cliente para probar el sistema
         crearUsuario(new Cliente("cliente", "cliente", "jorgito@outlook.com", "Jorge", "Smith", "20111999", "3764 001122", "Argentina"));
+        
+        //Carga de la base de datos
+        this.vehiculos.addAll(daoVehiculo.listar());
+        this.rutas.addAll(daoRuta.listar());
+        this.productos.addAll(daoProducto.listar());
+        this.tiposDeProductos.addAll(daoTipoProducto.listar());
+        this.almacenes.addAll(daoAlmacen.listar());
+        
+        this.proveedores.addAll(daoProveedor.listar());
     }
     
     //Funcionalidades

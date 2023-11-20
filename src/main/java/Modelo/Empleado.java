@@ -4,11 +4,14 @@
  */
 package Modelo;
 
+import javax.persistence.MappedSuperclass;
+
 /**
  *
  * @author Gustavo
  */
 
+@MappedSuperclass
 public abstract class Empleado extends Usuario{
     private String cuil;
 

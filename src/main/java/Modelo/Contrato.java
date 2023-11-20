@@ -36,6 +36,11 @@ public class Contrato implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "Contrato{" + "id=" + id + ", descripcion=" + descripcion + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + '}';
+    }
+
+    @Override
     public int hashCode() {
         int hash = 5;
         hash = 97 * hash + Objects.hashCode(this.descripcion);

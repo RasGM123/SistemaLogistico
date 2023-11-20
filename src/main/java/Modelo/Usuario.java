@@ -7,17 +7,17 @@ package Modelo;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 /**
  *
  * @author Gustavo
  */
 
-@Entity
+@MappedSuperclass
 public abstract class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +26,6 @@ public abstract class Usuario implements Serializable {
     private String password;
     private String email;
     private LocalDateTime fechaCreacion;
-    
     private String nombres;
     private String apellidos;
     private String dni;

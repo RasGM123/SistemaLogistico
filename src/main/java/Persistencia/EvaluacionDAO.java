@@ -4,16 +4,16 @@
  */
 package Persistencia;
 
-import Modelo.Pedido;
+import Modelo.Evaluacion;
 
 /**
  *
  * @author Gustavo
  */
-
-public class PedidoDAO extends GenericDAO <Pedido>{
+public class EvaluacionDAO extends GenericDAO <Evaluacion> {
     
-    public PedidoDAO() {
-        super(Pedido.class);
+    public EvaluacionDAO() {
+        super(Evaluacion.class);
     }
+    
 }

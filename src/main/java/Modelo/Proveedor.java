@@ -8,7 +8,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,9 +31,9 @@ public class Proveedor implements Serializable {
     private String email;
     private String telefono;
     private String direccion;
-    @OneToMany
+    @OneToMany (cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Contrato> contratos;
-    @OneToMany
+    @OneToMany (cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Evaluacion> evaluaciones;
 
     public Proveedor() {
@@ -46,8 +48,6 @@ public class Proveedor implements Serializable {
         this.contratos = new ArrayList();
         this.evaluaciones = new ArrayList();
     }
-    
-    
     
     //Funcionalidades
     

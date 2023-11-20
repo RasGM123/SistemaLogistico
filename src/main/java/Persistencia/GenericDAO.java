@@ -14,7 +14,7 @@ import javax.persistence.EntityManager;
  */
 
 public abstract class GenericDAO <T> {
-    private Class<T> clase;
+    private final Class<T> clase;
 
     public GenericDAO(Class<T> tipo) {
         this.clase = tipo;
@@ -118,7 +118,7 @@ public abstract class GenericDAO <T> {
         }
     }
             
-    private EntityManager getEntityManager(){
+    protected EntityManager getEntityManager(){
         return ConexionDB.getEntityManagerFactory().createEntityManager();
     }
 }

@@ -4,19 +4,27 @@
  */
 package Modelo;
 
-import Persistencia.GenericDAO;
+import Persistencia.AlmacenDAO;
+import Persistencia.ContratoDAO;
+import Persistencia.EvaluacionDAO;
+import Persistencia.ProductoDAO;
+import Persistencia.ProveedorDAO;
 import Persistencia.TipoProductoDAO;
+import Persistencia.RutaDAO;
+import Persistencia.VehiculoDAO;
 import java.time.LocalDate;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.Entity;
 
 /**
  *
  * @author Gustavo
  */
 
+@Entity
 public class Gerente extends Administrativo implements PerfilGerente{
     public Gerente() {
     }
@@ -72,36 +80,41 @@ public class Gerente extends Administrativo implements PerfilGerente{
     @Override
     public void crearVehiculo(Vehiculo vehiculo) throws Exception{
         List<Vehiculo> vehiculos = sistema.getVehiculos();
+        VehiculoDAO dao = new VehiculoDAO();
         
         if(existeVehiculo(vehiculo)){
             throw new Exception("El vehículo "+vehiculo.getDominio()+" ya está cargado en el sistema");
         }
         
-        /*
-            GENERRAR ID
-        */
-        vehiculo.setId(generarId(vehiculo));
-        
         vehiculos.add(vehiculo);
+        
+        dao.crear(vehiculo);
     }
     
     @Override
     public void editarVehiculo(Vehiculo vehiculo, String marca, String modelo, String dominio, int capacidadDeCarga){
+        VehiculoDAO dao = new VehiculoDAO();
+        
         vehiculo.setMarca(marca);
         vehiculo.setModelo(modelo);
         vehiculo.setDominio(dominio);
         vehiculo.setCapacidadCarga(capacidadDeCarga);
+        
+        dao.editar(vehiculo);
     }
     
     @Override
     public void borrarVehiculo(Vehiculo vehiculo) throws Exception{
         List<Vehiculo> vehiculos = sistema.getVehiculos();
+        VehiculoDAO dao = new VehiculoDAO();
         
         if(!existeVehiculo(vehiculo)){
             throw new Exception("El vehículo que desea borrar no está cargado en el sistema.");
         }
         
         vehiculos.remove(vehiculo);
+        
+        dao.borrar(vehiculo.getId());
     }
     
     public boolean existeVehiculo(Vehiculo vehiculo){
@@ -117,36 +130,41 @@ public class Gerente extends Administrativo implements PerfilGerente{
     @Override
     public void crearRuta(Ruta ruta) throws Exception{
         List<Ruta> rutas = sistema.getRutas();
+        RutaDAO dao = new RutaDAO();
         
         if(existeRuta(ruta)){
             throw new Exception("La ruta "+ruta.getDestino()+" -> "+ruta.getDestino()+" ya está cargada en el sistema.");
         }
         
-        /*
-            GENERRAR ID
-        */
-        ruta.setId(generarId(ruta));
-        
         rutas.add(ruta);
+        
+        dao.crear(ruta);
     }
     
     @Override
     public void editarRuta(Ruta ruta, String origen, String destino, LocalDate fechaSalida, LocalDate fechaLlegada){
+        RutaDAO dao = new RutaDAO();
+        
         ruta.setOrigen(origen);
         ruta.setDestino(destino);
         ruta.setFechaSalida(fechaSalida);
         ruta.setFechaLlegada(fechaLlegada);
+        
+        dao.editar(ruta);
     }
     
     @Override
     public void borrarRuta(Ruta ruta) throws Exception{
         List<Ruta> rutas = sistema.getRutas();
+        RutaDAO dao = new RutaDAO();
         
         if(!existeRuta(ruta)){
             throw new Exception("La ruta que desea borrar no está cargada en el sistema");
         }
         
         rutas.remove(ruta);
+        
+        dao.borrar(ruta.getId());
     }
     
     public boolean existeRuta(Ruta ruta){
@@ -162,17 +180,15 @@ public class Gerente extends Administrativo implements PerfilGerente{
     @Override
     public void crearProveedor(Proveedor proveedor) throws Exception{
         List<Proveedor> proveedores = sistema.getProveedores();
+        ProveedorDAO dao = new ProveedorDAO();
         
         if(existeProveedor(proveedor)){
             throw new Exception("El proveedor "+proveedor.getNombre()+" ya está cargado en el sistema.");
         }
         
-        /*
-            GENERRAR ID
-        */
-        proveedor.setId(generarId(proveedor));
-        
         proveedores.add(proveedor);
+        
+        dao.crear(proveedor);
     }
     
     @Override
@@ -194,16 +210,22 @@ public class Gerente extends Administrativo implements PerfilGerente{
     }
     
     @Override
-    public void editarProveedor(Proveedor proveedor, String cuit, String nombre, String telefono, String direccion){
+    public void editarProveedor(Proveedor proveedor, String cuit, String nombre, String email, String telefono, String direccion){
+        ProveedorDAO dao = new ProveedorDAO();
+        
         proveedor.setCuit(cuit);
         proveedor.setNombre(nombre);
+        proveedor.setEmail(email);
         proveedor.setTelefono(telefono);
         proveedor.setDireccion(direccion);
+        
+        dao.editar(proveedor);
     }
     
     @Override
     public void borrarProveedor(Proveedor proveedor) throws Exception{
         List<Proveedor> proveedores = sistema.getProveedores();
+        ProveedorDAO dao = new ProveedorDAO();
         
         if(!existeProveedor(proveedor)){
             throw new Exception("El proveedor que desea borrar no está cargado en el sistema.");
@@ -213,8 +235,9 @@ public class Gerente extends Administrativo implements PerfilGerente{
         proveedor.getContratos().clear();
         //Se borran las Evaluaciones del Proveedor
         proveedor.getEvaluaciones().clear();
-        
         proveedores.remove(proveedor);
+        
+        dao.borrar(proveedor.getId());
     }
     
     public boolean existeProveedor(Proveedor proveedor){
@@ -223,16 +246,17 @@ public class Gerente extends Administrativo implements PerfilGerente{
         return proveedores.contains(proveedor);
     }
     
-    //Otras operaciones con Proveedor
+    //Operaciones con Proveedor
     
     @Override
     public void agregarEvaluacion(Proveedor proveedor, Evaluacion evaluacion){
-        /*
-            GENERRAR ID
-        */
-        evaluacion.setId(generarId(evaluacion));
+        ProveedorDAO daoProveedor = new ProveedorDAO();
+        EvaluacionDAO daoEvaluacion = new EvaluacionDAO();
         
         proveedor.agregarEvaluacion(evaluacion);
+        
+        daoEvaluacion.crear(evaluacion);
+        daoProveedor.editar(proveedor);
     }
     
     @Override
@@ -242,12 +266,13 @@ public class Gerente extends Administrativo implements PerfilGerente{
     
     @Override
     public void agregarContrato(Proveedor proveedor, Contrato contrato){
-        /*
-            GENERRAR ID
-        */
-        contrato.setId(generarId(contrato));
+        ProveedorDAO daoProveedor = new ProveedorDAO();
+        ContratoDAO daoContrato = new ContratoDAO();
         
         proveedor.agregarContrato(contrato);
+        
+        daoContrato.crear(contrato);
+        daoProveedor.editar(proveedor);
     }
     
     @Override
@@ -262,29 +287,32 @@ public class Gerente extends Administrativo implements PerfilGerente{
     @Override
     public void crearAlmacen(Almacen almacen) throws Exception{
         List<Almacen> almacenes = sistema.getAlmacenes();
+        AlmacenDAO dao = new AlmacenDAO();
         
         if(existeAlmacen(almacen)){
             throw new Exception("El almacen "+almacen.getNombreSucursal()+" ya está cargado en el sistema.");
         }
         
-        /*
-            GENERRAR ID
-        */
-        almacen.setId(generarId(almacen));
-        
         almacenes.add(almacen);
+        
+        dao.crear(almacen);
     }
     
     @Override
     public void editarAlmacen(Almacen almacen, String nombre, boolean esCentroDistribucion, String direccion){
+        AlmacenDAO dao = new AlmacenDAO();
+        
         almacen.setNombreSucursal(nombre);
         almacen.setEsCentroDistribucion(esCentroDistribucion);
         almacen.setDireccion(direccion);
+        
+        dao.editar(almacen);
     }
     
     @Override
     public void borrarAlmacen(Almacen almacen) throws Exception{
         List<Almacen> almacenes = sistema.getAlmacenes();
+        AlmacenDAO dao = new AlmacenDAO();
         
         if(!existeAlmacen(almacen)){
             throw new Exception("El almacen que quiere borrar no está cargado en el sistema.");
@@ -294,6 +322,8 @@ public class Gerente extends Administrativo implements PerfilGerente{
         almacen.getRenglones().clear();
         //Se borra el Almacen del Sistema
         almacenes.remove(almacen);
+        
+        dao.borrar(almacen.getId());
     }
     
     public boolean existeAlmacen(Almacen almacen){
@@ -309,40 +339,75 @@ public class Gerente extends Administrativo implements PerfilGerente{
     @Override
     public void crearProducto(Producto producto) throws Exception{
         List<Producto> productos = sistema.getProductos();
+        ProductoDAO dao = new ProductoDAO();
         
         if(existeProducto(producto)){
             throw new Exception("El producto "+producto.getNombre()+" ya está cargado en el sistema.");
         }
         
-        /*
-            GENERRAR ID
-        */
-        producto.setId(generarId(producto));
-        
         productos.add(producto);
+        
+        dao.crear(producto);
     }
     
     @Override
     public void editarProducto(Producto producto, String nombre, TipoProducto tipoProducto){
+        ProductoDAO dao = new ProductoDAO();
+        
         producto.setNombre(nombre);
         producto.setTipoProducto(tipoProducto);
+        
+        dao.editar(producto);
     }
     
     @Override
     public void borrarProducto(Producto producto) throws Exception{
         List<Producto> productos = sistema.getProductos();
+        ProductoDAO dao = new ProductoDAO();
         
         if(!existeProducto(producto)){
             throw new Exception("El producto que desea borrar no está cargado en el sistema.");
         }
         
+        if(estaProductoEnUso(producto)){
+            throw new Exception("No se puede borrar producto que esté siendo usado en otra parte del sistema.");
+        }
+        
         productos.remove(producto);
+        
+        dao.borrar(producto.getId());
     }
     
     public boolean existeProducto(Producto producto){
         List<Producto> productos = sistema.getProductos();
         
         return productos.contains(producto);
+    }
+    
+    public boolean estaProductoEnUso(Producto producto){
+        
+        //Se busca el Producto en los Almacenes
+        for(Almacen a:sistema.getAlmacenes()){
+            if(a.buscarRenglon(producto) != null){
+                return true;
+            }
+        }
+        
+        //Se busca el Producto en las Ordenes de Compra
+        for(OrdenDeCompra o:sistema.getOrdenesDeCompra()){
+            if(o.tieneProducto(producto)){
+                return true;
+            }
+        }
+        
+        //Se busca el Producto en todos los Pedidos
+        for(Pedido p:sistema.getPedidos().values()){
+            if(p.obtenerCantidadProducto(producto)>0){
+                return true;
+            }
+        }
+        
+        return false;
     }
     
     /*

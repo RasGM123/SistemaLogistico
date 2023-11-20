@@ -33,7 +33,7 @@ public interface PerfilGerente {
     public void crearProveedor(Proveedor proveedor) throws Exception;
     public Proveedor buscarProveedor(String nombre);
     public List<Proveedor> listarProveedores();
-    public void editarProveedor(Proveedor proveedor, String cuit, String nombre, String telefono, String direccion);
+    public void editarProveedor(Proveedor proveedor, String cuit, String nombre, String email, String telefono, String direccion);
     public void borrarProveedor(Proveedor proveedor) throws Exception;
     
     //Operaciones con Proveedor

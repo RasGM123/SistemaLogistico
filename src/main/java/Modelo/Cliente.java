@@ -4,6 +4,8 @@
  */
 package Modelo;
 
+import Persistencia.ClienteDAO;
+import Persistencia.TicketDAO;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -113,12 +115,13 @@ public class Cliente extends Usuario implements PerfilCliente, Serializable{
     @Override
     public void crearTicket(String motivo, String reclamo) {
         Ticket ticket = new Ticket(motivo, reclamo);
-        
-        ticket.setId(ticket.hashCode());
+        ClienteDAO dao = new ClienteDAO();
         
         this.sistema.getTickets().add(ticket);
         
         this.tickets.add(ticket);
+        
+        dao.editar(this);
     }
 
     @Override
@@ -142,7 +145,7 @@ public class Cliente extends Usuario implements PerfilCliente, Serializable{
     public void determinarPreferencias(int cantidadPedidos, int cantidadPreferencias) throws Exception{
         
         if(pedidos.isEmpty()){
-            throw new Exception("El cliente todavía no ha cargado pedidos.");
+            throw new Exception("El cliente todavía no ha realizado pedidos.");
         }
         
         List<String> resultado = new ArrayList();
@@ -237,9 +240,5 @@ public class Cliente extends Usuario implements PerfilCliente, Serializable{
 
     public List<Ticket> getTickets() {
         return tickets;
-    }
-
-    private List<Ticket> ArrayList() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

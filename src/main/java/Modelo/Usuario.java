@@ -4,20 +4,28 @@
  */
 package Modelo;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 /**
  *
  * @author Gustavo
  */
-public abstract class Usuario {
+
+@MappedSuperclass
+public abstract class Usuario implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String username;
     private String password;
     private String email;
     private LocalDateTime fechaCreacion;
-    
     private String nombres;
     private String apellidos;
     private String dni;

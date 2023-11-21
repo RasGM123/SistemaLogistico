@@ -4,26 +4,40 @@
  */
 package Modelo;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  *
  * @author Rodrigo
  */
-public class Evaluacion {
+
+@Entity
+public class Evaluacion implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private LocalDateTime fecha;
+    private LocalDate fecha;
     private int puntuacion;
     private String comentario;
 
     public Evaluacion() {
     }
 
-    public Evaluacion(int puntuacion, String comentario) {
-        this.fecha = LocalDateTime.now();
+    public Evaluacion(LocalDate fecha, int puntuacion, String comentario) {
+        this.fecha = fecha;
         this.puntuacion = puntuacion;
         this.comentario = comentario;
+    }
+
+    @Override
+    public String toString() {
+        return "Evaluacion{" + "id=" + id + ", fecha=" + fecha + ", puntuacion=" + puntuacion + ", comentario=" + comentario + '}';
     }
 
     @Override
@@ -56,7 +70,7 @@ public class Evaluacion {
         this.id = id;
     }
 
-    public void setFecha(LocalDateTime fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
@@ -74,7 +88,7 @@ public class Evaluacion {
         return id;
     }
 
-    public LocalDateTime getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 

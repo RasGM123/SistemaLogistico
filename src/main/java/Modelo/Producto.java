@@ -4,16 +4,28 @@
  */
 package Modelo;
 
+import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 
 /**
  *
  * @author Rodrigo
  */
-public class Producto {
+
+@Entity
+public class Producto implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nombre;
+    @OneToOne (fetch = FetchType.EAGER)
     private TipoProducto tipoProducto;
 
     public Producto() {
@@ -22,6 +34,11 @@ public class Producto {
     public Producto(String nombre, TipoProducto tipoProducto) {
         this.nombre = nombre;
         this.tipoProducto = tipoProducto;
+    }
+
+    @Override
+    public String toString() {
+        return "Producto{" + "id=" + id + ", nombre=" + nombre + ", tipoProducto=" + tipoProducto + '}';
     }
 
     @Override

@@ -6,17 +6,25 @@ package Modelo;
 
 import java.io.Serializable;
 import java.util.Objects;
-
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author Gustavo
  */
 
-
+@Entity
 public class RenglonPedido implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int cantidad;
+    @OneToOne (fetch = FetchType.EAGER)
     private Producto producto;
 
     public RenglonPedido() {
@@ -25,6 +33,11 @@ public class RenglonPedido implements Serializable {
     public RenglonPedido(int cantidad, Producto producto){
         this.cantidad = cantidad;
         this.producto = producto;
+    }
+
+    @Override
+    public String toString() {
+        return "RenglonPedido{" + "id=" + id + ", cantidad=" + cantidad + ", producto=" + producto + '}';
     }
 
     @Override

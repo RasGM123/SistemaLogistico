@@ -4,20 +4,32 @@
  */
 package Modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author Rodrigo
  */
 
-public class Almacen {
+@Entity
+public class Almacen implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nombreSucursal;
     private boolean esCentroDistribucion;
     private String direccion;
+    @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<RenglonInventario> renglones;
 
     public Almacen() {
@@ -91,7 +103,7 @@ public class Almacen {
         }
     }
     
-    public void borrarProducto(Producto producto) throws Exception{
+    public void quitarProducto(Producto producto) throws Exception{
         RenglonInventario renglon = buscarRenglon(producto);
         
         if(renglon == null){

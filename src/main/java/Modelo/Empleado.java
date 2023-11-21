@@ -8,6 +8,7 @@ package Modelo;
  *
  * @author Gustavo
  */
+
 public abstract class Empleado extends Usuario{
     private String cuil;
 

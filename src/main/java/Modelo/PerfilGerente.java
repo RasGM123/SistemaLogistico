@@ -5,7 +5,6 @@
 package Modelo;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -13,12 +12,15 @@ import java.util.Map;
  *
  * @author Gustavo
  */
+
 public interface PerfilGerente {
     
-    //CRUD Transportista
-    public void crearTransportista(Transportista transportista) throws Exception;
-    public void editarTransportista(Transportista transportista, String cuil, String nombre, String apellido, String dni, String telefono, String direccion);
-    public void borrarTransportista(Transportista transportista) throws Exception;
+    //CRUD Usuario
+    public void crearUsuario(Usuario usuario) throws Exception;
+    public Usuario buscarUsuario(Usuario usuario);
+    public List<Usuario> listarUsuarios();
+    public void editarUsuario(Usuario usuario);
+    public void borrarUsuario(Usuario usuario) throws Exception;
     
     //CRUD Vehiculo
     public void crearVehiculo(Vehiculo vehiculo) throws Exception;
@@ -34,7 +36,7 @@ public interface PerfilGerente {
     public void crearProveedor(Proveedor proveedor) throws Exception;
     public Proveedor buscarProveedor(String nombre);
     public List<Proveedor> listarProveedores();
-    public void editarProveedor(Proveedor proveedor, String cuit, String nombre, String telefono, String direccion);
+    public void editarProveedor(Proveedor proveedor, String cuit, String nombre, String email, String telefono, String direccion);
     public void borrarProveedor(Proveedor proveedor) throws Exception;
     
     //Operaciones con Proveedor
@@ -54,9 +56,9 @@ public interface PerfilGerente {
     public void borrarProducto(Producto producto) throws Exception;
     
     //CRUD TipoProducto
-    public void crearTipoDeProducto(TipoProducto tipo) throws Exception;
-    public void editarTipoProducto(TipoProducto tipo, String nombre);
-    public void borrarTipoDeProducto(TipoProducto tipo) throws Exception;
+    public void crearTipoProducto(TipoProducto tipoProducto) throws Exception;
+    public void editarTipoProducto(TipoProducto tipoProducto, String nombre);
+    public void borrarTipoProducto(TipoProducto tipoProducto) throws Exception;
     
     //CRUD OrdenDeCompra
     public void crearOrdenDeCompra(OrdenDeCompra orden) throws Exception;
@@ -65,7 +67,7 @@ public interface PerfilGerente {
     public void editarOrdenDeCompra(OrdenDeCompra orden, Proveedor proveedor, List<RenglonOrdenDeCompra> renglones);
     public void borrarOrdenDeCompra(OrdenDeCompra orden) throws Exception;
     //Otras operaciones con OrdenDeCompra
-    public void establecerEntregaOrdenDeCompra(OrdenDeCompra orden, LocalDateTime fechaEntrega) throws Exception;
+    public void establecerEntregaOrdenDeCompra(OrdenDeCompra orden, LocalDate fechaEntrega) throws Exception;
     
     //Generacion de informes
     //Numero de veces que se pidieron los Productos comprendido entre 2 fechas

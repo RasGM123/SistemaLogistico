@@ -4,14 +4,23 @@
  */
 package Modelo;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  *
  * @author Rodrigo
  */
-public class Ruta {
+
+@Entity
+public class Ruta implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String origen;
     private String destino;
@@ -26,6 +35,11 @@ public class Ruta {
         this.destino = destino;
         this.fechaSalida = fechaSalida;
         this.fechaLlegada = fechaLlegada;
+    }
+
+    @Override
+    public String toString() {
+        return "Ruta{" + "id=" + id + ", origen=" + origen + ", destino=" + destino + ", fechaSalida=" + fechaSalida + ", fechaLlegada=" + fechaLlegada + '}';
     }
 
     @Override

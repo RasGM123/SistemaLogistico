@@ -4,7 +4,7 @@
  */
 package Modelo;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,20 +12,26 @@ import java.util.Objects;
  *
  * @author Gustavo
  */
+
 class Remito {
     private int id;
-    private LocalDateTime fechaCreacionPedido;
-    private LocalDateTime fechaEntrega;
+    private LocalDate fechaCreacionPedido;
+    private LocalDate fechaEntrega;
     private List<RenglonPedido> renglones;
 
     public Remito() {
     }
 
-    public Remito(int id, LocalDateTime fechaCreacionPedido, LocalDateTime fechaEntrega, List<RenglonPedido> renglones) {
+    public Remito(int id, LocalDate fechaCreacionPedido, LocalDate fechaEntrega, List<RenglonPedido> renglones) {
         this.id = id;
         this.fechaCreacionPedido = fechaCreacionPedido;
         this.fechaEntrega = fechaEntrega;
         this.renglones = renglones;
+    }
+
+    @Override
+    public String toString() {
+        return "Remito{" + "id=" + id + ", fechaCreacionPedido=" + fechaCreacionPedido + ", fechaEntrega=" + fechaEntrega + '}';
     }
 
     @Override
@@ -58,11 +64,11 @@ class Remito {
         this.id = id;
     }
 
-    public void setFechaCreacionPedido(LocalDateTime fechaCreacionPedido) {
+    public void setFechaCreacionPedido(LocalDate fechaCreacionPedido) {
         this.fechaCreacionPedido = fechaCreacionPedido;
     }
 
-    public void setFechaEntrega(LocalDateTime fechaEntrega) {
+    public void setFechaEntrega(LocalDate fechaEntrega) {
         this.fechaEntrega = fechaEntrega;
     }
 
@@ -76,11 +82,11 @@ class Remito {
         return id;
     }
 
-    public LocalDateTime getFechaCreacionPedido() {
+    public LocalDate getFechaCreacionPedido() {
         return fechaCreacionPedido;
     }
 
-    public LocalDateTime getFechaEntrega() {
+    public LocalDate getFechaEntrega() {
         return fechaEntrega;
     }
 

@@ -13,6 +13,7 @@ import java.util.List;
 public interface PerfilAdministrativo {
     
     //CRUD Cliente
+    public void crearUsuarioCliente(Cliente cliente) throws Exception;
     public Cliente buscarClientePorDni(String dni);
     public List<Cliente> buscarClientePorApellido(String apellido);
     public List<Cliente> listarClientes();
@@ -27,7 +28,7 @@ public interface PerfilAdministrativo {
     public void borrarPedido(Cliente cliente, Pedido pedido) throws Exception;
     
     //Otras operaciones con Pedido
-    public void cambiarEstado(Pedido pedido, String estado);
+    public void cambiarEstadoPedido(Pedido pedido, String estado, String detalle);
     public void asignarRuta(Pedido pedido, Ruta ruta);
     public void asignarTransportista(Pedido pedido, Transportista transportista);
     public Remito generarRemito(Pedido pedido);
@@ -64,15 +65,15 @@ public interface PerfilAdministrativo {
     //Gestion Almacen
     public void agregarProducto(Almacen almacen, Producto producto, int cantidad) throws Exception;
     public RenglonInventario buscarProductoEnAlmacen(Almacen almacen, Producto producto);
-    public List<RenglonInventario> listarProductos(Almacen almacen);
+    public List<RenglonInventario> listarProductosEnAlmacen(Almacen almacen);
     public void cambiarCantidadProducto(Almacen almacen, Producto producto, int cantidad) throws Exception;
-    public void borrarProducto(Almacen almacen, Producto producto) throws Exception;
+    public void borrarProductoDeAlmacen(Almacen almacen, Producto producto) throws Exception;
     
     //CRUD Producto
     public Producto buscarProducto(String nombre);
     public List<Producto> listarProductos();
     
     //CRUD TipoProducto
-    public TipoProducto buscarTipoDeProducto(String nombre);
+    public TipoProducto buscarTipoProducto(String nombre);
     public List<TipoProducto> listarTipoProducto();
 }

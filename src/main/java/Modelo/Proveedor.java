@@ -4,22 +4,36 @@
  */
 package Modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author Rodrigo
  */
-public class Proveedor {
+
+@Entity
+public class Proveedor implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String cuit;
     private String nombre;
     private String email;
     private String telefono;
     private String direccion;
+    @OneToMany (cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Contrato> contratos;
+    @OneToMany (cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Evaluacion> evaluaciones;
 
     public Proveedor() {
@@ -43,6 +57,11 @@ public class Proveedor {
     
     public void agregarEvaluacion(Evaluacion evaluacion){
         evaluaciones.add(evaluacion);
+    }
+
+    @Override
+    public String toString() {
+        return "Proveedor{" + "id=" + id + ", cuit=" + cuit + ", nombre=" + nombre + ", email=" + email + ", telefono=" + telefono + ", direccion=" + direccion + '}';
     }
     
     @Override

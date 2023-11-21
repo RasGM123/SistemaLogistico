@@ -4,12 +4,19 @@
  */
 package Modelo;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
+
 /**
  *
  * @author Rodrigo
  */
+
+@Entity
 public class Transportista extends Empleado{
-    private Vehiculo vehiculo;
+    @OneToOne (fetch = FetchType.EAGER)
+    private Vehiculo vehiculoAsignado;
 
     public Transportista() {
     }
@@ -17,18 +24,18 @@ public class Transportista extends Empleado{
     public Transportista(String cuil, String username, String password, String email, String nombres, String apellidos, String dni, String telefono, String direccion) {
         super(cuil, username, password, email, nombres, apellidos, dni, telefono, direccion);
         
-        this.vehiculo = null;
+        this.vehiculoAsignado = null;
     }
     
     //Setters
 
-    public void setVehiculo(Vehiculo vehiculo) {
-        this.vehiculo = vehiculo;
+    public void setVehiculoAsignado(Vehiculo vehiculoAsignado) {
+        this.vehiculoAsignado = vehiculoAsignado;
     }
     
     //Getters
 
-    public Vehiculo getVehiculo() {
-        return vehiculo;
+    public Vehiculo getVehiculoAsignado() {
+        return vehiculoAsignado;
     }
 }

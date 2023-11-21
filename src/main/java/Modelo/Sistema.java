@@ -4,19 +4,34 @@
  */
 package Modelo;
 
+import Persistencia.AdministrativoDAO;
+import Persistencia.AlmacenDAO;
+import Persistencia.ClienteDAO;
+import Persistencia.GerenteDAO;
+import Persistencia.OrdenDeCompraDAO;
+import Persistencia.PedidoDAO;
+import Persistencia.ProductoDAO;
+import Persistencia.ProveedorDAO;
+import Persistencia.RutaDAO;
+import Persistencia.TicketDAO;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import Persistencia.TipoProductoDAO;
+import Persistencia.TransportistaDAO;
+import Persistencia.VehiculoDAO;
 
 /**
  *
  * @author Gustavo
  */
+
 public final class Sistema {
     //Sistema es SINGLETON
     private static Sistema instancia;
+    
     //Clave = nombre usuario
     private Map<String,Usuario> usuarios;
     //Clave = id Pedido
@@ -55,11 +70,25 @@ public final class Sistema {
         //El Sistema no tiene iniciada la Sesion al crearse
         this.sesion = null;
         
-        cargarDatos();
+        cargarDB();
     }
     
-    //Carga algunos datos en el Sistema para poder probarlo
-    public void cargarDatos() throws Exception{
+    private void cargarDB() throws Exception{
+        ClienteDAO daoCliente = new ClienteDAO();
+        AdministrativoDAO daoAdministrativo = new AdministrativoDAO();
+        GerenteDAO daoGerente = new GerenteDAO();
+        TransportistaDAO daoTransportista = new TransportistaDAO();
+        
+        PedidoDAO daoPedido = new PedidoDAO();
+        VehiculoDAO daoVehiculo = new VehiculoDAO();
+        RutaDAO daoRuta = new RutaDAO();
+        ProductoDAO daoProducto = new ProductoDAO();
+        TipoProductoDAO daoTipoProducto = new TipoProductoDAO();
+        AlmacenDAO daoAlmacen = new AlmacenDAO();
+        OrdenDeCompraDAO daoOrdenDeCompra = new OrdenDeCompraDAO();
+        ProveedorDAO daoProveedor = new ProveedorDAO();
+        TicketDAO daoTicket = new TicketDAO();
+        
         //se crea un Usuario Gerente para probar el sistema
         crearUsuario(new Gerente("993300022200", "gerente", "gerente", "elon@musk.com", "Elon", "Mosquito", "33000222", "3788 671100", "CASA"));
         
@@ -69,6 +98,43 @@ public final class Sistema {
         //se crea un Usuario Cliente para probar el sistema
         crearUsuario(new Cliente("cliente", "cliente", "jorgito@outlook.com", "Jorge", "Smith", "20111999", "3764 001122", "Argentina"));
         
+        //Se crea un Usuario Transportista para probar el sistema
+        crearUsuario(new Transportista("111100022299", "carlos", "carlos", "carlos@gmail.com", "Carlos", "Perez", "11000222", "3700 771100", "JUPITER"));
+        
+        //Carga de la base de datos
+        List<Cliente> listaClientes = daoCliente.listar();
+        for(Cliente c:listaClientes){
+            this.usuarios.put(c.getUsername(), c);
+        }
+        
+        List<Administrativo> listaAdministrativos = daoAdministrativo.listar();
+        for(Administrativo a:listaAdministrativos){
+            this.usuarios.put(a.getUsername(), a);
+        }
+        
+        List<Gerente> listaGerentes = daoGerente.listar();
+        for(Gerente g:listaGerentes){
+            this.usuarios.put(g.getUsername(), g);
+        }
+        
+        List<Transportista> listaTransportistas = daoTransportista.listar();
+        for(Transportista t:listaTransportistas){
+            this.usuarios.put(t.getUsername(), t);
+        }
+        
+        List<Pedido> listaPedidos = daoPedido.listar();
+        for(Pedido p:listaPedidos){
+            this.pedidos.put(p.getId(), p);
+        }
+        
+        this.vehiculos.addAll(daoVehiculo.listar());
+        this.rutas.addAll(daoRuta.listar());
+        this.productos.addAll(daoProducto.listar());
+        this.tiposDeProductos.addAll(daoTipoProducto.listar());
+        this.almacenes.addAll(daoAlmacen.listar());
+        this.ordenesDeCompra.addAll(daoOrdenDeCompra.listar());
+        this.proveedores.addAll(daoProveedor.listar());
+        this.tickets.addAll(daoTicket.listar());
     }
     
     //Funcionalidades
@@ -77,7 +143,7 @@ public final class Sistema {
         ABM Usuario
     */
     
-    //Crea un usuario y lo agrega al Sistema si no existe
+    //Crea un usuario
     public void crearUsuario(Usuario usuario) throws Exception{
         if(existeUsuario(usuario)){
             throw new Exception("El nombre de usuario "+usuario.getUsername()+" no está disponible.");
@@ -87,12 +153,10 @@ public final class Sistema {
             throw new Exception("El correo "+usuario.getEmail()+" no está disponible.");
         }
         
-        usuario.setId(generarId(usuario));
-        
         usuarios.put(usuario.getUsername(), usuario);
     }
     
-    public Usuario buscarUsuario(String username) throws Exception{
+    public Usuario buscarUsuario(String username){
         if(!existeUsuario(username)){
             return null;
         }
@@ -155,7 +219,7 @@ public final class Sistema {
         return usuarios.containsKey(usuario.getUsername());
     }
     
-    public boolean existeUsuario(String username) throws Exception{
+    public boolean existeUsuario(String username){
         if(usuarios.isEmpty()){
             return false;
         }
@@ -245,11 +309,6 @@ public final class Sistema {
         return 4;
     }
     
-    //Implementacion pendiente...
-    public String hashPassword(String password){
-        return password;
-    }
-    
     //getters & setters
 
     public Map<String, Usuario> getUsuarios() {
@@ -318,11 +377,6 @@ public final class Sistema {
 
     public List<Ticket> getTickets() {
         return this.tickets;
-    }
-    
-    //SACAR DESPUES DE IMPLMENTAR PERSISTENCIA
-    public int generarId(Object o){
-        return o.hashCode();
     }
 }
 

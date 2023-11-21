@@ -4,13 +4,22 @@
  */
 package Modelo;
 
+import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  *
  * @author Gustavo
  */
-public class TipoProducto {
+
+@Entity
+public class TipoProducto implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nombre;
 
@@ -21,6 +30,11 @@ public class TipoProducto {
         this.nombre = nombre;
     }
 
+    @Override
+    public String toString() {
+        return "TipoProducto{" + "id=" + id + ", nombre=" + nombre + '}';
+    }
+    
     @Override
     public int hashCode() {
         int hash = 3;

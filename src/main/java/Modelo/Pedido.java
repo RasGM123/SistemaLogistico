@@ -5,31 +5,44 @@
 package Modelo;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
  * @author Rodrigo
  */
 
+@Entity
 public class Pedido implements Serializable {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private LocalDateTime fechaCreacion;
+    private LocalDate fechaCreacion;
     private String estado;
+    @OneToOne (fetch = FetchType.EAGER)
     private Ruta ruta;
+    @OneToOne (fetch = FetchType.EAGER)
     private Transportista transportista;
-
+    @OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<RenglonPedido> renglones;
+    @OneToMany (fetch = FetchType.EAGER)
     private List<Movimiento> movimientos;
 
     public Pedido() {
     }
     
-    public Pedido(LocalDateTime fechaCreacion, Ruta ruta, List<RenglonPedido> renglones) {
+    public Pedido(LocalDate fechaCreacion, Ruta ruta, List<RenglonPedido> renglones) {
         this.fechaCreacion = fechaCreacion;
         this.estado = "Preparándose";
         this.ruta = ruta;
@@ -41,7 +54,7 @@ public class Pedido implements Serializable {
     //Funcionalidades
 
     public Remito generarRemito() {
-        return new Remito(this.id, this.getFechaCreacion(), LocalDateTime.now(), this.getRenglones());
+        return new Remito(this.id, this.getFechaCreacion(), LocalDate.now(), this.getRenglones());
     }
     
     public int obtenerCantidadProducto(Producto producto){
@@ -84,16 +97,11 @@ public class Pedido implements Serializable {
         this.id = id;
     }
 
-    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+    public void setFechaCreacion(LocalDate fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
     public void setEstado(String estado) {
-        Movimiento movimiento = new Movimiento(LocalDateTime.now(), estado);
-        
-        //Se genera un nuevo Movimiento cada vez que cambia el estado del Pedido
-        movimientos.add(movimiento);
-        
         this.estado = estado;
     }
 
@@ -106,16 +114,16 @@ public class Pedido implements Serializable {
         if(this.transportista!=null){
             
             //Vehiculo que tenía asignado el Transportista anterior
-            Vehiculo vehiculo = this.getTransportista().getVehiculo();
+            Vehiculo vehiculo = this.getTransportista().getVehiculoAsignado();
             
             //Se libera el Vehiculo del Transportista anterior
-            this.transportista.setVehiculo(null);
+            this.transportista.setVehiculoAsignado(null);
             
             //Se asigna el Transportista nuevo al Pedido
             this.transportista = transportista;
             
             //Se asigna el Vehiculo al nuevo Transportista
-            transportista.setVehiculo(vehiculo);
+            transportista.setVehiculoAsignado(vehiculo);
         }
         
         this.transportista = transportista;
@@ -135,7 +143,7 @@ public class Pedido implements Serializable {
         return id;
     }
 
-    public LocalDateTime getFechaCreacion() {
+    public LocalDate getFechaCreacion() {
         return fechaCreacion;
     }
 

@@ -5,13 +5,9 @@
 package ventanas.emergentes;
 
 import Modelo.*;
-import java.awt.Desktop;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
-import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -313,7 +309,7 @@ public class Envio extends javax.swing.JInternalFrame {
     private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
         Usuario us = sis.obtenerSesion();
         if (us instanceof Administrativo admin) {
-            admin.cambiarEstado(pedido, actualizarestado());
+            admin.cambiarEstadoPedido(pedido, actualizarestado(), "");
             JOptionPane.showMessageDialog(this, "Pedido Actualizado!");
         }
     }//GEN-LAST:event_ActualizarActionPerformed

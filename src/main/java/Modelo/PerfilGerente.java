@@ -12,12 +12,15 @@ import java.util.Map;
  *
  * @author Gustavo
  */
+
 public interface PerfilGerente {
     
-    //CRUD Transportista
-    public void crearTransportista(Transportista transportista) throws Exception;
-    public void editarTransportista(Transportista transportista, String cuil, String nombre, String apellido, String dni, String telefono, String direccion);
-    public void borrarTransportista(Transportista transportista) throws Exception;
+    //CRUD Usuario
+    public void crearUsuario(Usuario usuario) throws Exception;
+    public Usuario buscarUsuario(Usuario usuario);
+    public List<Usuario> listarUsuarios();
+    public void editarUsuario(Usuario usuario);
+    public void borrarUsuario(Usuario usuario) throws Exception;
     
     //CRUD Vehiculo
     public void crearVehiculo(Vehiculo vehiculo) throws Exception;

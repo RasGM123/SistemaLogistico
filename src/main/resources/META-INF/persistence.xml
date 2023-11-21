@@ -18,8 +18,9 @@
     <class>Modelo.Ticket</class>
     <class>Modelo.TipoProducto</class>
     <class>Modelo.Transportista</class>
-    <class>Modelo.Usuario</class>
     <class>Modelo.Vehiculo</class>
+    <class>Modelo.Administrativo</class>
+    <class>Modelo.Gerente</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/sistema_logistico"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>

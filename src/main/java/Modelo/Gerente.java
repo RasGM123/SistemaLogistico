@@ -4,13 +4,18 @@
  */
 package Modelo;
 
+import Persistencia.AdministrativoDAO;
 import Persistencia.AlmacenDAO;
+import Persistencia.ClienteDAO;
 import Persistencia.ContratoDAO;
 import Persistencia.EvaluacionDAO;
+import Persistencia.GerenteDAO;
+import Persistencia.OrdenDeCompraDAO;
 import Persistencia.ProductoDAO;
 import Persistencia.ProveedorDAO;
 import Persistencia.TipoProductoDAO;
 import Persistencia.RutaDAO;
+import Persistencia.TransportistaDAO;
 import Persistencia.VehiculoDAO;
 import java.time.LocalDate;
 import java.time.Duration;
@@ -34,43 +39,93 @@ public class Gerente extends Administrativo implements PerfilGerente{
     }
     
     /*
-        CRUD Transportista
+        CRUD Usuario
     */
-    
+
     @Override
-    public void crearTransportista(Transportista transportista) throws Exception{
-        Map<String, Usuario> usuarios = sistema.getUsuarios();
+    public void crearUsuario(Usuario usuario) throws Exception {
+        String clase = usuario.getClass().getSimpleName();
         
-        if(existeTransportista(transportista)){
-            throw new Exception("El transportista "+transportista.getCuil()+" ya está cargado en el sistema");
+        sistema.crearUsuario(usuario);
+        
+        switch (clase){
+            case "Cliente":
+                ClienteDAO daoCliente = new ClienteDAO();
+                daoCliente.crear(usuario);
+                break;
+            case "Administrativo":
+                AdministrativoDAO daoAdministrativo = new AdministrativoDAO();
+                daoAdministrativo.crear(usuario);
+                break;
+            case "Gerente":
+                GerenteDAO daoGerente = new GerenteDAO();
+                daoGerente.crear(usuario);
+                break;
+            case "Transportista":
+                TransportistaDAO daoTransportista = new TransportistaDAO();
+                daoTransportista.crear(usuario);
+                break;
         }
-        
-        /*
-            GENERRAR ID
-        */
-        transportista.setId(generarId(transportista));
-        
-        usuarios.put(transportista.getUsername(), transportista);
     }
-    
+
     @Override
-    public void editarTransportista(Transportista transportista,String cuil, String nombre, String apellido, String dni, String telefono, String direccion){
-        transportista.editarDatosPersonales(cuil, nombre, apellido, dni, telefono, direccion);
+    public Usuario buscarUsuario(Usuario usuario) {
+        return sistema.buscarUsuario(usuario.getUsername());
     }
-    
+
     @Override
-    public void borrarTransportista(Transportista transportista) throws Exception{
-        Map<String, Usuario> usuarios = sistema.getUsuarios();
+    public List<Usuario> listarUsuarios() {
+        return sistema.listarUsuarios();
+    }
+
+    @Override
+    public void editarUsuario(Usuario usuario) {
+        String clase = usuario.getClass().getSimpleName();
         
-        if(!existeTransportista(transportista)){
-            throw new Exception("El tranportista que desea borrar no está cargado en el sistema.");
+        switch (clase){
+            case "Cliente":
+                ClienteDAO daoCliente = new ClienteDAO();
+                daoCliente.editar(usuario);
+                break;
+            case "Administrativo":
+                AdministrativoDAO daoAdministrativo = new AdministrativoDAO();
+                daoAdministrativo.editar(usuario);
+                break;
+            case "Gerente":
+                GerenteDAO daoGerente = new GerenteDAO();
+                daoGerente.editar(usuario);
+                break;
+            case "Transportista":
+                TransportistaDAO daoTransportista = new TransportistaDAO();
+                daoTransportista.editar(usuario);
+                break;
         }
-        
-        usuarios.remove(transportista.getUsername());
     }
-    
-    public boolean existeTransportista(Transportista transportista){
-        return sistema.existeUsuario(transportista);
+
+    @Override
+    public void borrarUsuario(Usuario usuario) throws Exception {
+        String clase = usuario.getClass().getSimpleName();
+        
+        sistema.borrarUsuario(usuario);
+        
+        switch (clase){
+            case "Cliente":
+                ClienteDAO daoCliente = new ClienteDAO();
+                daoCliente.borrar(usuario.getId());
+                break;
+            case "Administrativo":
+                AdministrativoDAO daoAdministrativo = new AdministrativoDAO();
+                daoAdministrativo.borrar(usuario.getId());
+                break;
+            case "Gerente":
+                GerenteDAO daoGerente = new GerenteDAO();
+                daoGerente.borrar(usuario.getId());
+                break;
+            case "Transportista":
+                TransportistaDAO daoTranportista = new TransportistaDAO();
+                daoTranportista.editar(usuario);
+                break;
+        }
     }
     
     /*
@@ -483,17 +538,15 @@ public class Gerente extends Administrativo implements PerfilGerente{
     @Override
     public void crearOrdenDeCompra(OrdenDeCompra orden) throws Exception{
         List<OrdenDeCompra> ordenes = sistema.getOrdenesDeCompra();
+        OrdenDeCompraDAO dao = new OrdenDeCompraDAO();
         
         if(existeOrdenDeCompra(orden)){
             throw new Exception("Ya existe una orden de compra con el ID "+orden.getId()+" cargada en el sistema.");
         }
         
-        /*
-            GENERRAR ID
-        */
-        orden.setId(generarId(orden));
-        
         ordenes.add(orden);
+        
+        dao.crear(orden);
     }
 
     @Override
@@ -516,19 +569,26 @@ public class Gerente extends Administrativo implements PerfilGerente{
 
     @Override
     public void editarOrdenDeCompra(OrdenDeCompra orden, Proveedor proveedor, List<RenglonOrdenDeCompra> renglones) {
+        OrdenDeCompraDAO dao = new OrdenDeCompraDAO();
+        
         orden.setProveedor(proveedor);
         orden.setRenglones(renglones);
+        
+        dao.editar(orden);
     }
 
     @Override
     public void borrarOrdenDeCompra(OrdenDeCompra orden) throws Exception {
         List<OrdenDeCompra> ordenes = sistema.getOrdenesDeCompra();
+        OrdenDeCompraDAO dao = new OrdenDeCompraDAO();
         
         if(!existeOrdenDeCompra(orden)){
             throw new Exception("La orden de compra que desea borrar no está cargada en el sistema");
         }
         
         ordenes.remove(orden);
+        
+        dao.borrar(orden.getId());
     }
     
     public boolean existeOrdenDeCompra(OrdenDeCompra orden){
@@ -541,9 +601,12 @@ public class Gerente extends Administrativo implements PerfilGerente{
 
     @Override
     public void establecerEntregaOrdenDeCompra(OrdenDeCompra orden, LocalDate fechaEntrega) throws Exception{
+        OrdenDeCompraDAO dao = new OrdenDeCompraDAO();
+        
         orden.establecerEntrega(fechaEntrega);
+        
+        dao.editar(orden);
     }
-    
     
     //Generacion de informes
     //Numero de veces que se pidieron los Prodcutos comprendido entre 2 fechas

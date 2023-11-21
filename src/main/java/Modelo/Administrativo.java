@@ -5,6 +5,11 @@
 package Modelo;
 
 import Persistencia.AlmacenDAO;
+import Persistencia.ClienteDAO;
+import Persistencia.MovimientoDAO;
+import Persistencia.PedidoDAO;
+import Persistencia.TicketDAO;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +37,19 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
         CRUD Cliente
     */
 
+    @Override
+    public void crearUsuarioCliente(Cliente cliente) throws Exception {
+        ClienteDAO dao = new ClienteDAO();
+        
+        if(!(cliente instanceof Cliente)){
+            throw new Exception("Operación no permitida.");
+        }
+        
+        sistema.crearUsuario(cliente);
+        
+        dao.crear(cliente);
+    }
+    
     @Override
     public Cliente buscarClientePorDni(String dni) {
         Map<String, Usuario> usuarios = sistema.getUsuarios();
@@ -77,27 +95,26 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
         return lista;
     }
     
-    
-    
     /*
         CRUD Pedido
     */
     
     @Override
     public void crearPedido(Cliente cliente, Pedido pedido) throws Exception{
-        Map<Integer, Pedido> pedidos = sistema.getPedidos();
+        Map<Integer, Pedido> pedidosSistema = sistema.getPedidos();
         List<Pedido> pedidosCliente = cliente.getPedidos();
-        
+        ClienteDAO daoCliente = new ClienteDAO();
+        PedidoDAO daoPedido = new PedidoDAO();
         
         if(existePedido(pedido)){
             throw new Exception("Ya existe un pedido con el ID "+pedido.getId()+" cargado en el sistema.");
         }
         
-        //Se agrega el Pedido al Sistema
-        pedidos.put(pedido.getId(), pedido);
-        
         //Se agrega el Pedido al Cliente
         pedidosCliente.add(pedido);
+        
+        daoPedido.crear(pedido);
+        daoCliente.editar(cliente);
     }
     
     //Busca 1 Pedido de 1 Cliente especifico con el id del Pedido como criterio
@@ -131,13 +148,18 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
     //Se cambian solo la lista de productos del Pedido
     @Override
     public void editarPedido(Pedido pedido, List<RenglonPedido> renglones){
+        PedidoDAO dao = new PedidoDAO();
+        
         pedido.setRenglones(renglones);
+        
+        dao.editar(pedido);
     }
     
     @Override
     public void borrarPedido(Cliente cliente, Pedido pedido) throws Exception{
         Map<Integer, Pedido> pedidosSistema = sistema.getPedidos();
         List<Pedido> pedidosCliente = cliente.getPedidos();
+        PedidoDAO dao = new PedidoDAO();
         
         if(!existePedido(pedido)){
             throw new Exception("El pedido que desea borrar no está cargado en el sistema.");
@@ -147,6 +169,8 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
         pedidosSistema.remove(pedido.getId());
         //Se borra el Pedido del Cliente
         pedidosCliente.remove(pedido);
+        
+        dao.borrar(pedido.getId());
     }
     
     public boolean existePedido(Pedido pedido){
@@ -158,18 +182,34 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
     //Otras operaciones relacionadas con Pedido
     
     @Override
-    public void cambiarEstado(Pedido pedido, String estado){
+    public void cambiarEstadoPedido(Pedido pedido, String estado, String detalle){
+        Movimiento movimiento = new Movimiento(LocalDate.now(), detalle);
+        PedidoDAO daoPedido = new PedidoDAO();
+        MovimientoDAO daoMovimiento = new MovimientoDAO();
+        
         pedido.setEstado(estado);
+        pedido.getMovimientos().add(movimiento);
+        
+        daoMovimiento.crear(movimiento);
+        daoPedido.editar(pedido);
     }
     
     @Override
     public void asignarRuta(Pedido pedido, Ruta ruta){
+        PedidoDAO dao = new PedidoDAO();
+        
         pedido.setRuta(ruta);
+        
+        dao.editar(pedido);
     }
     
     @Override
     public void asignarTransportista(Pedido pedido, Transportista transportista){
+        PedidoDAO dao = new PedidoDAO();
+        
         pedido.setTransportista(transportista);
+        
+        dao.editar(pedido);
     }
     
     @Override
@@ -180,7 +220,11 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
     //Funciones relacionadas con mensajeria
     @Override
     public void responderTicket(Ticket ticket, String respuesta) {
+        TicketDAO dao = new TicketDAO();
+        
         ticket.setRespuesta(respuesta);
+        
+        dao.editar(ticket);
     }
 
     @Override
@@ -459,10 +503,5 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
     //Metodo que se llama al cerrar sesion
     public void desconectar(){
         this.sistema = null;
-    }
-    
-    //SACAR DESPUES DE IMPLEMENTAR PERSISTENCIA
-    public int generarId(Object o){
-        return o.hashCode();
     }
 }

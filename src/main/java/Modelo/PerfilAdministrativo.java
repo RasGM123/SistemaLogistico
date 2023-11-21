@@ -13,6 +13,7 @@ import java.util.List;
 public interface PerfilAdministrativo {
     
     //CRUD Cliente
+    public void crearUsuarioCliente(Cliente cliente) throws Exception;
     public Cliente buscarClientePorDni(String dni);
     public List<Cliente> buscarClientePorApellido(String apellido);
     public List<Cliente> listarClientes();
@@ -27,7 +28,7 @@ public interface PerfilAdministrativo {
     public void borrarPedido(Cliente cliente, Pedido pedido) throws Exception;
     
     //Otras operaciones con Pedido
-    public void cambiarEstado(Pedido pedido, String estado);
+    public void cambiarEstadoPedido(Pedido pedido, String estado, String detalle);
     public void asignarRuta(Pedido pedido, Ruta ruta);
     public void asignarTransportista(Pedido pedido, Transportista transportista);
     public Remito generarRemito(Pedido pedido);

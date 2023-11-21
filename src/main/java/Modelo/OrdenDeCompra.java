@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -30,7 +31,7 @@ public class OrdenDeCompra implements Serializable {
     private LocalDate fechaEntrega;
     @OneToOne (fetch = FetchType.EAGER)
     private Proveedor proveedor;
-    @OneToMany (fetch = FetchType.EAGER)
+    @OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<RenglonOrdenDeCompra> renglones;
 
     public OrdenDeCompra() {

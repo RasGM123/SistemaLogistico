@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,7 +34,7 @@ public class Pedido implements Serializable {
     private Ruta ruta;
     @OneToOne (fetch = FetchType.EAGER)
     private Transportista transportista;
-    @OneToMany (fetch = FetchType.EAGER)
+    @OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<RenglonPedido> renglones;
     @OneToMany (fetch = FetchType.EAGER)
     private List<Movimiento> movimientos;
@@ -101,11 +102,6 @@ public class Pedido implements Serializable {
     }
 
     public void setEstado(String estado) {
-        Movimiento movimiento = new Movimiento(LocalDate.now(), estado);
-        
-        //Se genera un nuevo Movimiento cada vez que cambia el estado del Pedido
-        movimientos.add(movimiento);
-        
         this.estado = estado;
     }
 

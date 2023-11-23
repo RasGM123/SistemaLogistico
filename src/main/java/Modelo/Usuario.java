@@ -58,6 +58,11 @@ public abstract class Usuario implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "Usuario{" + "id=" + id + ", username=" + username + ", email=" + email + ", fechaCreacion=" + fechaCreacion + ", nombres=" + nombres + ", apellidos=" + apellidos + ", dni=" + dni + ", telefono=" + telefono + ", direccion=" + direccion + '}';
+    }
+
+    @Override
     public int hashCode() {
         int hash = 3;
         hash = 29 * hash + Objects.hashCode(this.username);

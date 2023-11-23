@@ -5,14 +5,14 @@
 package Modelo;
 
 import Persistencia.ClienteDAO;
-import Persistencia.TicketDAO;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
@@ -46,6 +46,17 @@ public class Cliente extends Usuario implements PerfilCliente, Serializable{
     }
     
     //Funcionalidades
+    
+    /*
+        CRUD Cliente
+    */
+
+    @Override
+    public void actualizarInformacionCuenta() {
+        ClienteDAO dao = new ClienteDAO();
+        
+        dao.editar(this);
+    }
 
     @Override
     public List<Pedido> listarPedidos() {
@@ -140,9 +151,9 @@ public class Cliente extends Usuario implements PerfilCliente, Serializable{
         return null;
     }
     
-    //devuelve la lista de tipos de producto mas pedidos por el cliente con una cantidad maxima de cantidadPreferencias
-    //tomando en cuenta los mas recientes pedidos hasta una cantidadPedidos
-    public void determinarPreferencias(int cantidadPedidos, int cantidadPreferencias) throws Exception{
+    //devuelve la lista de tipos de producto mas pedidos por el cliente con una cantidad maxima de cantMaxPreferencias
+    //tomando en cuenta los mas recientes pedidos hasta una cantMaxPedido
+    public void determinarPreferencias(int cantMaxPedido, int cantMaxPreferencias) throws Exception{
         
         if(pedidos.isEmpty()){
             throw new Exception("El cliente todavía no ha realizado pedidos.");
@@ -150,8 +161,8 @@ public class Cliente extends Usuario implements PerfilCliente, Serializable{
         
         List<String> resultado = new ArrayList();
         //String = nombre del tipo de producto , Integer = numero de apariciones
-        Map<String,Integer> listaPreferencias = new HashMap();
-        List<Pedido> ultimosPedidos = listarUltimosPedidos(cantidadPedidos);
+        Map<String,Integer> frecuencias = new HashMap();
+        List<Pedido> ultimosPedidos = listarUltimosPedidos(cantMaxPedido);
         String tipoProducto;
         
         //recorre los ultimos X pedidos del cliente  para conocer sus preferencias
@@ -161,22 +172,29 @@ public class Cliente extends Usuario implements PerfilCliente, Serializable{
             for(RenglonPedido renglon:pedido.getRenglones()){
                 tipoProducto = renglon.getProducto().getTipoProducto().getNombre();
                 
-                if(listaPreferencias.containsKey(tipoProducto)){
+                if(frecuencias.containsKey(tipoProducto)){
                     
                     //Si la preferencia existe en el mapa, se incrementa su numero de incidencias en 1
-                    listaPreferencias.put(tipoProducto, listaPreferencias.get(tipoProducto)+1);
+                    frecuencias.put(tipoProducto, frecuencias.get(tipoProducto)+1);
                 }else{
                     
                     //Si la preferencia NO existe en el mapa, se agrega el tipo de producto con cantidad de incidencias = 1
-                    listaPreferencias.put(tipoProducto, 1);
+                    frecuencias.put(tipoProducto, 1);
                 }
             }
         }
         
-        if(listaPreferencias.size()>cantidadPreferencias){
+        if(frecuencias.size() > cantMaxPreferencias){
+            Stream<Map.Entry<String, Integer>> frecuenciasSorted;
             
+            frecuenciasSorted = frecuencias.entrySet()
+                                            .stream()
+                                            .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+                                            .limit(cantMaxPreferencias);
+            
+            resultado = frecuenciasSorted.map(Map.Entry::getKey).toList();
         }else{
-            resultado.addAll((Collection<? extends String>) listaPreferencias);
+            resultado.addAll(frecuencias.keySet());
         }
         
         this.preferencias = resultado;

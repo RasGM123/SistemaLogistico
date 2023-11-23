@@ -11,7 +11,11 @@ import java.util.List;
  *
  * @author Gustavo
  */
+
 public interface PerfilCliente {
+    //CRUD Cliente
+    public void actualizarInformacionCuenta();
+    
     //Funciones relacionadas con Pedidos
     public List<Pedido> listarPedidos();
     public List<Pedido> listarPedidos(LocalDate inicio, LocalDate fin) throws Exception;

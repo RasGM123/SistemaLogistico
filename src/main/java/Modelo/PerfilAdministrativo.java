@@ -12,6 +12,9 @@ import java.util.List;
  */
 public interface PerfilAdministrativo {
     
+    //CRUD Administrativo
+    public void actualizarInformacionCuenta() throws Exception;
+    
     //CRUD Cliente
     public void crearUsuarioCliente(Cliente cliente) throws Exception;
     public Cliente buscarClientePorDni(String dni);

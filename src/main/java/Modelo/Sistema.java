@@ -93,13 +93,13 @@ public final class Sistema {
         crearUsuario(new Gerente("993300022200", "gerente", "gerente", "elon@musk.com", "Elon", "Mosquito", "33000222", "3788 671100", "CASA"));
         
         //se crea un Usuario Administrativo para probar el sistema
-        crearUsuario(new Administrativo("119900022299", "empleado", "empleado", "marcos@gmail.com", "Marcos", "Zuck", "99000222", "3700 991100", "MARTE"));
+        crearUsuario(new Administrativo("119900022299", "administrativo", "administrativo", "marcos@gmail.com", "Marcos", "Zuck", "99000222", "3700 991100", "MARTE"));
         
         //se crea un Usuario Cliente para probar el sistema
         crearUsuario(new Cliente("cliente", "cliente", "jorgito@outlook.com", "Jorge", "Smith", "20111999", "3764 001122", "Argentina"));
         
         //Se crea un Usuario Transportista para probar el sistema
-        crearUsuario(new Transportista("111100022299", "carlos", "carlos", "carlos@gmail.com", "Carlos", "Perez", "11000222", "3700 771100", "JUPITER"));
+        crearUsuario(new Transportista("111100022299", "transportista", "transportista", "carlos@gmail.com", "Carlos", "Perez", "11000222", "3700 771100", "JUPITER"));
         
         //Carga de la base de datos
         List<Cliente> listaClientes = daoCliente.listar();
@@ -255,6 +255,10 @@ public final class Sistema {
             }else{
                 if(usuario instanceof Gerente usuarioGerente){
                     usuarioGerente.conectar(this);
+                }else{
+                    if(usuarios instanceof Transportista usuarioTransportista){
+                        usuarioTransportista.conectar(this);
+                    }
                 }
             }
         }
@@ -277,6 +281,10 @@ public final class Sistema {
             }else{
                 if(usuario instanceof Gerente usuarioGerente){
                     usuarioGerente.desconectar();
+                }else{
+                    if(usuario instanceof Transportista usuarioTransportista){
+                        usuarioTransportista.desconectar();
+                    }
                 }
             }
         }

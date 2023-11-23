@@ -4,8 +4,10 @@
  */
 package Modelo;
 
+import Persistencia.AdministrativoDAO;
 import Persistencia.AlmacenDAO;
 import Persistencia.ClienteDAO;
+import Persistencia.GerenteDAO;
 import Persistencia.MovimientoDAO;
 import Persistencia.PedidoDAO;
 import Persistencia.TicketDAO;
@@ -31,6 +33,28 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
 
     public Administrativo(String cuil, String username, String password, String email, String nombres, String apellidos, String dni, String telefono, String direccion) {
         super(cuil, username, password, email, nombres, apellidos, dni, telefono, direccion);
+    }
+    
+    /*
+        CRUD Empleado
+    */
+
+    @Override
+    public void actualizarInformacionCuenta() throws Exception {
+        String clase = this.getClass().getSimpleName();
+        
+        switch (clase){
+            case "Administrativo":
+                AdministrativoDAO daoAdministrativo = new AdministrativoDAO();
+                
+                daoAdministrativo.editar(this);
+                break;
+            case "Gerente":
+                GerenteDAO daoGerente = new GerenteDAO();
+                
+                daoGerente.editar(this);
+                break;
+        }
     }
     
     /*

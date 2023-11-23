@@ -4,7 +4,6 @@
  */
 package Modelo;
 
-import Persistencia.ProductoDAO;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -62,12 +61,10 @@ public class Producto implements Serializable {
             return false;
         }
         final Producto other = (Producto) obj;
-        return this.id == other.id;
-    }
-    
-    public void actualizar(){
-        ProductoDAO dao = new ProductoDAO();
-        dao.editar(this);
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        return Objects.equals(this.tipoProducto, other.tipoProducto);
     }
     
     //Setters

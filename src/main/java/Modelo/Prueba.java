@@ -31,26 +31,17 @@ public class Prueba {
             Cliente cliente1 = new Cliente("pablo", "pablo", "pablo@hotmail.com", "Pablo", "Gomez", "3", "9", "Casa");
             gerente.crearUsuarioCliente(cliente1);
             
-            TipoProducto tipoProducto1 = new TipoProducto("Comida");
-            gerente.crearTipoProducto(tipoProducto1);
+            TipoProducto tipo1 = new TipoProducto("Lacteos");
+            gerente.crearTipoProducto(tipo1);
             
-            Producto producto1 = new Producto("Pancho", tipoProducto1);
+            TipoProducto tipo2 = new TipoProducto("Muebles");
+            gerente.crearTipoProducto(tipo2);
+            
+            Producto producto1 = new Producto("Yogur", tipo1);
             gerente.crearProducto(producto1);
             
-            Ruta ruta1 = new Ruta("Aca", "Alla", LocalDate.now(), LocalDate.of(2024, 12, 30));
-            gerente.crearRuta(ruta1);
-            
-            List<RenglonPedido> renglones1 = List.of(new RenglonPedido(2, producto1));
-            Pedido pedido1 = new Pedido(LocalDate.now(), ruta1, renglones1);
-            gerente.crearPedido(cliente1, pedido1);
-            
-            //String cuil, String username, String password, String email, String nombres, String apellidos, String dni, String telefono, String direccion
-            Transportista transportista1 = new Transportista("3", "ejemplo", "ejemplo", "ejemplo@ejemplo.com", "Martin", "Carloto", "32", "990", "direccion");
-            
-            transportista1.setNombres("POWER RANGER");
-            transportista1.actualizarInformacionCuenta();
-            
-            transportista1.entregarPedido(pedido1);
+            Producto producto2 = new Producto("Yogur", tipo2);
+            gerente.crearProducto(producto2);
             
             
         } catch (Exception ex) {

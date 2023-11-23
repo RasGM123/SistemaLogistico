@@ -63,7 +63,7 @@ public class Almacen implements Serializable {
             return false;
         }
         final Almacen other = (Almacen) obj;
-        return this.id == other.id;
+        return Objects.equals(this.nombreSucursal, other.nombreSucursal);
     }
 
     //Funcionalidades

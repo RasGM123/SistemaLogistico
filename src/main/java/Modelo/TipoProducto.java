@@ -54,7 +54,7 @@ public class TipoProducto implements Serializable {
             return false;
         }
         final TipoProducto other = (TipoProducto) obj;
-        return this.id == other.id;
+        return Objects.equals(this.nombre, other.nombre);
     }
     
     //Setters

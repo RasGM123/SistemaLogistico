@@ -107,6 +107,8 @@ public final class General extends javax.swing.JFrame {
                 Registerm.setVisible(false);
                 nuevacategoria.setVisible(true);
                 nuevacategoria1.setVisible(true);
+                ajususer.setVisible(true);
+                ajususer1.setVisible(true);
             } else if (us instanceof Transportista t) {
                 Usuariom.setVisible(true);
                 Seguimiento.setVisible(true);

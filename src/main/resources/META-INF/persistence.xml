@@ -22,11 +22,10 @@
     <class>Modelo.Administrativo</class>
     <class>Modelo.Gerente</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/sistema_logistico"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/sistema_logico"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="64f6@8k*&amp;p6%FE8cQ8Xj5!T@dK5%A^"/>
-      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
     </properties>
   </persistence-unit>
 </persistence>

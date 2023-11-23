@@ -5,8 +5,15 @@
 package ventanas.emergentes;
 
 import Modelo.*;
+import com.toedter.calendar.JDateChooser;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Iterator;
+import java.util.Map;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,13 +22,15 @@ import javax.swing.ImageIcon;
 public class Analisis extends javax.swing.JInternalFrame {
 
     private Sistema sis;
+
     /**
      * Creates new form Analisis
+     *
      * @param s
      */
     public Analisis(Sistema s) {
         initComponents();
-        Icon icon = new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\main\\java\\imagenes\\minicon\\grafico-histograma.png");
+        Icon icon = new javax.swing.ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\grafico-histograma.png");
         setFrameIcon(icon);
         this.sis = s;
     }
@@ -38,15 +47,15 @@ public class Analisis extends javax.swing.JInternalFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
-        jButton2 = new javax.swing.JButton();
+        op1 = new javax.swing.JRadioButton();
+        op2 = new javax.swing.JRadioButton();
+        op3 = new javax.swing.JRadioButton();
+        op4 = new javax.swing.JRadioButton();
+        op5 = new javax.swing.JRadioButton();
+        Generar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        info = new javax.swing.JTextArea();
         Salir = new javax.swing.JButton();
 
         setClosable(true);
@@ -59,30 +68,35 @@ public class Analisis extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Selecciona una opción:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 24))); // NOI18N
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        jRadioButton1.setText("Cantidad de usuarios");
+        buttonGroup1.add(op1);
+        op1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        op1.setText("Cantidad de usuarios");
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        jRadioButton2.setText("Cantidad de Pedidos");
+        buttonGroup1.add(op2);
+        op2.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        op2.setText("Promedio de Pedidos");
 
-        buttonGroup1.add(jRadioButton3);
-        jRadioButton3.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        jRadioButton3.setText("Cantidad de Pedidos");
+        buttonGroup1.add(op3);
+        op3.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        op3.setText("Número de veces que pidieron un Producto");
 
-        buttonGroup1.add(jRadioButton4);
-        jRadioButton4.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        jRadioButton4.setText("Cantidad de Pedidos");
+        buttonGroup1.add(op4);
+        op4.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        op4.setText("Cantidad de entregas Comprometidas");
 
-        buttonGroup1.add(jRadioButton5);
-        jRadioButton5.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        jRadioButton5.setText("Cantidad de Pedidos");
+        buttonGroup1.add(op5);
+        op5.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        op5.setText("Promedio de entregas");
 
-        jButton2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jButton2.setText("Generar");
-        jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Generar.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        Generar.setText("Generar");
+        Generar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        Generar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Generar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GenerarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -92,44 +106,44 @@ public class Analisis extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
+                        .addComponent(op1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton2)
+                        .addComponent(op2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jRadioButton3))
+                        .addComponent(op3))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jRadioButton4)
+                        .addComponent(op4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jRadioButton5)
+                        .addComponent(op5)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(14, Short.MAX_VALUE))
+                        .addComponent(Generar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton3))
+                    .addComponent(op1)
+                    .addComponent(op2)
+                    .addComponent(op3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton4)
-                    .addComponent(jRadioButton5)
-                    .addComponent(jButton2))
+                    .addComponent(op4)
+                    .addComponent(op5)
+                    .addComponent(Generar))
                 .addGap(0, 10, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Informe:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 24))); // NOI18N
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jTextArea1.setRows(5);
-        jTextArea1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jScrollPane1.setViewportView(jTextArea1);
+        info.setEditable(false);
+        info.setBackground(new java.awt.Color(255, 255, 255));
+        info.setColumns(20);
+        info.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        info.setRows(5);
+        info.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jScrollPane1.setViewportView(info);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -192,20 +206,150 @@ public class Analisis extends javax.swing.JInternalFrame {
         dispose();
     }//GEN-LAST:event_SalirActionPerformed
 
+    private void GenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenerarActionPerformed
+        if (op1.isSelected()) {
+            cantidadclientes();
+        } else if (op2.isSelected()) {
+            promedioPedidos();
+        } else if (op3.isSelected()) {
+            pedidomasAclamado();
+        } else if (op4.isSelected()) {
+            entegasComprendidas();
+        } else if (op5.isSelected()) {
+            PromedioEntregas();
+        }
+    }//GEN-LAST:event_GenerarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Generar;
     private javax.swing.JButton Salir;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JTextArea info;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JRadioButton op1;
+    private javax.swing.JRadioButton op2;
+    private javax.swing.JRadioButton op3;
+    private javax.swing.JRadioButton op4;
+    private javax.swing.JRadioButton op5;
     // End of variables declaration//GEN-END:variables
+
+    private void cantidadclientes() {
+        try {
+            info.setText("");
+            Usuario us = sis.obtenerSesion();
+            if (us instanceof Gerente g) {
+                LocalDate i = null;
+                LocalDate f = null;
+                fechas(i, f);
+                int c = g.contarClientesRegistrados(i, f);
+                String men = "Cantidad de usuarios entre " + i.toString() + " y " + f.toString() + "\n"
+                        + "Cantidad usuarios total: " + Integer.toString(c);
+                info.append(men);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+
+    private void promedioPedidos() {
+        try {
+            Usuario us = sis.obtenerSesion();
+            if (us instanceof Gerente g) {
+                LocalDate i = null;
+                LocalDate f = null;
+                fechas(i, f);
+                double d = g.calcularPromedioPedidos(i, f);
+                String men = "Promedio de pedidos entre " + i.toString() + " y " + f.toString() + "\n"
+                        + "Total: " + Double.toString(d);
+                info.append(men);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+
+    private void pedidosmasAclamado() {
+        try {
+            Usuario us = sis.obtenerSesion();
+            if (us instanceof Gerente g) {
+                LocalDate i = null;
+                LocalDate f = null;
+                fechas(i, f);
+                int cont = 0;
+                Map<Producto, Integer> datos = g.listarProductosPorPedidos(i, f);
+                String infos = "Lista de pedidos entre " + i.toString() + " y " + f.toString();
+                info.append(infos);
+                for (Producto p : datos.keySet()) {
+                    int ca = datos.get(p);
+                    String men = "Producto: " + p.getNombre() + " Cantidad: " + Integer.toString(ca) + "\n";
+                    info.append(men);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+
+    private void entegasComprendidas() {
+        try {
+            Usuario us = sis.obtenerSesion();
+            if (us instanceof Gerente g) {
+                LocalDate i = null;
+                LocalDate f = null;
+                fechas(i, f);
+                int cont = 0;
+                Map<Transportista, Integer> datos = g.listarTransportistasPorEntregas(i, f);
+                String infos = "Lista de pedidos comprendidas entre " + i.toString() + " y " + f.toString();
+                info.append(infos);
+                for (Transportista p : datos.keySet()) {
+                    int ca = datos.get(p);
+                    String men = "Transportista: " + p.getNombres() + " " + p.getApellidos() + " Cantidad de entregas: " + Integer.toString(ca) + "\n";
+                    info.append(men);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+
+    private void PromedioEntregas() {
+        try {
+            Usuario us = sis.obtenerSesion();
+            if (us instanceof Gerente g) {
+                LocalDate i = null;
+                LocalDate f = null;
+                fechas(i, f);
+                int cont = 0;
+                Map<Proveedor, Float> datos = g.listarProveedoresPorTiempoDeEntrega(i, f);
+                String infos = "Pomedio de entregas del proveedores desde " + i.toString() + " y " + f.toString();
+                info.append(infos);
+                for (Proveedor p : datos.keySet()) {
+                    float ca = datos.get(p);
+                    String men = "Proveedor: " + p.getNombre() + " tiempo promedio: " + Float.toString(ca) + "\n";
+                    info.append(men);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+
+    private void fechas(LocalDate i, LocalDate f) {
+        JDateChooser dateChooser1 = new JDateChooser();
+        JDateChooser dateChooser2 = new JDateChooser();
+        Object[] params = {"Fecha Inicio:", dateChooser1, "Fecha Fin:", dateChooser2};
+        int option = JOptionPane.showConfirmDialog(null, params, "Seleccionar fechas", JOptionPane.OK_CANCEL_OPTION);
+        if (option == JOptionPane.OK_OPTION) {
+            i = dateChooser1.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            f = dateChooser2.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        }
+    }
+
+    private void pedidomasAclamado() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

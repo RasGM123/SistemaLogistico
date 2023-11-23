@@ -29,6 +29,7 @@ public class AjusteUsuario extends javax.swing.JInternalFrame {
         Icon icon = new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\circulo-de-usuario.png");
         setFrameIcon(icon);
         this.gen = gene;
+        setvisible();
     }
 
     private void setDatos(Usuario us) {
@@ -36,9 +37,51 @@ public class AjusteUsuario extends javax.swing.JInternalFrame {
         Nombre.setText(us.getNombres());
         Apellido.setText(us.getApellidos());
         Correo.setText(us.getEmail());
-        Direccion.setText(us.getEmail());
+        Direccion.setText(us.getDireccion());
         Tel.setText(us.getTelefono());
         DNI.setText(us.getDni());
+    }
+
+    private void setvisible() {
+        ttr.setVisible(false);
+        Rol.setVisible(false);
+        Usuario us = gen.obtenerSesion();
+        if (us instanceof Gerente gen) {
+            ttr.setVisible(true);
+            Rol.setVisible(true);
+        }
+    }
+
+    private void actualizaruser(Usuario u) throws Exception {
+        Usuario us = gen.obtenerSesion();
+        if (us instanceof Gerente g) {
+            String con = user.getPassword();
+            g.borrarUsuario(u);
+            String r = (String) Rol.getSelectedItem();
+            switch (r) {
+                case "Cliente":
+                    Usuario usn = new Cliente(Apodo.getText(), con, Correo.getText(), Nombre.getText(), Apellido.getText(), DNI.getText(), Tel.getText(), Direccion.getText());
+                    g.crearUsuario(usn);
+                    break;
+                case "Administrador":
+                    String cuit = JOptionPane.showInputDialog("Ingrese cuil: ");
+                    Usuario ad = new Administrativo(cuit, Apodo.getText(), con, Correo.getName(), Nombre.getText(), Apellido.getText(), DNI.getText(), Tel.getText(), Direccion.getText());
+                    g.crearUsuario(ad);
+                    break;
+                case "Transportista":
+                    String cui = JOptionPane.showInputDialog("Ingrese cuil: ");
+                    Usuario tp = new Transportista(cui, Apodo.getText(), con, Correo.getName(), Nombre.getText(), Apellido.getText(), DNI.getText(), Tel.getText(), Direccion.getText());
+                    g.crearUsuario(tp);
+                    break;
+                case "Gerente":
+                    String cu = JOptionPane.showInputDialog("Ingrese cuil: ");
+                    Usuario grn = new Gerente(cu, Apodo.getText(), con, Correo.getText(), Nombre.getText(), Apellido.getText(), DNI.getText(), Tel.getText(), Direccion.getText());
+                    g.crearUsuario(grn);
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+        }
     }
 
     /**
@@ -61,11 +104,11 @@ public class AjusteUsuario extends javax.swing.JInternalFrame {
         Apodo = new javax.swing.JTextField();
         Direccion = new javax.swing.JTextField();
         Nombre = new javax.swing.JTextField();
-        jButton7 = new javax.swing.JButton();
+        Actualizar = new javax.swing.JButton();
         jLabel47 = new javax.swing.JLabel();
         Tel = new javax.swing.JTextField();
-        jLabel48 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        ttr = new javax.swing.JLabel();
+        Rol = new javax.swing.JComboBox<>();
         Buscar = new javax.swing.JButton();
         DNI = new javax.swing.JTextField();
         jLabel49 = new javax.swing.JLabel();
@@ -133,12 +176,12 @@ public class AjusteUsuario extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton7.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jButton7.setText("Actualizar");
-        jButton7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        Actualizar.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        Actualizar.setText("Actualizar");
+        Actualizar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        Actualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                ActualizarActionPerformed(evt);
             }
         });
 
@@ -153,12 +196,17 @@ public class AjusteUsuario extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel48.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel48.setText("Tipo de Rol:");
+        ttr.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        ttr.setText("Tipo de Rol:");
 
-        jComboBox1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Usuario", "Gerente", "Administrativo", "Empleado" }));
-        jComboBox1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        Rol.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        Rol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Gerente", "Administrativo", "Transportista" }));
+        Rol.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        Rol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RolActionPerformed(evt);
+            }
+        });
 
         Buscar.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         Buscar.setText("Buscar");
@@ -187,42 +235,41 @@ public class AjusteUsuario extends javax.swing.JInternalFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel5Layout.createSequentialGroup()
-                            .addComponent(jLabel43)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(Apodo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel5Layout.createSequentialGroup()
-                            .addComponent(jLabel44)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabel41)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(Apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel5Layout.createSequentialGroup()
-                            .addComponent(jLabel42)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(Correo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jLabel47)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(Tel, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel5Layout.createSequentialGroup()
-                            .addComponent(jLabel45)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(Direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel5Layout.createSequentialGroup()
-                            .addComponent(jLabel49)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(DNI, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(Actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel48)
+                        .addComponent(jLabel43)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(Apodo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel44)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel41)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel42)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Correo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel47)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Tel, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel45)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel49)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(DNI, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(ttr)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Rol, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -255,10 +302,10 @@ public class AjusteUsuario extends javax.swing.JInternalFrame {
                     .addComponent(DNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel48)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ttr)
+                    .addComponent(Rol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton7)
+                .addComponent(Actualizar)
                 .addContainerGap())
         );
 
@@ -295,7 +342,7 @@ public class AjusteUsuario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_DNIActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
         try {
             user.setApellidos(Apellido.getText());
             user.setDireccion(Direccion.getText());
@@ -304,30 +351,36 @@ public class AjusteUsuario extends javax.swing.JInternalFrame {
             user.setNombres(Nombre.getText());
             user.setTelefono(Tel.getText());
             user.setUsername(Apodo.getText());
+            
             JOptionPane.showMessageDialog(null, "Datos Actualizados!");
             dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: Entrada de datos no correspondientes");
         }
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_ActualizarActionPerformed
 
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
         try {
             String nom = Apodo.getText();
             Usuario user = gen.buscarUsuario(nom);
-            if(user != null){
+            if (user != null) {
                 setDatos(user);
-            }else{
-                JOptionPane.showMessageDialog(null, "El usuario no fue encontrado!");
+            } else {
+                JOptionPane.showMessageDialog(this, "El usuario no fue encontrado!");
             }
-            
+
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: Entrada de datos no correspondientes");
+            JOptionPane.showMessageDialog(this, "Error: Entrada de datos no correspondientes");
         }
     }//GEN-LAST:event_BuscarActionPerformed
 
+    private void RolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RolActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RolActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Actualizar;
     private javax.swing.JTextField Apellido;
     private javax.swing.JTextField Apodo;
     private javax.swing.JButton Buscar;
@@ -335,17 +388,16 @@ public class AjusteUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JTextField DNI;
     private javax.swing.JTextField Direccion;
     private javax.swing.JTextField Nombre;
+    private javax.swing.JComboBox<String> Rol;
     private javax.swing.JTextField Tel;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel47;
-    private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JLabel ttr;
     // End of variables declaration//GEN-END:variables
 }

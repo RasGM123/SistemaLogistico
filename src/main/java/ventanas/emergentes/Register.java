@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import ventanas.general.*;
 import Modelo.*;
+import Persistencia.ClienteDAO;
 
 /**
  *
@@ -315,6 +316,8 @@ public class Register extends javax.swing.JInternalFrame {
                 if (con1.equals(con2)) {
                     Usuario usu = new Cliente(nick.getText(),con1,Correo.getText() ,Nombre.getText() , Apellido.getText(), DNI.getText(), Tel.getText(), Direccion.getText());
                     sistem.crearUsuario(usu);
+                    ClienteDAO dao = new ClienteDAO();
+                    dao.crear(usu);
                     dispose();
                 }else{
                     JOptionPane.showMessageDialog(this, "La contraseña no son iguales");

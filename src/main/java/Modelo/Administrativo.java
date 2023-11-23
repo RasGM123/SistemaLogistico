@@ -451,6 +451,18 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
         return null;
     }
     
+    public Producto buscarProductoID(Integer id){
+        List<Producto> productos = sistema.getProductos();
+        
+        for(Producto p:productos){
+            if(p.getId() == id){
+                return p;
+            }
+        }
+        
+        return null;
+    }
+    
     @Override
     public List<Producto> listarProductos(){
         return sistema.getProductos();
@@ -488,6 +500,7 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
         dao.editar(almacen);
     }
 
+    
     @Override
     public RenglonInventario buscarProductoEnAlmacen(Almacen almacen, Producto producto) {
         return almacen.buscarRenglon(producto);

@@ -4,6 +4,7 @@
  */
 package Modelo;
 
+import Persistencia.ProductoDAO;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -62,6 +63,11 @@ public class Producto implements Serializable {
         }
         final Producto other = (Producto) obj;
         return this.id == other.id;
+    }
+    
+    public void actualizar(){
+        ProductoDAO dao = new ProductoDAO();
+        dao.editar(this);
     }
     
     //Setters

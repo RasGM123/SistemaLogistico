@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,15 +19,18 @@ import javax.swing.JOptionPane;
 public class AgrAlmacen extends javax.swing.JInternalFrame {
 
     private Sistema sis;
+    private AgregarProducto ap;
     /**
      * Creates new form AgrAlmacen
      * @param s
+     * @param a
      */
-    public AgrAlmacen(Sistema s) {
+    public AgrAlmacen(Sistema s, AgregarProducto a) {
         initComponents();
         this.sis = s;
         Icon icon = new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\cajas.png");
         setFrameIcon(icon);
+        this.ap = a;
     }
 
     /**
@@ -135,6 +139,7 @@ public class AgrAlmacen extends javax.swing.JInternalFrame {
             Almacen a = new Almacen( Nombre.getText(), CenDistribucion.isSelected(), Direccion.getText());
             try {
                 gen.crearAlmacen(a);
+                ap.setAlmacenes();
             } catch (Exception ex) {
                 Logger.getLogger(AgrAlmacen.class.getName()).log(Level.SEVERE, null, ex);
             }

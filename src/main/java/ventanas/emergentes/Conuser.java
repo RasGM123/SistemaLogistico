@@ -30,6 +30,7 @@ public class Conuser extends javax.swing.JInternalFrame {
         setFrameIcon(icon);
         this.gen = genes;
         setDatos(gen.obtenerSesion());
+        this.user = gen.obtenerSesion();
     }
 
     private void setDatos(Usuario us) {
@@ -37,7 +38,7 @@ public class Conuser extends javax.swing.JInternalFrame {
         Nombre.setText(us.getNombres());
         Apellido.setText(us.getApellidos());
         Correo.setText(us.getEmail());
-        Direccion.setText(us.getEmail());
+        Direccion.setText(us.getDireccion());
         Tel.setText(us.getTelefono());
         DNI.setText(us.getDni());
     }
@@ -347,33 +348,40 @@ public class Conuser extends javax.swing.JInternalFrame {
 
     private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
         try {
-            user.setApellidos(Apellido.getText());
-            user.setDireccion(Direccion.getText());
-            user.setDni(DNI.getName());
-            user.setEmail(Correo.getText());
-            user.setNombres(Nombre.getText());
-            user.setTelefono(Tel.getText());
-            user.setUsername(Apodo.getText());
-            JOptionPane.showMessageDialog(null, "Datos Actualizados!");
-            dispose();
+            if (user instanceof Cliente c) {
+                c.setApellidos(Apellido.getText());
+                c.setDireccion(Direccion.getText());
+                c.setDni(DNI.getText());
+                c.setEmail(Correo.getText());
+                c.setNombres(Nombre.getText());
+                c.setTelefono(Tel.getText());
+                c.setUsername(Apodo.getText());
+                c.actualizarInformacionCuenta();
+                JOptionPane.showMessageDialog(null, "Datos Actualizados!");
+                dispose();
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: Entrada de datos no correspondientes");
         }
     }//GEN-LAST:event_ActualizarActionPerformed
 
     private void ActContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActContrasenaActionPerformed
-        try{
-            char cont1[] = con1.getPassword(),cont2[]=con2.getPassword();
-            String contra1 = new String(cont1);
-            String contra2 = new String(cont2);
-            if(contra1.equals(contra2)){
-                user.setPassword(contra1);
-                JOptionPane.showMessageDialog(null, "Contraseña Actualizada");
-            }else{
-                JOptionPane.showMessageDialog(null, "Error: Las entradas no son iguales!");
+        try {
+            if (user instanceof Cliente cl) {
+                char cont1[] = con1.getPassword();
+                char cont2[] = con2.getPassword();
+                String contra1 = new String(cont1);
+                String contra2 = new String(cont2);
+                if (contra1.equals(contra2)) {
+                    cl.setPassword(contra1);
+                    cl.actualizarInformacionCuenta();
+                    JOptionPane.showMessageDialog(this, "Contraseña Actualizada");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error: Las entradas no son iguales!");
+                }
             }
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Error: Entrada de datos no correspondientes");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_ActContrasenaActionPerformed
 

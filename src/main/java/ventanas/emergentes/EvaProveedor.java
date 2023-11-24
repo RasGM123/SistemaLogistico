@@ -121,12 +121,12 @@ public class EvaProveedor extends javax.swing.JInternalFrame {
         try {
             Usuario us = sis.obtenerSesion();
             if (us instanceof Gerente gen) {
-                Evaluacion ev = new Evaluacion( LocalDate.now(), Integer.getInteger(Puntuacion.getText()), Comentario.getText());
+                Evaluacion ev = new Evaluacion( LocalDate.now(), Integer.parseInt(Puntuacion.getText()), Comentario.getText());
                 pro.agregarEvaluacion(ev);
                 dispose();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro: Los datos de entradas no son correspondientes!");
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_EnviarActionPerformed
 

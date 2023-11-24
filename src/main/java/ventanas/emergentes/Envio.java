@@ -309,17 +309,24 @@ public class Envio extends javax.swing.JInternalFrame {
     private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
         Usuario us = sis.obtenerSesion();
         if (us instanceof Administrativo admin) {
-            admin.cambiarEstadoPedido(pedido, actualizarestado(), "");
+            String nestado = actualizarestado();
+            admin.cambiarEstadoPedido(pedido, nestado, nestado);
             JOptionPane.showMessageDialog(this, "Pedido Actualizado!");
+            ponerListaPedidos();
         }
     }//GEN-LAST:event_ActualizarActionPerformed
 
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
+        try{
         Usuario us = sis.obtenerSesion();
         if (us instanceof Administrativo admin) {
-            List<Pedido> p = admin.listarPedidosSistema();
-            p.remove(pedido);
+            Cliente cli = buscarcliente(pedido);
+            admin.borrarPedido(cli, pedido);
             JOptionPane.showMessageDialog(this, "Pedido Eliminado!");
+            ponerListaPedidos();
+        }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_EliminarActionPerformed
 
@@ -371,4 +378,17 @@ public class Envio extends javax.swing.JInternalFrame {
     private javax.swing.JButton todo;
     private javax.swing.JMenuItem todos;
     // End of variables declaration//GEN-END:variables
+
+    private Cliente buscarcliente(Pedido pedido1) throws Exception{
+        Usuario us = sis.obtenerSesion();
+        Administrativo admin = us instanceof Administrativo ? (Administrativo) us : null;
+        List<Cliente> c = admin.listarClientes();
+        Cliente cli = null;
+        for(Cliente b : c){
+            if(b.buscarPedido(pedido1.getId()) != null){
+                cli = b;
+            }
+        }
+        return cli;
+    }
 }

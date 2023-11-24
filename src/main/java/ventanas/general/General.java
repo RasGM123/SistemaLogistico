@@ -73,6 +73,7 @@ public final class General extends javax.swing.JFrame {
                 Registerm.setVisible(false);
                 infoenvio.setVisible(false);
                 infoenvio1.setVisible(false);
+                AsigVehiculo.setVisible(false);
             } else if (us instanceof PerfilAdministrativo) {
                 Usuariom.setVisible(true);
                 Seguimiento.setVisible(true);
@@ -478,6 +479,7 @@ public final class General extends javax.swing.JFrame {
         });
         Usuariom.add(contacto);
 
+        AsigVehiculo.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         AsigVehiculo.setText("Asignar Vehículo");
         AsigVehiculo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

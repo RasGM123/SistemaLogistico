@@ -101,6 +101,11 @@ public class ModProveedores extends javax.swing.JInternalFrame {
 
         Email.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         Email.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        Email.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EmailActionPerformed(evt);
+            }
+        });
 
         Tel.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         Tel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -189,6 +194,11 @@ public class ModProveedores extends javax.swing.JInternalFrame {
         Aceptar.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         Aceptar.setText("Aceptar");
         Aceptar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        Aceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AceptarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -240,7 +250,7 @@ public class ModProveedores extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "No tiene los permisis correspondientes!");
             }
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Error: No se encontro el proveedor!");
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_BuscarActionPerformed
 
@@ -259,6 +269,23 @@ public class ModProveedores extends javax.swing.JInternalFrame {
             ep.setVisible(true);
         }
     }//GEN-LAST:event_EvaluacionActionPerformed
+
+    private void AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarActionPerformed
+        try{
+            Usuario us = sis.obtenerSesion();
+            if(us instanceof Gerente gen){
+                gen.editarProveedor(proveedor, Cuit.getText(), Nombre.getText(), Email.getText(), Tel.getText(), Direccion.getText());
+                JOptionPane.showMessageDialog(this, "Proveedor actualizado");
+                dispose();
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_AceptarActionPerformed
+
+    private void EmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EmailActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

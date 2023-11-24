@@ -22,6 +22,7 @@ public class Seguimiento extends javax.swing.JInternalFrame {
     private LocalDate fecha;
     private String estado;
     private DefaultListModel modelo;
+
     /**
      * Creates new form Seguimiento
      *
@@ -71,7 +72,7 @@ public class Seguimiento extends javax.swing.JInternalFrame {
         id.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
         jAceptar.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jAceptar.setText("Aceptar");
+        jAceptar.setText("Buscar");
         jAceptar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         jAceptar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -180,28 +181,39 @@ public class Seguimiento extends javax.swing.JInternalFrame {
 
     private void jAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAceptarActionPerformed
         try {
-            DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+            DateTimeFormatter formatFecha = DateTimeFormatter.ISO_DATE;
+
             Usuario us = sis.obtenerSesion();
-            if (us instanceof Cliente cli) {
-                Pedido pi = cli.buscarPedido(Integer.getInteger(id.getText()));
-                this.fecha = pi.getFechaCreacion();
-                this.estado = pi.getEstado();
-                for(Movimiento Movimientos : pi.getMovimientos()){
-                    String fmov = String.valueOf(Movimientos.getId());
-                    fmov +="-";
-                    fmov += Movimientos.getFecha().format(format);
-                    fmov += "-";
-                    fmov += Movimientos.getDetalle();
-                    modelo.addElement(fmov);
+
+            if (us instanceof Cliente cliente) {
+
+                int idPedido = Integer.parseInt(id.getText());
+                Pedido pedido = cliente.buscarPedido(idPedido);
+
+                LocalDate fechaPedido = pedido.getFechaCreacion();
+                String estadoPedido = pedido.getEstado();
+
+                DefaultListModel<String> modelo = new DefaultListModel<>();
+
+                for (Movimiento movimiento : pedido.getMovimientos()) {
+
+                    String registroMovimiento = movimiento.getId() + " <<>> ";
+                    registroMovimiento += movimiento.getFecha().format(formatFecha) + " <<>> ";
+                    registroMovimiento += movimiento.getDetalle();
+
+                    modelo.addElement(registroMovimiento);
+
                 }
+
                 Mov.setModel(modelo);
+                Fecha.setText(fechaPedido.toString());
+                Estado.setText(estadoPedido);
+
             }
-            
-            Fecha.setText(fecha.toString());
-            Estado.setText(estado);
-            
+
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: de entrada de datos");
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_jAceptarActionPerformed
 

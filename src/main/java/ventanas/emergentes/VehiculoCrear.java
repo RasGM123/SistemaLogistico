@@ -183,6 +183,7 @@ public class VehiculoCrear extends javax.swing.JInternalFrame {
                 }
             }
 
+            setVehiculos();
             // Mensaje de confirmación  
             JOptionPane.showMessageDialog(null, "Vehículo creado");
 

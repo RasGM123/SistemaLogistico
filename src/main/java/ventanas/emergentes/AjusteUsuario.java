@@ -55,15 +55,16 @@ public class AjusteUsuario extends javax.swing.JInternalFrame {
     private void actualizaruser(Usuario u) throws Exception {
         Usuario us = gen.obtenerSesion();
         if (us instanceof Gerente g) {
-            String con = user.getPassword();
+            String con = u.getPassword();
             g.borrarUsuario(u);
             String r = (String) Rol.getSelectedItem();
+            JOptionPane.showMessageDialog(this, r);
             switch (r) {
                 case "Cliente":
                     Usuario usn = new Cliente(Apodo.getText(), con, Correo.getText(), Nombre.getText(), Apellido.getText(), DNI.getText(), Tel.getText(), Direccion.getText());
                     g.crearUsuario(usn);
                     break;
-                case "Administrador":
+                case "Administrativo":
                     String cuit = JOptionPane.showInputDialog("Ingrese cuil: ");
                     Usuario ad = new Administrativo(cuit, Apodo.getText(), con, Correo.getName(), Nombre.getText(), Apellido.getText(), DNI.getText(), Tel.getText(), Direccion.getText());
                     g.crearUsuario(ad);
@@ -343,26 +344,19 @@ public class AjusteUsuario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_DNIActionPerformed
 
     private void ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarActionPerformed
-        try {
-            user.setApellidos(Apellido.getText());
-            user.setDireccion(Direccion.getText());
-            user.setDni(DNI.getName());
-            user.setEmail(Correo.getText());
-            user.setNombres(Nombre.getText());
-            user.setTelefono(Tel.getText());
-            user.setUsername(Apodo.getText());
-            
+        try {           
+            actualizaruser(user);
             JOptionPane.showMessageDialog(null, "Datos Actualizados!");
             dispose();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: Entrada de datos no correspondientes");
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_ActualizarActionPerformed
 
     private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
         try {
             String nom = Apodo.getText();
-            Usuario user = gen.buscarUsuario(nom);
+            this.user = gen.buscarUsuario(nom);
             if (user != null) {
                 setDatos(user);
             } else {

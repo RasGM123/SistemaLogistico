@@ -32,7 +32,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Encli extends javax.swing.JInternalFrame {
 
-    private Usuario us;
+    private Cliente cli = null;
     private Sistema sis;
     private Pedido pe;
     private List<RenglonPedido> rp = new ArrayList<>();
@@ -52,6 +52,7 @@ public class Encli extends javax.swing.JInternalFrame {
         this.sis = s;
         this.es = e;
         setCategoria();
+        IngresarCliente.setText("Ingresar el DNI cliente");
     }
 
     private RenglonPedido modproducto(int id) {
@@ -66,7 +67,6 @@ public class Encli extends javax.swing.JInternalFrame {
     }
 
     private void setProducto(RenglonPedido rp) {
-        IDs.setText(String.valueOf(rp.getId()));
         Cantidad.setText(String.valueOf(rp.getCantidad()));
         Nombre.setText(rp.getProducto().getNombre());
         Categorias.setSelectedItem(rp.getProducto().getTipoProducto().getNombre());
@@ -163,20 +163,17 @@ public class Encli extends javax.swing.JInternalFrame {
         IngresarCliente = new javax.swing.JTextField();
         BuscarCliente = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        Agregar1 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         Cantidad = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        IDs = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         Nombre = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         Categorias = new javax.swing.JComboBox<>();
-        Buscar = new javax.swing.JButton();
+        addpro = new javax.swing.JButton();
 
         Mod.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
 
-        Modificar.setText("jMenuItem1");
+        Modificar.setText("Modificar");
         Modificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ModificarActionPerformed(evt);
@@ -184,7 +181,7 @@ public class Encli extends javax.swing.JInternalFrame {
         });
         Mod.add(Modificar);
 
-        Eliminar.setText("jMenuItem1");
+        Eliminar.setText("Eliminar");
         Eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EliminarActionPerformed(evt);
@@ -193,7 +190,7 @@ public class Encli extends javax.swing.JInternalFrame {
         Mod.add(Eliminar);
 
         Agregar.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        Agregar.setText("jMenuItem1");
+        Agregar.setText("Agregar");
         Agregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AgregarActionPerformed(evt);
@@ -252,6 +249,11 @@ public class Encli extends javax.swing.JInternalFrame {
 
         IngresarCliente.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         IngresarCliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        IngresarCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                IngresarClienteMouseClicked(evt);
+            }
+        });
 
         BuscarCliente.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         BuscarCliente.setText("Buscar");
@@ -286,28 +288,11 @@ public class Encli extends javax.swing.JInternalFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Producto:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 18))); // NOI18N
 
-        Agregar1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        Agregar1.setIcon(new ImageIcon(System.getProperty("user.dir") + "\\src\\main\\java\\imagenes\\minicon\\agregar.png"));
-        Agregar1.setText("Agregar");
-        Agregar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        Agregar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Agregar1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Agregar1ActionPerformed(evt);
-            }
-        });
-
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel6.setText("Cantidad:");
 
         Cantidad.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         Cantidad.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel2.setText("Producto ID:");
-
-        IDs.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        IDs.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel4.setText("Nombre:");
@@ -327,13 +312,13 @@ public class Encli extends javax.swing.JInternalFrame {
             }
         });
 
-        Buscar.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        Buscar.setText("Buscar");
-        Buscar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        Buscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Buscar.addActionListener(new java.awt.event.ActionListener() {
+        addpro.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        addpro.setText("Agregar");
+        addpro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        addpro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addpro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BuscarActionPerformed(evt);
+                addproActionPerformed(evt);
             }
         });
 
@@ -341,39 +326,27 @@ public class Encli extends javax.swing.JInternalFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Nombre))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(IDs, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Categorias, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(Agregar1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(addpro, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(IDs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Buscar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(Cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -382,12 +355,12 @@ public class Encli extends javax.swing.JInternalFrame {
                     .addComponent(jLabel4)
                     .addComponent(Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(Categorias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Agregar1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(addpro)
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -395,7 +368,7 @@ public class Encli extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(10, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 661, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -446,8 +419,11 @@ public class Encli extends javax.swing.JInternalFrame {
 
     private void BuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarClienteActionPerformed
         try {
-            us = sis.buscarUsuario(IngresarCliente.getText());
-            JOptionPane.showInternalConfirmDialog(null, "Usuario: " + us.getUsername() + " selecionado!");
+            Usuario us = sis.obtenerSesion();
+            if(us instanceof Administrativo admin){
+                cli = admin.buscarClientePorDni(IngresarCliente.getText());
+                JOptionPane.showMessageDialog(null, "Usuario: " + cli.getUsername() + " selecionado!");
+            }           
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
@@ -468,7 +444,7 @@ public class Encli extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_EliminarActionPerformed
 
     private void AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarActionPerformed
-
+        addproActionPerformed(evt);
     }//GEN-LAST:event_AgregarActionPerformed
 
     private void EnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnviarActionPerformed
@@ -476,61 +452,63 @@ public class Encli extends javax.swing.JInternalFrame {
             Usuario use = sis.obtenerSesion();
             Ruta ru = optenerruta();
             if (use instanceof Administrativo admin) {
-                if (us instanceof Cliente cli) {
-                    Pedido pe = new Pedido(LocalDate.now(), ru, rp);
-                    admin.crearPedido(cli, pe);
-                    dispose();
-                }
+                pe = new Pedido(LocalDate.now(), null, rp);
+                admin.crearPedido(cli, pe);
+                admin.asignarRuta(pe, ru);
+                JOptionPane.showMessageDialog(null, "Pedido Enviado");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: no se pudo enviar el pedido!");
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_EnviarActionPerformed
-
-    private void Agregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Agregar1ActionPerformed
-        try {
-            Usuario us = sis.obtenerSesion();
-            if (us instanceof Administrativo admin) {
-                TipoProducto t = admin.buscarTipoProducto(Categorias.getItemAt(Categorias.getSelectedIndex()));
-                RenglonPedido r = new RenglonPedido(Integer.parseInt(Cantidad.getText()), new Producto(Nombre.getText(), t));
-                rp.add(r);
-                setModelLista(r);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
-    }//GEN-LAST:event_Agregar1ActionPerformed
 
     private void CategoriasComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_CategoriasComponentAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_CategoriasComponentAdded
 
-    private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
-        Usuario us = sis.obtenerSesion();
-        if (us instanceof Administrativo admin) {
-            Producto pro = admin.buscarProducto(Nombre.getText());
-            IDs.setText(String.valueOf(pro.getId()));
-            Categorias.setSelectedItem(pro.getTipoProducto().getNombre());
+    private void IngresarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IngresarClienteMouseClicked
+        IngresarCliente.setText("");
+    }//GEN-LAST:event_IngresarClienteMouseClicked
+
+    private void addproActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addproActionPerformed
+        try {
+            Usuario us = sis.obtenerSesion();
+            if (us instanceof Administrativo admin) {
+                TipoProducto t = admin.buscarTipoProducto(Categorias.getItemAt(Categorias.getSelectedIndex()));
+                Producto p = admin.buscarProducto(Nombre.getText());
+                RenglonPedido r = null;
+                if(p != null){
+                    r = new RenglonPedido(Integer.parseInt(Cantidad.getText()), p);
+                    rp.add(r);
+                    setModelLista(r);
+                }else{
+                    p = new Producto(Nombre.getText(), t);
+                    admin.crearProducto(p);
+                    JOptionPane.showMessageDialog(this, "El producto creado!");
+                    r = new RenglonPedido(Integer.parseInt(Cantidad.getText()), p);
+                    rp.add(r);
+                    setModelLista(r);
+                }              
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
-    }//GEN-LAST:event_BuscarActionPerformed
+    }//GEN-LAST:event_addproActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Agregar;
-    private javax.swing.JButton Agregar1;
-    private javax.swing.JButton Buscar;
     private javax.swing.JButton BuscarCliente;
     private javax.swing.JTextField Cantidad;
     private javax.swing.JComboBox<String> Categorias;
     private javax.swing.JMenuItem Eliminar;
     private javax.swing.JButton Enviar;
-    private javax.swing.JTextField IDs;
     private javax.swing.JTextField IngresarCliente;
     private javax.swing.JTable ListaProductos;
     private javax.swing.JPopupMenu Mod;
     private javax.swing.JMenuItem Modificar;
     private javax.swing.JTextField Nombre;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton addpro;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

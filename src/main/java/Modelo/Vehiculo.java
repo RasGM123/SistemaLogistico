@@ -60,7 +60,7 @@ public class Vehiculo implements Serializable {
             return false;
         }
         final Vehiculo other = (Vehiculo) obj;
-        return this.id == other.id;
+        return Objects.equals(this.dominio, other.dominio);
     }
     
     //Setters

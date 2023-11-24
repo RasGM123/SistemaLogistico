@@ -73,10 +73,16 @@ public interface PerfilAdministrativo {
     public void borrarProductoDeAlmacen(Almacen almacen, Producto producto) throws Exception;
     
     //CRUD Producto
+    public void crearProducto(Producto producto) throws Exception;
     public Producto buscarProducto(String nombre);
     public List<Producto> listarProductos();
+    public void editarProducto(Producto producto, String nombre, TipoProducto tipo);
+    public void borrarProducto(Producto producto) throws Exception;
     
     //CRUD TipoProducto
+    public void crearTipoProducto(TipoProducto tipoProducto) throws Exception;
     public TipoProducto buscarTipoProducto(String nombre);
     public List<TipoProducto> listarTipoProducto();
+    public void editarTipoProducto(TipoProducto tipoProducto, String nombre);
+    public void borrarTipoProducto(TipoProducto tipoProducto) throws Exception;
 }

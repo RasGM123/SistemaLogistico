@@ -11,7 +11,9 @@ import Persistencia.ClienteDAO;
 import Persistencia.GerenteDAO;
 import Persistencia.MovimientoDAO;
 import Persistencia.PedidoDAO;
+import Persistencia.ProductoDAO;
 import Persistencia.TicketDAO;
+import Persistencia.TipoProductoDAO;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -440,6 +442,20 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
         CRUD Producto
     */
     
+    @Override
+    public void crearProducto(Producto producto) throws Exception{
+        List<Producto> productos = sistema.getProductos();
+        ProductoDAO dao = new ProductoDAO();
+        
+        if(existeProducto(producto)){
+            throw new Exception("El producto "+producto.getNombre()+" ya está cargado en el sistema.");
+        }
+        
+        productos.add(producto);
+        
+        dao.crear(producto);
+    }
+    
     public Producto buscarProducto(String nombre){
         List<Producto> productos = sistema.getProductos();
         
@@ -457,9 +473,84 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
         return sistema.getProductos();
     }
     
+    @Override
+    public void editarProducto(Producto producto, String nombre, TipoProducto tipoProducto){
+        ProductoDAO dao = new ProductoDAO();
+        
+        producto.setNombre(nombre);
+        producto.setTipoProducto(tipoProducto);
+        
+        dao.editar(producto);
+    }
+    
+    @Override
+    public void borrarProducto(Producto producto) throws Exception{
+        List<Producto> productos = sistema.getProductos();
+        ProductoDAO dao = new ProductoDAO();
+        
+        if(!existeProducto(producto)){
+            throw new Exception("El producto que desea borrar no está cargado en el sistema.");
+        }
+        
+        if(estaProductoEnUso(producto)){
+            throw new Exception("No se puede borrar producto que esté siendo usado en otra parte del sistema.");
+        }
+        
+        productos.remove(producto);
+        
+        dao.borrar(producto.getId());
+    }
+    
+    public boolean existeProducto(Producto producto){
+        List<Producto> productos = sistema.getProductos();
+        
+        return productos.contains(producto);
+    }
+    
+    public boolean estaProductoEnUso(Producto producto){
+        
+        //Se busca el Producto en los Almacenes
+        for(Almacen a:sistema.getAlmacenes()){
+            if(a.buscarRenglon(producto) != null){
+                return true;
+            }
+        }
+        
+        //Se busca el Producto en las Ordenes de Compra
+        for(OrdenDeCompra o:sistema.getOrdenesDeCompra()){
+            if(o.tieneProducto(producto)){
+                return true;
+            }
+        }
+        
+        //Se busca el Producto en todos los Pedidos
+        for(Pedido p:sistema.getPedidos().values()){
+            if(p.obtenerCantidadProducto(producto)>0){
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
     /*
         CRUD TipoProducto
     */
+    
+    
+    @Override
+    public void crearTipoProducto(TipoProducto tipoProducto) throws Exception{
+        List<TipoProducto> tipos = sistema.getTiposDeProductos();
+        TipoProductoDAO dao = new TipoProductoDAO();
+        
+        if(existeTipoProducto(tipoProducto)){
+            throw new Exception("Ya existe un tipo de producto con el nombre "+tipoProducto.getNombre()+".");
+        }
+        
+        tipos.add(tipoProducto);
+        
+        dao.crear(tipoProducto);
+    }
     
     @Override
     public TipoProducto buscarTipoProducto(String nombre){
@@ -477,6 +568,56 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
     @Override
     public List<TipoProducto> listarTipoProducto(){
         return sistema.getTiposDeProductos();
+    }
+    
+    @Override
+    public void editarTipoProducto(TipoProducto tipoProducto, String nombre){
+        TipoProductoDAO dao = new TipoProductoDAO();
+        
+        tipoProducto.setNombre(nombre);
+        
+        dao.editar(tipoProducto);
+    }
+    
+    @Override
+    public void borrarTipoProducto(TipoProducto tipoProducto) throws Exception{
+        List<TipoProducto> tipos = sistema.getTiposDeProductos();
+        TipoProductoDAO dao = new TipoProductoDAO();
+        
+        if(!existeTipoProducto(tipoProducto)){
+            throw new Exception("El tipo de producto que desea borrar no está cargado en el sistema.");
+        }
+        
+        if(estaTipoProductoEnUso(tipoProducto)){
+            throw new Exception("No se puede borrar un tipo de producto que esté siendo usado en algún producto.");
+        }
+        
+        tipos.remove(tipoProducto);
+        
+        dao.borrar(tipoProducto.getId());
+    }
+    
+    public boolean existeTipoProducto(TipoProducto tipoProducto){
+        List<TipoProducto> tipos = sistema.getTiposDeProductos();
+        
+        return tipos.contains(tipoProducto);
+    }
+    
+    //Se verifica si al menos 1 Producto tiene relacion con un TipoProducto
+    public boolean estaTipoProductoEnUso(TipoProducto tipoProducto){
+        List<Producto> productos = sistema.getProductos();
+        
+        if(productos.isEmpty()){
+            return false;
+        }
+        
+        for(Producto p:productos){
+            if(p.getTipoProducto().equals(tipoProducto)){
+                return true;
+            }
+        }
+        
+        return false;
     }
     
     //Gestion Almacen

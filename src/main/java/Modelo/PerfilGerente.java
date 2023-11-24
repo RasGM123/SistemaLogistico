@@ -50,16 +50,6 @@ public interface PerfilGerente {
     public void editarAlmacen(Almacen almacen, String nombre, boolean esCentroDistribucion, String direccion);
     public void borrarAlmacen(Almacen almacen) throws Exception;
     
-    //CRUD Producto
-    public void crearProducto(Producto producto) throws Exception;
-    public void editarProducto(Producto producto, String nombre, TipoProducto tipo);
-    public void borrarProducto(Producto producto) throws Exception;
-    
-    //CRUD TipoProducto
-    public void crearTipoProducto(TipoProducto tipoProducto) throws Exception;
-    public void editarTipoProducto(TipoProducto tipoProducto, String nombre);
-    public void borrarTipoProducto(TipoProducto tipoProducto) throws Exception;
-    
     //CRUD OrdenDeCompra
     public void crearOrdenDeCompra(OrdenDeCompra orden) throws Exception;
     public OrdenDeCompra buscarOrdenDeCompra(int idOrdenDeCompra);

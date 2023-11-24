@@ -21,7 +21,7 @@ public interface PerfilCliente {
     public List<Pedido> listarPedidos(LocalDate inicio, LocalDate fin) throws Exception;
     public Pedido buscarPedido(int idPedido);
     //Funcionalidades con Movimientos
-    public String consultarEstado(Pedido pedido);
+    public String consultarEstadoPedido(Pedido pedido);
     public List<Movimiento> listarMovimientos(Pedido pedido);
     //Funciones de mensajeria
     public void crearTicket(String motivo, String reclamo);

@@ -139,6 +139,7 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
         
         //Se agrega el Pedido al Cliente
         pedidosCliente.add(pedido);
+        pedidosSistema.put(pedido.getId(), pedido);
         
         daoPedido.crear(pedido);
         daoCliente.editar(cliente);

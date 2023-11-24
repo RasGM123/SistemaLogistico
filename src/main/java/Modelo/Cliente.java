@@ -50,13 +50,17 @@ public class Cliente extends Usuario implements PerfilCliente, Serializable{
     /*
         CRUD Cliente
     */
-
+    
     @Override
     public void actualizarInformacionCuenta() {
         ClienteDAO dao = new ClienteDAO();
         
         dao.editar(this);
     }
+    
+    /*
+        CRUD Pedido
+    */
 
     @Override
     public List<Pedido> listarPedidos() {
@@ -108,7 +112,7 @@ public class Cliente extends Usuario implements PerfilCliente, Serializable{
     }
 
     @Override
-    public String consultarEstado(Pedido pedido) {
+    public String consultarEstadoPedido(Pedido pedido) {
         return pedido.getEstado();
     }
 

@@ -36,7 +36,7 @@ public class Pedido implements Serializable {
     private Transportista transportista;
     @OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<RenglonPedido> renglones;
-    @OneToMany (fetch = FetchType.EAGER)
+    @OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Movimiento> movimientos;
 
     public Pedido() {

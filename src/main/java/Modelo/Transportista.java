@@ -35,10 +35,10 @@ public class Transportista extends Empleado implements PerfilTransportista{
         this.vehiculoAsignado = null;
     }
     
-    //Funcionalidades
+    /*
+        CRUD Transportista
+    */
     
-    
-    //CRUD Transportista
     @Override
     public void actualizarInformacionCuenta() {
         TransportistaDAO dao = new TransportistaDAO();
@@ -48,10 +48,10 @@ public class Transportista extends Empleado implements PerfilTransportista{
 
     //Operaciones con Pedido
     @Override
-    public Pedido buscarPedido(int id) {
+    public Pedido buscarPedido(int idPedido) {
         Map<Integer, Pedido> pedidos = sistema.getPedidos();
         
-        return pedidos.get(id);
+        return pedidos.get(idPedido);
     }
 
     @Override
@@ -73,7 +73,6 @@ public class Transportista extends Empleado implements PerfilTransportista{
         this.sistema = sistema;
     }
     
-    //Metodo que se llama al cerrar sesion
     public void desconectar(){
         this.sistema = null;
     }

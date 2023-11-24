@@ -14,6 +14,6 @@ public interface PerfilTransportista {
     public void actualizarInformacionCuenta();
     
     //Operaciones con Pedido
-    public Pedido buscarPedido(int id);
+    public Pedido buscarPedido(int idPedido);
     public void entregarPedido(Pedido pedido);
 }

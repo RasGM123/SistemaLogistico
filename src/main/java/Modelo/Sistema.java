@@ -194,7 +194,7 @@ public final class Sistema {
             cerrarSesion();
         }
         
-        usuarios.remove(usuario.getDni());
+        usuarios.remove(usuario.getUsername());
     }
     
     public boolean existeCorreo(String correo) throws Exception{

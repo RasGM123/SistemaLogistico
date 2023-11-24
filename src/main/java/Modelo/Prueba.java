@@ -31,19 +31,26 @@ public class Prueba {
             Cliente cliente1 = new Cliente("pablo", "pablo", "pablo@hotmail.com", "Pablo", "Gomez", "3", "9", "Casa");
             gerente.crearUsuarioCliente(cliente1);
             
+            /*
+            Ruta ruta1 = new Ruta("Aca", "Alla", LocalDate.now(), LocalDate.of(2023, 12, 10));
+            gerente.crearRuta(ruta1);
+            
             TipoProducto tipo1 = new TipoProducto("Lacteos");
             gerente.crearTipoProducto(tipo1);
-            
-            TipoProducto tipo2 = new TipoProducto("Muebles");
-            gerente.crearTipoProducto(tipo2);
             
             Producto producto1 = new Producto("Yogur", tipo1);
             gerente.crearProducto(producto1);
             
-            Producto producto2 = new Producto("Yogur", tipo2);
-            gerente.crearProducto(producto2);
+            List<RenglonPedido> renglones = new ArrayList(List.of(new RenglonPedido(1, producto1)));
+            Pedido pedido1 = new Pedido(LocalDate.now(), ruta1, renglones);
+            gerente.crearPedido(cliente1, pedido1);
             
+            gerente.borrarPedido(cliente1, pedido1);
+            */
             
+            gerente.borrarUsuario(cliente1);
+            
+            gerente.crearUsuario(cliente1);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             

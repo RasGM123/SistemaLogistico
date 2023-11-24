@@ -71,6 +71,10 @@ public class Almacen implements Serializable {
     public void agregarProducto(Producto producto, int cantidad) throws Exception{
         RenglonInventario renglon = buscarRenglon(producto);
         
+        if(cantidad < 0){
+            throw new Exception("La cantidad de un producto no puede ser menor a 0.");
+        }
+        
         if(renglon == null){
             renglones.add(new RenglonInventario(cantidad, producto));
         }else{

@@ -46,6 +46,16 @@ public class OrdenDeCompra implements Serializable {
     
     //Funcionalidades
     
+    public double calcularMontoOrdenDeCompra(){
+        double monto = 0;
+        
+        for(RenglonOrdenDeCompra r:renglones){
+            monto += r.getPrecioUnitario() * r.getCantidad();
+        }
+        
+        return monto;
+    }
+    
     public void establecerEntrega(LocalDate fechaEntrega) throws Exception{
         if(fechaEntrega.isBefore(fechaEmision)){
             throw new Exception("La fecha de entrega no puede ocurrir antes de la fecha de emisión.");

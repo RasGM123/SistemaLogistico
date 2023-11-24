@@ -68,6 +68,11 @@ public class Pedido implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "Pedido{" + "id=" + id + ", fechaCreacion=" + fechaCreacion + ", estado=" + estado + '}';
+    }
+
+    @Override
     public int hashCode() {
         int hash = 7;
         hash = 31 * hash + Objects.hashCode(this.fechaCreacion);

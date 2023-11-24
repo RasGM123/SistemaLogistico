@@ -137,12 +137,12 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
             throw new Exception("Ya existe un pedido con el ID "+pedido.getId()+" cargado en el sistema.");
         }
         
-        //Se agrega el Pedido al Cliente
         pedidosCliente.add(pedido);
-        pedidosSistema.put(pedido.getId(), pedido);
         
         daoPedido.crear(pedido);
         daoCliente.editar(cliente);
+        
+        pedidosSistema.put(pedido.getId(), pedido);
     }
     
     //Busca 1 Pedido de 1 Cliente especifico con el id del Pedido como criterio
@@ -187,7 +187,8 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
     public void borrarPedido(Cliente cliente, Pedido pedido) throws Exception{
         Map<Integer, Pedido> pedidosSistema = sistema.getPedidos();
         List<Pedido> pedidosCliente = cliente.getPedidos();
-        PedidoDAO dao = new PedidoDAO();
+        PedidoDAO daoPedido = new PedidoDAO();
+        ClienteDAO daoCliente = new ClienteDAO();
         
         if(!existePedido(pedido)){
             throw new Exception("El pedido que desea borrar no está cargado en el sistema.");
@@ -198,7 +199,8 @@ public class Administrativo extends Empleado implements PerfilAdministrativo{
         //Se borra el Pedido del Cliente
         pedidosCliente.remove(pedido);
         
-        dao.borrar(pedido.getId());
+        daoCliente.editar(cliente);
+        daoPedido.borrar(pedido.getId());
     }
     
     public boolean existePedido(Pedido pedido){

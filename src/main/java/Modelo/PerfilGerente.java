@@ -17,7 +17,7 @@ public interface PerfilGerente {
     
     //CRUD Usuario
     public void crearUsuario(Usuario usuario) throws Exception;
-    public Usuario buscarUsuario(Usuario usuario);
+    public Usuario buscarUsuarioPorDni(String dni);
     public List<Usuario> listarUsuarios();
     public void editarUsuario(Usuario usuario);
     public void borrarUsuario(Usuario usuario) throws Exception;
@@ -63,7 +63,7 @@ public interface PerfilGerente {
     //Numero de veces que se pidieron los Productos comprendido entre 2 fechas
     //KEY = Producto, VALUE = cantidad
     public Map<Producto, Integer> listarProductosPorPedidos(LocalDate inicio, LocalDate fin) throws Exception;
-    //Listado de Tranportitastas y su cantidad de entregas en comprendidas entre 2 fechas
+    //Listado de Tranportitastas y su cantidad de entregas comprendidas entre 2 fechas
     //KEY = Transportista, VALUE = cantidad de entregas
     public Map<Transportista, Integer> listarTransportistasPorEntregas(LocalDate inicio, LocalDate fin) throws Exception;
     //Devuelve un mapa donde KEY = Proveedor, VALUE = tiempo promedio de entrega comprendido entre 2 fechas

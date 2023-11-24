@@ -250,14 +250,14 @@ public final class Sistema {
         if(usuario instanceof Cliente cliente){
             cliente.conectar(this);
         }else{
-            if(usuario instanceof Administrativo usuarioAdministrativo){
-                usuarioAdministrativo.conectar(this);
+            if(usuario instanceof Administrativo administrativo){
+                administrativo.conectar(this);
             }else{
-                if(usuario instanceof Gerente usuarioGerente){
-                    usuarioGerente.conectar(this);
+                if(usuario instanceof Gerente gerente){
+                    gerente.conectar(this);
                 }else{
-                    if(usuarios instanceof Transportista usuarioTransportista){
-                        usuarioTransportista.conectar(this);
+                    if(usuario instanceof Transportista transportista){
+                        transportista.conectar(this);
                     }
                 }
             }
@@ -387,4 +387,3 @@ public final class Sistema {
         return this.tickets;
     }
 }
-

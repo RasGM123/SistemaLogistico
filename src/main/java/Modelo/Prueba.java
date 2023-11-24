@@ -31,7 +31,7 @@ public class Prueba {
             Cliente cliente1 = new Cliente("pablo", "pablo", "pablo@hotmail.com", "Pablo", "Gomez", "3", "9", "Casa");
             gerente.crearUsuarioCliente(cliente1);
             
-            /*
+            
             Ruta ruta1 = new Ruta("Aca", "Alla", LocalDate.now(), LocalDate.of(2023, 12, 10));
             gerente.crearRuta(ruta1);
             
@@ -45,12 +45,15 @@ public class Prueba {
             Pedido pedido1 = new Pedido(LocalDate.now(), ruta1, renglones);
             gerente.crearPedido(cliente1, pedido1);
             
-            gerente.borrarPedido(cliente1, pedido1);
-            */
+            sistema.cerrarSesion();
             
-            gerente.borrarUsuario(cliente1);
+            sistema.iniciarSesion("transportista", "transportista");
+            Transportista transportista1 = (Transportista) sistema.obtenerSesion();
             
-            gerente.crearUsuario(cliente1);
+            transportista1.entregarPedido(pedido1);
+            
+            System.out.println("PEDIDO = "+transportista1.buscarPedido(1));
+            
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             

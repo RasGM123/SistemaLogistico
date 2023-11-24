@@ -44,8 +44,6 @@ public class Gerente extends Administrativo implements PerfilGerente{
     public void crearUsuario(Usuario usuario) throws Exception {
         String clase = usuario.getClass().getSimpleName();
         
-        sistema.crearUsuario(usuario);
-        
         switch (clase){
             case "Cliente":
                 ClienteDAO daoCliente = new ClienteDAO();
@@ -64,11 +62,21 @@ public class Gerente extends Administrativo implements PerfilGerente{
                 daoTransportista.crear(usuario);
                 break;
         }
+        
+        sistema.crearUsuario(usuario);
     }
 
     @Override
-    public Usuario buscarUsuario(Usuario usuario) {
-        return sistema.buscarUsuario(usuario.getUsername());
+    public Usuario buscarUsuarioPorDni(String dni) {
+        Map<String,Usuario> usuariosSistema = sistema.getUsuarios();
+        
+        for(Usuario u:usuariosSistema.values()){
+            if(u.getDni().equalsIgnoreCase(dni)){
+                return u;
+            }
+        }
+        
+        return null;
     }
 
     @Override

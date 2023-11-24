@@ -104,7 +104,7 @@ public class MovimientosPedidos extends javax.swing.JInternalFrame {
         });
 
         Agregar.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        Agregar.setText("Agregar");
+        Agregar.setText("Entregar");
         Agregar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         Agregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -194,10 +194,7 @@ public class MovimientosPedidos extends javax.swing.JInternalFrame {
 
         ListaMovimientos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "N°", "Fecha", "Estado"
@@ -296,6 +293,22 @@ public class MovimientosPedidos extends javax.swing.JInternalFrame {
                         mov.remove(id);
                         BuscarActionPerformed(e);
                     }
+                }else if(us instanceof Transportista t){
+                    Pedido p = t.buscarPedido(Integer.parseInt(numero.getText()));
+                    List<Movimiento> mov = p.getMovimientos();
+                    if (opcion == 1) {
+                        Movimiento m = mov.get(id);
+                        estados.addActionListener(e -> {
+                            String es = (String) estados.getSelectedItem();
+                            m.setDetalle(es);
+                            LocalDate fe = LocalDate.now();
+                            m.setFecha(fe);
+                        });
+                        BuscarActionPerformed(e);
+                    } else if (opcion == 2) {
+                        mov.remove(id);
+                        BuscarActionPerformed(e);
+                    }
                 }
             }
         });
@@ -307,7 +320,17 @@ public class MovimientosPedidos extends javax.swing.JInternalFrame {
             modelo = (DefaultTableModel) ListaMovimientos.getModel();
             modelo.setRowCount(0);
             if (us instanceof Administrativo admin) {
-                Pedido pi = admin.buscarPedidoEnSistema(Integer.getInteger(numero.getText()));
+                Pedido pi = admin.buscarPedidoEnSistema(Integer.parseInt(numero.getText()));
+                for (Movimiento Movimientos : pi.getMovimientos()) {
+                    Object[] m = new Object[3];
+                    m[0] = Movimientos.getId();
+                    m[1] = Movimientos.getFecha().toString();
+                    m[2] = Movimientos.getDetalle();
+                    modelo.addRow(m);
+                }
+                ListaMovimientos.setModel(modelo);
+            }else if(us instanceof Transportista t){
+                Pedido pi = t.buscarPedido(Integer.parseInt(numero.getText()));
                 for (Movimiento Movimientos : pi.getMovimientos()) {
                     Object[] m = new Object[3];
                     m[0] = Movimientos.getId();
@@ -319,7 +342,7 @@ public class MovimientosPedidos extends javax.swing.JInternalFrame {
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: de entrada de datos");
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_BuscarActionPerformed
 
@@ -341,15 +364,9 @@ public class MovimientosPedidos extends javax.swing.JInternalFrame {
 
     private void AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarActionPerformed
         Usuario us = sis.obtenerSesion();
-        if (us instanceof Administrativo admin) {
-            Pedido p = admin.buscarPedidoEnSistema(Integer.getInteger(numero.getText()));
-            List<Movimiento> movs = p.getMovimientos();
-            estados.addActionListener(e -> {
-                String es = (String) estados.getSelectedItem();
-                LocalDate fe = LocalDate.now();
-                this.mov = new Movimiento(fe, es);
-            });
-            movs.add(mov);
+        if( us instanceof Transportista t){
+            Pedido pi = t.buscarPedido(Integer.parseInt(numero.getText()));
+            t.entregarPedido(pi);
             BuscarActionPerformed(evt);
         }
     }//GEN-LAST:event_AgregarActionPerformed

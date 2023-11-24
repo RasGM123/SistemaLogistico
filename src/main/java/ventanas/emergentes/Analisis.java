@@ -242,11 +242,9 @@ public class Analisis extends javax.swing.JInternalFrame {
             info.setText("");
             Usuario us = sis.obtenerSesion();
             if (us instanceof Gerente g) {
-                LocalDate i = null;
-                LocalDate f = null;
-                fechas(i, f);
-                int c = g.contarClientesRegistrados(i, f);
-                String men = "Cantidad de usuarios entre " + i.toString() + " y " + f.toString() + "\n"
+                LocalDate[] fechas = obtenerFechas();
+                int c = g.contarClientesRegistrados(fechas[0], fechas[1]);
+                String men = "Cantidad de usuarios entre " + fechas[0].toString() + " y " + fechas[1].toString() +"\n"
                         + "Cantidad usuarios total: " + Integer.toString(c);
                 info.append(men);
             }
@@ -259,11 +257,9 @@ public class Analisis extends javax.swing.JInternalFrame {
         try {
             Usuario us = sis.obtenerSesion();
             if (us instanceof Gerente g) {
-                LocalDate i = null;
-                LocalDate f = null;
-                fechas(i, f);
-                double d = g.calcularPromedioPedidos(i, f);
-                String men = "Promedio de pedidos entre " + i.toString() + " y " + f.toString() + "\n"
+                LocalDate[] fechas = obtenerFechas();
+                double d = g.calcularPromedioPedidos(fechas[0], fechas[1]);
+                String men = "Promedio de pedidos entre " + fechas[0].toString() + " y " + fechas[1].toString() + "\n"
                         + "Total: " + Double.toString(d);
                 info.append(men);
             }
@@ -276,12 +272,10 @@ public class Analisis extends javax.swing.JInternalFrame {
         try {
             Usuario us = sis.obtenerSesion();
             if (us instanceof Gerente g) {
-                LocalDate i = null;
-                LocalDate f = null;
-                fechas(i, f);
+                LocalDate[] fechas = obtenerFechas();
                 int cont = 0;
-                Map<Producto, Integer> datos = g.listarProductosPorPedidos(i, f);
-                String infos = "Lista de pedidos entre " + i.toString() + " y " + f.toString();
+                Map<Producto, Integer> datos = g.listarProductosPorPedidos(fechas[0], fechas[1]);
+                String infos = "Lista de pedidos entre " + fechas[0].toString() + " y " + fechas[1].toString() +"\n";
                 info.append(infos);
                 for (Producto p : datos.keySet()) {
                     int ca = datos.get(p);
@@ -298,12 +292,10 @@ public class Analisis extends javax.swing.JInternalFrame {
         try {
             Usuario us = sis.obtenerSesion();
             if (us instanceof Gerente g) {
-                LocalDate i = null;
-                LocalDate f = null;
-                fechas(i, f);
+                LocalDate[] fechas = obtenerFechas();
                 int cont = 0;
-                Map<Transportista, Integer> datos = g.listarTransportistasPorEntregas(i, f);
-                String infos = "Lista de pedidos comprendidas entre " + i.toString() + " y " + f.toString();
+                Map<Transportista, Integer> datos = g.listarTransportistasPorEntregas(fechas[0], fechas[1]);
+                String infos = "Lista de pedidos comprendidas entre " + fechas[0].toString() + " y " + fechas[1].toString() +"\n";
                 info.append(infos);
                 for (Transportista p : datos.keySet()) {
                     int ca = datos.get(p);
@@ -320,12 +312,10 @@ public class Analisis extends javax.swing.JInternalFrame {
         try {
             Usuario us = sis.obtenerSesion();
             if (us instanceof Gerente g) {
-                LocalDate i = null;
-                LocalDate f = null;
-                fechas(i, f);
+                LocalDate[] fechas = obtenerFechas();
                 int cont = 0;
-                Map<Proveedor, Float> datos = g.listarProveedoresPorTiempoDeEntrega(i, f);
-                String infos = "Pomedio de entregas del proveedores desde " + i.toString() + " y " + f.toString();
+                Map<Proveedor, Float> datos = g.listarProveedoresPorTiempoDeEntrega(fechas[0], fechas[1]);
+                String infos = "Pomedio de entregas del proveedores desde " + fechas[0].toString() + " y " + fechas[1].toString() + "\n";
                 info.append(infos);
                 for (Proveedor p : datos.keySet()) {
                     float ca = datos.get(p);
@@ -338,16 +328,19 @@ public class Analisis extends javax.swing.JInternalFrame {
         }
     }
 
-    private void fechas(LocalDate i, LocalDate f) {
-        JDateChooser dateChooser1 = new JDateChooser();
-        JDateChooser dateChooser2 = new JDateChooser();
-        Object[] params = {"Fecha Inicio:", dateChooser1, "Fecha Fin:", dateChooser2};
-        int option = JOptionPane.showConfirmDialog(null, params, "Seleccionar fechas", JOptionPane.OK_CANCEL_OPTION);
-        if (option == JOptionPane.OK_OPTION) {
-            i = dateChooser1.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            f = dateChooser2.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        }
+    private LocalDate[] obtenerFechas() {
+    JDateChooser dateChooser1 = new JDateChooser();
+    JDateChooser dateChooser2 = new JDateChooser();
+    Object[] params = {"Fecha Inicio:", dateChooser1, "Fecha Fin:", dateChooser2};
+    int option = JOptionPane.showConfirmDialog(null, params, "Seleccionar fechas", JOptionPane.OK_CANCEL_OPTION);
+    if (option == JOptionPane.OK_OPTION) {
+        LocalDate fechaInicio = dateChooser1.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate fechaFin = dateChooser2.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        return new LocalDate[]{fechaInicio, fechaFin};
+    } else {
+        return new LocalDate[]{null, null}; // Manejar el caso en que el usuario cancele la selección
     }
+}
 
     private void pedidomasAclamado() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

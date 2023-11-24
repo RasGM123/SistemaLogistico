@@ -126,6 +126,13 @@ public final class General extends javax.swing.JFrame {
                 Mensajes.setVisible(true);
                 Loginm.setVisible(false);
                 Registerm.setVisible(false);
+                ajususer.setVisible(false);
+                ajususer1.setVisible(false);
+                AsigVehiculo.setVisible(false);
+                infoenvio1.setVisible(true);
+                ajuste1.setVisible(true);
+                Mensajes.setVisible(false);
+                amov.setVisible(false);
             } else if (us == null) {
                 setVisibleMenu();
             }

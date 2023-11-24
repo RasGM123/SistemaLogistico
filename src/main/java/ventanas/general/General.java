@@ -220,6 +220,7 @@ public final class General extends javax.swing.JFrame {
         CrearEnvio = new javax.swing.JMenuItem();
         gestionarenvio = new javax.swing.JMenuItem();
         transporte = new javax.swing.JMenuItem();
+        historial = new javax.swing.JMenuItem();
         Proveedores = new javax.swing.JMenu();
         AgrProveedor = new javax.swing.JMenuItem();
         ModProveedor = new javax.swing.JMenuItem();
@@ -547,6 +548,7 @@ public final class General extends javax.swing.JFrame {
         });
         Envio.add(gestionarenvio);
 
+        transporte.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         transporte.setText("Transporte");
         transporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -554,6 +556,15 @@ public final class General extends javax.swing.JFrame {
             }
         });
         Envio.add(transporte);
+
+        historial.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        historial.setText("Historial");
+        historial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                historialActionPerformed(evt);
+            }
+        });
+        Envio.add(historial);
 
         Menu.add(Envio);
 
@@ -840,6 +851,12 @@ public final class General extends javax.swing.JFrame {
         a.setVisible(true);
     }//GEN-LAST:event_newinfoActionPerformed
 
+    private void historialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historialActionPerformed
+        Historial h = new Historial(sis);
+        escritorio.add(h);
+        h.setVisible(true);
+    }//GEN-LAST:event_historialActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -920,6 +937,7 @@ public final class General extends javax.swing.JFrame {
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenuItem gestionarenvio;
     private javax.swing.JMenuItem gestionarenvio1;
+    private javax.swing.JMenuItem historial;
     private javax.swing.JMenuItem infoenvio;
     private javax.swing.JMenuItem infoenvio1;
     private javax.swing.JMenu inicio;
